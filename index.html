@@ -37,6 +37,14 @@
 
 .titleBrand{position:absolute;left:14px;top:12px;z-index:8;background:rgba(0,0,0,.72);border:1px solid rgba(255,255,255,.4);border-radius:10px;padding:8px 12px;font-weight:900;letter-spacing:.12em;color:#fff;text-shadow:0 2px 6px #000}.titleBrand small{display:block;font-size:10px;letter-spacing:.18em;color:#dbeafe}.titleVersion{position:absolute;right:10px;top:8px;z-index:9;background:#020812;color:#fff;border:1px solid rgba(255,255,255,.45);border-radius:8px;padding:9px 12px;font:700 14px Georgia,serif;box-shadow:0 2px 10px #000}.hero .maker{z-index:8}
 .shotHint{position:absolute;left:12px;bottom:12px;z-index:4;background:#000c;border:1px solid #ffe082;padding:7px 10px;border-radius:7px;font-size:12px;color:#ffe082;max-width:70%}
+.shootView.timing-moving #camImg{filter:blur(2px) brightness(.9)!important;transform-origin:50% 50%!important}
+.shootView.timing-ready #camImg{filter:none!important}
+.shootView.timing-peak #camImg{filter:none!important}
+.shootView.timing-peak .focus{border-color:#79ffb0!important;box-shadow:0 0 0 2px #0008,0 0 20px #52ff9a;animation:focusBreath .55s ease-in-out infinite alternate}
+.shootView.timing-ready .focus{border-color:#ffe66a!important;box-shadow:0 0 0 2px #0008,0 0 10px #ffe66a88}
+.shootView.timing-moving .focus{border-color:#ff7b7b!important;opacity:.75}
+@keyframes focusBreath{from{transform:translate(-50%,-50%) scale(.94)}to{transform:translate(-50%,-50%) scale(1.05)}}
+.shootBrief{display:block;color:#fff;font-size:13px;line-height:1.5;margin-bottom:4px}.shootSense{font-weight:900}.shootSense.moving{color:#ff9a9a}.shootSense.ready{color:#ffe66a}.shootSense.peak{color:#79ffb0}
 
 
 
@@ -553,7 +561,7 @@
 </section>
 <section id="story" class="screen"><div class="top"><b id="placeLabel">会場</b><span id="clock">10:20</span></div><div class="art"><img id="sceneImg" src="poses/embedded_9788354d56372ea3.jpg"></div><div class="dialog" id="msg"></div><div class="cmds" id="cmds"></div></section>
 <section id="rivalGallery" class="screen"><div class="top"><b>会場のカメコたち</b><span>要注意</span></div><div class="rivalStrip"><div class="rivalCard"><img src="poses/kuroda.png"><b>黒田</b>機材マウント型</div><div class="rivalCard"><img src="poses/tanaka.png"><b>田中</b>知り合い自慢型</div><div class="rivalCard"><img src="poses/ryo.png"><b>リョウ</b>距離感バグ型</div><div class="rivalCard"><img src="poses/hide.png"><b>ヒデ</b>写真見せつけ型</div></div><div class="dialog"><span class="speaker">マボ</span><br>会場には色々なカメラマンがいる。<br><span class="thought">（俺は……あいつらとは違う。たぶん。違うよな？）</span></div><div class="cmds"><button class="cmd" id="rivalBack">マップへ戻る</button></div></section>
-<section id="shoot" class="screen"><div class="shootView"><img id="camImg" src="poses/embedded_cb2d18490e0ae63f.jpg"><div class="hud"><div class="remaining" id="remain">あと 6 / 6 枚</div><div class="focus" id="focus"></div><div class="flash" id="flash"></div></div></div><div class="shootCtl"><button data-cam="left">◀ 左へ</button><button data-cam="pose">ポーズを待つ</button><button data-cam="right">右へ ▶</button><button data-cam="in">寄る</button><button data-cam="center">中央</button><button data-cam="out">引く</button><div class="countBig" id="countBig">あと 6 / 6 枚</div><div class="shutterWrap"><button class="shutter" id="shutter">SHUTTER</button></div></div></section>
+<section id="shoot" class="screen"><div class="shootView"><img id="camImg" src="poses/embedded_cb2d18490e0ae63f.jpg"><div class="hud"><div class="remaining" id="remain">あと 6 / 6 枚</div><div class="focus" id="focus"></div><div class="flash" id="flash"></div></div></div><div class="shootCtl"><button data-cam="left">◀ 左へ</button><button data-cam="pose">次のポーズ</button><button data-cam="right">右へ ▶</button><button data-cam="in">寄る</button><button data-cam="center">中央</button><button data-cam="out">引く</button><div class="countBig" id="countBig">あと 6 / 6 枚</div><div class="shutterWrap"><button class="shutter" id="shutter">SHUTTER</button></div></div></section>
 <section id="select" class="screen"><div class="top"><b id="selectTitle">写真を選ぶ</b><span id="selectSub">1枚選択</span></div><div class="dialog" id="selectDialog">撮影した六枚から一枚を選ぶ。</div><div class="selectGrid" id="selectGrid"></div><div class="cmds"><button class="cmd" id="sendPhoto">この写真を選ぶ</button></div></section>
 <section id="end" class="screen"><div class="endScene" id="ending"><small id="endDay">翌日</small><h1 id="endTitle"></h1><div id="endBody"></div><button class="restart" id="restart">タイトルに戻る</button></div></section>
 <section id="postend" class="screen"><div class="posterScene" id="posterScene"><div class="posterFrame"><img id="posterImg" class="posterArt" alt="エンディングアート"><button id="posterReturn" class="posterReturn">タイトルに戻る</button></div></div></section>
@@ -1326,27 +1334,57 @@ const SHOTIDEAL={
  east:[[20,1.05],[-22,1.12],[18,.96],[-16,1.08],[24,1.02],[-20,1.14]],
  entrance:[[-16,1.00],[18,1.08],[-12,.94],[16,1.04],[-18,1.10],[12,.98]]
 };
-function v4CompositionFeedback(place,pose){
+const SHOOT_STYLE={
+ outdoor:{cycle:2900,peak:[1650,2150],brief:'表情が変わる瞬間と、自然なカメラ目線を狙う。'},
+ indoor:{cycle:3900,peak:[2250,3000],brief:'急がず、黒衣装の陰影と質感が落ち着く瞬間を待つ。'},
+ rest:{cycle:3500,peak:[1950,2700],brief:'声を急かさず、自然な表情と距離感を残す。'},
+ east:{cycle:3350,peak:[1850,2500],brief:'背景を広く使い、視線の先に余白を作る。'},
+ entrance:{cycle:2700,peak:[1500,1950],brief:'時間は短い。表情がこちらを向いた瞬間を逃さない。'}
+};
+let shootTicker=null;
+function shootStyle(){return SHOOT_STYLE[S.currentShoot]||SHOOT_STYLE.outdoor}
+function timingInfo(){
+ let st=shootStyle(),elapsed=Math.max(0,performance.now()-(S.cam.phaseStarted||performance.now()));
+ if(elapsed<620)return {state:'moving',label:'ポーズが動いている',quality:35};
+ if(elapsed<st.peak[0])return {state:'ready',label:'姿勢が整ってきた',quality:72};
+ if(elapsed<=st.peak[1])return {state:'peak',label:'目線と表情が決まった',quality:100};
+ if(elapsed<st.cycle-300)return {state:'ready',label:'表情がほどけていく',quality:76};
+ return {state:'moving',label:'次のポーズへ移りそうだ',quality:48};
+}
+function framingInfo(place,pose){
  let c=S.cam||{x:0,z:1},ideal=(SHOTIDEAL[place]||SHOTIDEAL.outdoor)[pose%6];
- let dx=c.x-ideal[0],dz=c.z-ideal[1];
- let h=Math.abs(dx)<=9?'いい感じ':(dx>0?'少し右にズレてる':'少し左にズレてる');
- let d=Math.abs(dz)<=.06?'いい感じ':(dz>0?'少し近すぎる':'少し遠すぎる');
- return '構図：'+h+'　／　距離：'+d;
+ let dx=Math.abs(c.x-ideal[0]),dz=Math.abs(c.z-ideal[1]);
+ if(dx<=6&&dz<=.035)return {label:'構図が決まった',quality:100};
+ if(dx<=13&&dz<=.075)return {label:'構図に手応えがある',quality:84};
+ if(dx<=25&&dz<=.13)return {label:'もう少し画角を探りたい',quality:65};
+ return {label:'まだ構図が定まらない',quality:42};
 }
 function poseHint(place,pose){let h={outdoor:['背景を少し入れたい','表情を寄り気味で','全身を見せたい','右側に余白がほしい','少し寄った構図','衣装全体を見せたい'],indoor:['黒衣装の陰影を強調','顔と上半身を寄りで','壁の余白を使いたい','縦のラインを意識','視線の先に余白','衣装の質感を寄りで'],rest:['自然な距離感で','座り姿を少し寄りで','休憩スペースも残す','表情中心','飲み物も入れる','自然な全身寄り'],east:['背景を大きく使う','光の方向へ余白','全身と背景','視線方向を空ける','作品っぽく寄る','背景込みで整える'],entrance:['入口の雰囲気も入れる','短時間なので表情重視','友達待ちの自然さ','視線方向に余白','少し寄って一枚','背景も残して撮る']};return (h[place]||h.outdoor)[pose%6]}
 function applyPoseLook(){let c=S.cam||{pose:0,x:0,z:1};let img=$('#camImg');img.style.filter='none';img.style.width='100%';img.style.height='100%';img.style.objectFit='contain';img.style.objectPosition='center center';img.style.left='50%';img.style.top='50%';img.style.transform=`translate(-50%,-50%) scale(${c.z})`;img.style.transformOrigin='50% 50%';let f=$('.focus');if(f){let fx=Math.max(15,Math.min(85,50+c.x*.42));f.style.left=fx+'%'}}
-function startShoot(place='outdoor'){S.currentShoot=place;theme('shoot');show('shoot');S.shots=[];S.cam={x:0,z:1,pose:0};setImageNoFlash($('#camImg'),poseImage(place,0));let old=$('.shootName');if(old)old.remove();let nm=document.createElement('div');nm.className='shootName';nm.textContent='撮影：'+people[place].name;$('.shootView').appendChild(nm);let oldh=$('#shotHint');if(oldh)oldh.remove();let hint=document.createElement('div');hint.id='shotHint';hint.className='shotHint';$('.shootView').appendChild(hint);renderCam();v2Advance(20)}
-function renderCam(){let c=S.cam;applyPoseLook();let n=6-S.shots.length;$('#remain').textContent=`あと ${n} / 6 枚`;$('#countBig').textContent=`あと ${n} / 6 枚`;let h=$('#shotHint');if(h)h.innerHTML='構図ヒント：'+poseHint(S.currentShoot,c.pose)+'<br><b>'+v4CompositionFeedback(S.currentShoot,c.pose)+'</b>'}
-$$('[data-cam]').forEach(b=>b.onclick=()=>{click();let c=S.cam,a=b.dataset.cam;if(a==='left')c.x=Math.max(-70,c.x-18);if(a==='right')c.x=Math.min(70,c.x+18);if(a==='in')c.z=Math.min(1.30,c.z+.08);if(a==='out')c.z=Math.max(.82,c.z-.08);if(a==='center'){c.x=0;c.z=1}if(a==='pose'){c.pose=(c.pose+1)%6;setImageNoFlash($('#camImg'),poseImage(S.currentShoot,c.pose))}renderCam()});
-$('#shutter').onclick=()=>{if(S.shots.length>=6)return;shotFx();let f=$('#flash');f.classList.remove('go');void f.offsetWidth;f.classList.add('go');let c=S.cam,ideal=(SHOTIDEAL[S.currentShoot]||SHOTIDEAL.outdoor)[c.pose%6],dx=Math.abs(c.x-ideal[0]),dz=Math.abs(c.z-ideal[1]);let composition=Math.round(Math.max(0,100-dx*1.15));let distance=Math.round(Math.max(0,100-dz*210));let score=Math.round(composition*.62+distance*.38);score=Math.max(35,Math.min(99,score));S.shots.push({score,composition,distance,pose:c.pose,img:poseImage(S.currentShoot,c.pose)});if(score>=90){if(S.bond&&S.bond[S.currentShoot]!==undefined)S.bond[S.currentShoot]++}else if(score<50){S.unease=Math.min(S.unease+0,99)}if(S.shots.length<6){c.pose=(c.pose+1)%6;setImageNoFlash($('#camImg'),poseImage(S.currentShoot,c.pose));c.x=0;c.z=1}renderCam();if(S.shots.length===6)setTimeout(photoSelect,350)};
+function setTimingClass(){let view=$('.shootView'),t=timingInfo();if(!view)return;view.classList.remove('timing-moving','timing-ready','timing-peak');view.classList.add('timing-'+t.state)}
+function beginPoseMotion(resetFrame=false){let c=S.cam;if(!c)return;c.phaseStarted=performance.now();if(resetFrame){c.x=0;c.z=1}setImageNoFlash($('#camImg'),poseImage(S.currentShoot,c.pose));setTimingClass();renderCam()}
+function advanceShootPose(resetFrame=false){let c=S.cam;if(!c)return;c.pose=(c.pose+1)%6;beginPoseMotion(resetFrame)}
+function runShootTicker(){
+ if(shootTicker)clearInterval(shootTicker);
+ shootTicker=setInterval(()=>{
+  if(!$('#shoot').classList.contains('active')||!S.cam)return;
+  let st=shootStyle(),elapsed=performance.now()-(S.cam.phaseStarted||performance.now());
+  if(elapsed>=st.cycle)advanceShootPose(false);else{setTimingClass();renderCam()}
+ },100);
+}
+function stopShootTicker(){if(shootTicker){clearInterval(shootTicker);shootTicker=null}}
+function startShoot(place='outdoor'){S.currentShoot=place;theme('shoot');show('shoot');S.shots=[];S.cam={x:0,z:1,pose:0,phaseStarted:performance.now()};setImageNoFlash($('#camImg'),poseImage(place,0));let old=$('.shootName');if(old)old.remove();let nm=document.createElement('div');nm.className='shootName';nm.textContent='撮影：'+people[place].name;$('.shootView').appendChild(nm);let oldh=$('#shotHint');if(oldh)oldh.remove();let hint=document.createElement('div');hint.id='shotHint';hint.className='shotHint';$('.shootView').appendChild(hint);renderCam();runShootTicker();v2Advance(20)}
+function renderCam(){let c=S.cam;if(!c)return;applyPoseLook();let n=6-S.shots.length,t=timingInfo(),fr=framingInfo(S.currentShoot,c.pose);$('#remain').textContent=`あと ${n} / 6 枚`;$('#countBig').textContent=`あと ${n} / 6 枚`;let h=$('#shotHint');if(h)h.innerHTML=`<span class="shootBrief">${shootStyle().brief}</span>狙い：${poseHint(S.currentShoot,c.pose)}<br><b>${fr.label}</b>　／　<span class="shootSense ${t.state}">${t.label}</span>`}
+$$('[data-cam]').forEach(b=>b.onclick=()=>{click();let c=S.cam,a=b.dataset.cam;if(a==='left')c.x=Math.max(-70,c.x-18);if(a==='right')c.x=Math.min(70,c.x+18);if(a==='in')c.z=Math.min(1.30,c.z+.08);if(a==='out')c.z=Math.max(.82,c.z-.08);if(a==='center'){c.x=0;c.z=1}if(a==='pose')advanceShootPose(false);else renderCam()});
+$('#shutter').onclick=()=>{if(S.shots.length>=6)return;shotFx();let f=$('#flash');f.classList.remove('go');void f.offsetWidth;f.classList.add('go');let c=S.cam,ideal=(SHOTIDEAL[S.currentShoot]||SHOTIDEAL.outdoor)[c.pose%6],dx=Math.abs(c.x-ideal[0]),dz=Math.abs(c.z-ideal[1]),timing=timingInfo().quality;let composition=Math.round(Math.max(0,100-dx*1.15));let distance=Math.round(Math.max(0,100-dz*210));let taste=photoTasteBonus(S.currentShoot,{pose:c.pose})>=12?100:photoTasteBonus(S.currentShoot,{pose:c.pose})>=5?78:52;let score=Math.round(composition*.40+distance*.25+timing*.25+taste*.10);score=Math.max(35,Math.min(99,score));S.shots.push({score,composition,distance,timing,taste,pose:c.pose,img:poseImage(S.currentShoot,c.pose)});if(score>=90){if(S.bond&&S.bond[S.currentShoot]!==undefined)S.bond[S.currentShoot]++}if(S.shots.length<6){advanceShootPose(true)}renderCam();if(S.shots.length===6){stopShootTicker();setTimeout(photoSelect,350)}};
 function v4ReturnMap(){v4SetProgressTime();if(v4AllLayerResultsResolved()&&S.v4RivalsComplete){S.timeMin=900;v2Status();return v4Closing()}if(S.timeMin>=900)return v4Closing();show('map')}
 const PHOTO_TASTE={outdoor:{best:[1,4],good:[0,5],labels:['表情','自然さ','雰囲気']},indoor:{best:[0,5],good:[3,4],labels:['質感','世界観','陰影']},rest:{best:[0,2],good:[1,4],labels:['自然さ','表情','空気感']},east:{best:[2,4],good:[1,5],labels:['構図','背景','作品感']},entrance:{best:[1,3],good:[0,5],labels:['表情','明るさ','SNS映え']}};
 function photoTasteBonus(p,s){let t=PHOTO_TASTE[p]||PHOTO_TASTE.outdoor;return t.best.includes(s.pose)?12:t.good.includes(s.pose)?5:-6}
-function photoAppeal(p,s){return Math.max(35,Math.min(99,s.score+photoTasteBonus(p,s)))}
-function photoTraits(p,s){let t=PHOTO_TASTE[p]||PHOTO_TASTE.outdoor;let c=s.composition>=88?'◎':s.composition>=72?'○':'△';let d=s.distance>=88?'◎':s.distance>=72?'○':'△';let fit=t.best.includes(s.pose)?'◎':t.good.includes(s.pose)?'○':'△';return `${t.labels[0]}${c} / ${t.labels[1]}${fit} / ${t.labels[2]}${d}`}
+function photoAppeal(p,s){return Math.max(35,Math.min(99,s.score))}
+function photoTraits(p,s){let t=PHOTO_TASTE[p]||PHOTO_TASTE.outdoor;let c=s.composition>=88?'◎':s.composition>=72?'○':'△';let d=s.distance>=88?'◎':s.distance>=72?'○':'△';let m=(s.timing||0)>=90?'◎':(s.timing||0)>=70?'○':'△';let fit=t.best.includes(s.pose)?'◎':t.good.includes(s.pose)?'○':'△';return `${t.labels[0]}${c} / 瞬間${m} / ${t.labels[1]}${fit} / ${t.labels[2]}${d}`}
 function finishPostShootChoice(p,line){let P=people[p];story(p,P.name,line+'<br><span class="thought">（写真の出来だけじゃなく、最後の一言も印象に残る。）</span>',[['一礼して離れる',()=>v4ReturnMap()]])}
 function postShootChoices(p,appeal){let P=people[p];return [['「ありがとうございました。また機会があればお願いします」',()=>{S.rep++;S.trust++;S.bond[p]=(S.bond[p]||0)+1;finishPostShootChoice(p,'「はい、こちらこそありがとうございました！」')}],['「かなりいいの撮れました。あとで送りますね」',()=>{if(appeal>=80){S.rep++;S.trust++;finishPostShootChoice(p,'「ありがとうございます。楽しみにしてます！」')}else{S.unease++;finishPostShootChoice(p,'「あ、はい……確認しますね」<br>少しだけ反応が控えめだった。')}}],['「撮ってる間、ずっと見ていたくなる感じでした」',()=>{S.creep++;S.unease+=2;S.bond[p]=Math.max(-3,(S.bond[p]||0)-1);finishPostShootChoice(p,'「……あ、ありがとうございます」<br>'+P.name+'は一瞬だけ返事に間を置いた。')}]]}
-function photoSelect(){let p=S.currentShoot||'outdoor',P=people[p];markShot(p);v4SetProgressTime();show('select');$('#selectTitle').textContent=P.name+'の写真を選ぶ';$('#selectSub').textContent='6枚から1枚';$('#selectDialog').innerHTML=P.name+'へ渡す一枚を選ぶ。<br><span class="thought">（点数だけじゃない。本人が好きそうな表情や雰囲気も見よう。）</span>';$('#sendPhoto').textContent='この写真に決める';let g=$('#selectGrid');g.innerHTML='';S.selected=null;S.shots.forEach((s,i)=>{let b=document.createElement('button');b.className='thumb';b.innerHTML=`<img src="${s.img}"><span>${i+1}<br>${photoTraits(p,s)}</span>`;b.onclick=()=>{$$('.thumb').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');S.selected=i;click()};g.appendChild(b)})}
+function photoSelect(){stopShootTicker();let p=S.currentShoot||'outdoor',P=people[p];markShot(p);v4SetProgressTime();show('select');$('#selectTitle').textContent=P.name+'の写真を選ぶ';$('#selectSub').textContent='6枚から1枚';$('#selectDialog').innerHTML=P.name+'へ渡す一枚を選ぶ。<br><span class="thought">（点数は見えない。構図、瞬間、本人の希望を見て選ぼう。）</span>';$('#sendPhoto').textContent='この写真に決める';let g=$('#selectGrid');g.innerHTML='';S.selected=null;S.shots.forEach((s,i)=>{let b=document.createElement('button');b.className='thumb';b.innerHTML=`<img src="${s.img}"><span>${i+1}<br>${photoTraits(p,s)}</span>`;b.onclick=()=>{$$('.thumb').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');S.selected=i;click()};g.appendChild(b)})}
 $('#sendPhoto').onclick=()=>{if(S.selected===null){alert('写真を1枚選んでください');return}let p=S.currentShoot||'outdoor',shot=S.shots[S.selected],score=shot.score,appeal=photoAppeal(p,shot),P=people[p];S.photoScores[p]=score;if(p==='outdoor')S.photo=score;if(S.bond&&S.bond[p]!==undefined){S.bond[p]+=appeal>=90?2:appeal>=78?1:appeal<60?-1:0}S.rep+=appeal>=92?1:0;S.trust+=appeal>=85?1:0;S.unease+=appeal<55?1:0;let reaction='';if(appeal>=90){reaction=p==='outdoor'?'「えっ、これすごく好きです！ 表情も雰囲気もめっちゃいい……！」':p==='indoor'?'「すごい……この雰囲気、かなり好きです！」':p==='rest'?'「え、これ私すごく好きです！ 自然な感じがいいです」':p==='east'?'「これ作品っぽい！ 背景までちゃんと活きてて好きです」':'「えっ、これ好きです！ 投稿にも使いたいです」'}else if(appeal>=80){reaction=p==='outdoor'?'「いいですね！ これ、使わせてもらいたいです」':p==='indoor'?'「いい感じです。雰囲気、好きです」':p==='rest'?'「いいですね！ 自然な感じで嬉しいです」':p==='east'?'「構図いいですね。背景との感じも好きです」':'「いいですね！ これ友達にも見せたいです」'}else if(appeal>=70){reaction='「ありがとうございます。いい感じですね」'}else if(appeal>=55){reaction='「ありがとうございます。確認しておきますね」<br>悪くはなさそうだが、強い反応でもない。'}else{reaction='「あ……ありがとうございます。受け取っておきますね」<br>反応は少し薄かった。'}let taste=photoTasteBonus(p,shot)>=12?'本人の好みにかなり合った気がする。':photoTasteBonus(p,shot)>=5?'雰囲気は合っていそうだ。':'技術的には悪くなくても、好みとは少しズレたかもしれない。';story(p,P.name,reaction+'<br><span class="thought">（'+taste+'）</span><br><br><b>撮影後、どう締める？</b>',postShootChoices(p,appeal))}
 const V8IMG={map:'poses/embedded_d1fd251629b3f36e.jpg',bad:'poses/embedded_72c81b2a72e5808e.jpg',badPhone:'poses/embedded_35bcea3cb489f714.jpg',good:'poses/embedded_f0d8992119de1749.jpg',goodClose:'poses/embedded_a41e77553da29fe8.jpg',gallery:'poses/embedded_a41e77553da29fe8.jpg'};
 const COMMON_WARNING_SNS='poses/embedded_24fb47e241790106.png';
