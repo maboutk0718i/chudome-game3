@@ -867,7 +867,7 @@ function story(p,sp,text,choices,img){
  $('#sceneImg').classList.remove('cleanVenueCrop','loop2IntroCrop');
  let P=people[p]||people.outdoor;
  let sceneSrc=img||(['outdoor','indoor','rest','east','entrance'].includes(p)?V47POSE[p+'5']:(p==='rivals'?rivalSpeakerImage(sp):P.img));
- let camScene=p==='rivals'||sceneSrc===REIJI_IMG||sceneSrc===IMG.kuroda||sceneSrc===IMG.tanaka||sceneSrc===IMG.ryoji||sceneSrc===IMG.hide;
+ let camScene=p==='rivals'||sceneSrc===REIJI_IMG||sceneSrc==='poses/karen_intruder.png'||sceneSrc===IMG.kuroda||sceneSrc===IMG.tanaka||sceneSrc===IMG.ryoji||sceneSrc===IMG.hide;
  let mk=camScene?'rival':'talk';theme(mk);
  $('#placeLabel').textContent=p==='rivals'?'カメコエリア':P.label;
  setImageNoFlash($('#sceneImg'),sceneSrc);
@@ -1357,7 +1357,7 @@ function photoTasteBonus(p,s){let t=PHOTO_TASTE[p]||PHOTO_TASTE.outdoor;return t
 function photoAppeal(p,s){return Math.max(35,Math.min(99,s.score+photoTasteBonus(p,s)))}
 function photoTraits(p,s){let t=PHOTO_TASTE[p]||PHOTO_TASTE.outdoor;let c=s.composition>=88?'◎':s.composition>=72?'○':'△';let d=s.distance>=88?'◎':s.distance>=72?'○':'△';let fit=t.best.includes(s.pose)?'◎':t.good.includes(s.pose)?'○':'△';let moment=s.poseState==='settled'?'◎':s.poseState==='adjusting'?'○':'△';return `${t.labels[0]}${c} / 瞬間${moment} / ${t.labels[1]}${fit} / ${t.labels[2]}${d}`}
 function finishPostShootChoice(p,line){let P=people[p];story(p,P.name,line+'<br><span class="thought">（写真の出来だけじゃなく、最後の一言も印象に残る。）</span>',[['一礼して離れる',()=>v4ReturnMap()]])}
-function postShootChoices(p,appeal){let P=people[p];return [['「ありがとうございました。また機会があればお願いします」',()=>{S.rep++;S.trust++;S.bond[p]=(S.bond[p]||0)+1;finishPostShootChoice(p,'「はい、こちらこそありがとうございました！」')}],['「かなりいいの撮れました。あとで送りますね」',()=>{if(appeal>=80){S.rep++;S.trust++;finishPostShootChoice(p,'「ありがとうございます。楽しみにしてます！」')}else{S.unease++;finishPostShootChoice(p,'「あ、はい……確認しますね」<br>少しだけ反応が控えめだった。')}}],['「撮ってる間、ずっと見ていたくなる感じでした」',()=>{S.creep++;S.unease+=2;S.bond[p]=Math.max(-3,(S.bond[p]||0)-1);finishPostShootChoice(p,'「……あ、ありがとうございます」<br>'+P.name+'は一瞬だけ返事に間を置いた。')}]]}
+function postShootChoices(p,appeal){let P=people[p];return [['「ありがとうございました。また機会があればお願いします」',()=>{S.rep++;S.trust++;S.bond[p]=(S.bond[p]||0)+1;finishPostShootChoice(p,'「はい、こちらこそありがとうございました！」')}],['「かなりいいの撮れました。あとで送りますね」',()=>{if(appeal>=80){S.rep++;S.trust++;finishPostShootChoice(p,'「ありがとうございます。楽しみにしてます！」')}else{S.unease++;finishPostShootChoice(p,'「あ、はい……確認しますね」<br>少しだけ反応が控えめだった。')}}],['「撮影が終わっても、しばらく近くにいていいですか？」',()=>{S.creep++;S.unease+=2;S.bond[p]=Math.max(-3,(S.bond[p]||0)-1);finishPostShootChoice(p,'「……いえ、もう撮影は終わったので」<br>'+P.name+'は明らかに距離を取った。')}]]}
 function photoSelect(){stopPoseChanceTimer();let p=S.currentShoot||'outdoor',P=people[p];markShot(p);v4SetProgressTime();show('select');$('#selectTitle').textContent=P.name+'の写真を選ぶ';$('#selectSub').textContent='6枚から1枚';$('#selectDialog').innerHTML=P.name+'へ渡す一枚を選ぶ。<br><span class="thought">（構図だけでなく、ポーズが定まった瞬間も見て選ぼう。）</span>';$('#sendPhoto').textContent='この写真に決める';let g=$('#selectGrid');g.innerHTML='';S.selected=null;S.shots.forEach((s,i)=>{let b=document.createElement('button');b.className='thumb';b.innerHTML=`<img src="${s.img}"><span>${i+1}<br>${photoTraits(p,s)}</span>`;b.onclick=()=>{$$('.thumb').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');S.selected=i;click()};g.appendChild(b)})}
 $('#sendPhoto').onclick=()=>{if(S.selected===null){alert('写真を1枚選んでください');return}let p=S.currentShoot||'outdoor',shot=S.shots[S.selected],score=shot.score,appeal=photoAppeal(p,shot),P=people[p];S.photoScores[p]=score;if(p==='outdoor')S.photo=score;if(S.bond&&S.bond[p]!==undefined){S.bond[p]+=appeal>=90?2:appeal>=78?1:appeal<60?-1:0}S.rep+=appeal>=92?1:0;S.trust+=appeal>=85?1:0;S.unease+=appeal<55?1:0;let reaction='';if(appeal>=90){reaction=p==='outdoor'?'「えっ、これすごく好きです！ 表情も雰囲気もめっちゃいい……！」':p==='indoor'?'「すごい……この雰囲気、かなり好きです！」':p==='rest'?'「え、これ私すごく好きです！ 自然な感じがいいです」':p==='east'?'「これ作品っぽい！ 背景までちゃんと活きてて好きです」':'「えっ、これ好きです！ 投稿にも使いたいです」'}else if(appeal>=80){reaction=p==='outdoor'?'「いいですね！ これ、使わせてもらいたいです」':p==='indoor'?'「いい感じです。雰囲気、好きです」':p==='rest'?'「いいですね！ 自然な感じで嬉しいです」':p==='east'?'「構図いいですね。背景との感じも好きです」':'「いいですね！ これ友達にも見せたいです」'}else if(appeal>=70){reaction='「ありがとうございます。いい感じですね」'}else if(appeal>=55){reaction='「ありがとうございます。確認しておきますね」<br>悪くはなさそうだが、強い反応でもない。'}else{reaction='「あ……ありがとうございます。受け取っておきますね」<br>反応は少し薄かった。'}let taste=photoTasteBonus(p,shot)>=12?'本人の好みにかなり合った気がする。':photoTasteBonus(p,shot)>=5?'雰囲気は合っていそうだ。':'技術的には悪くなくても、好みとは少しズレたかもしれない。';story(p,P.name,reaction+'<br><span class="thought">（'+taste+'）</span><br><br><b>撮影後、どう締める？</b>',postShootChoices(p,appeal))}
 const V8IMG={map:'poses/embedded_d1fd251629b3f36e.jpg',bad:'poses/embedded_72c81b2a72e5808e.jpg',badPhone:'poses/embedded_35bcea3cb489f714.jpg',good:'poses/embedded_f0d8992119de1749.jpg',goodClose:'poses/embedded_a41e77553da29fe8.jpg',gallery:'poses/embedded_a41e77553da29fe8.jpg'};
@@ -1724,7 +1724,7 @@ window.addEventListener('load',()=>{
     const choices={
       thanks:['「ありがとうございました。また機会があればお願いします」',()=>{S.rep++;S.trust++;S.bond[p]=(S.bond[p]||0)+1;finishPostShootChoice(p,'「はい、こちらこそありがとうございました！」')}],
       photo:['「かなりいいの撮れました。あとで送りますね」',()=>{if(appeal>=80){S.rep++;S.trust++;finishPostShootChoice(p,'「ありがとうございます。楽しみにしてます！」')}else{S.unease++;finishPostShootChoice(p,'「あ、はい……確認しますね」<br>少しだけ反応が控えめだった。')}}],
-      creepy:['「撮ってる間、ずっと見ていたくなる感じでした」',()=>{S.creep++;S.unease+=2;S.bond[p]=Math.max(-3,(S.bond[p]||0)-1);finishPostShootChoice(p,'「……あ、ありがとうございます」<br>'+P.name+'は一瞬だけ返事に間を置いた。')}],
+      creepy:['「撮影が終わっても、しばらく近くにいていいですか？」',()=>{S.creep++;S.unease+=2;S.bond[p]=Math.max(-3,(S.bond[p]||0)-1);finishPostShootChoice(p,'「……いえ、もう撮影は終わったので」<br>'+P.name+'は明らかに距離を取った。')}],
       next:['「次も見かけたら声かけてもいいですか？」',()=>nextMeetChoice(p)]
     };
     const order={
@@ -2642,7 +2642,7 @@ window.addEventListener('load',()=>{
     },
     indoor:{
       good:['「黒の質感が潰れないように仕上げます」','「そこ見てもらえてたなら嬉しいです。お願いします」'],
-      creepy:['「黒衣装の写真だけ集めた専用フォルダを作りますね」','「専用……？ 普通に送ってもらえれば大丈夫です」<br>りおの声が急に低くなった。']
+      creepy:['「この黒衣装、僕のスマホの待ち受けにしてもいいですか？」','「個人で見るものでも、勝手に使わないでください」<br>りおははっきり嫌そうな顔をした。']
     },
     rest:{
       good:['「休憩明けに時間をもらって、ありがとうございました」','「こちらこそ、待ってもらえて助かりました」'],
@@ -2663,7 +2663,7 @@ window.addEventListener('load',()=>{
     const choices=[
       ['「ありがとうございました。また機会があればお願いします」',()=>{S.rep++;S.trust++;S.bond[p]=(S.bond[p]||0)+1;finishPostShootChoice(p,'「はい、こちらこそありがとうございました！」')}],
       ['「かなりいいの撮れました。あとで送りますね」',()=>{if(appeal>=80){S.rep++;S.trust++;finishPostShootChoice(p,'「ありがとうございます。楽しみにしてます！」')}else{S.unease++;finishPostShootChoice(p,'「あ、はい……確認しますね」<br>少しだけ反応が控えめだった。')}}],
-      ['「撮ってる間、ずっと見ていたくなる感じでした」',()=>{S.creep++;S.unease+=2;S.bond[p]=Math.max(-3,(S.bond[p]||0)-1);finishPostShootChoice(p,'「……あ、ありがとうございます」<br>'+P.name+'は一瞬だけ返事に間を置いた。')}],
+      ['「撮影が終わっても、しばらく近くにいていいですか？」',()=>{S.creep++;S.unease+=2;S.bond[p]=Math.max(-3,(S.bond[p]||0)-1);finishPostShootChoice(p,'「……いえ、もう撮影は終わったので」<br>'+P.name+'は明らかに距離を取った。')}],
       ['「次も見かけたら声かけてもいいですか？」',()=>nextMeetChoiceV642(p)],
       [specific.good[0],()=>{S.rep++;S.trust++;S.bond[p]=(S.bond[p]||0)+2;finishPostShootChoice(p,specific.good[1])}],
       [specific.creepy[0],()=>{S.creep++;S.unease+=2;S.bond[p]=Math.max(-3,(S.bond[p]||0)-2);finishPostShootChoice(p,specific.creepy[1])}]
@@ -2760,7 +2760,7 @@ window.addEventListener('load',()=>{
   };
 
   const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.43';
+  if(versionEl)versionEl.textContent='Ver. 6.44';
 })();
 </script>
 
