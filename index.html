@@ -2649,12 +2649,12 @@ window.addEventListener('load',()=>{
       creepy:['「飲み物を持って休んでる姿も、ずっと見ていたかったです」','「……休憩中は、そっとしておいてください」<br>みくは飲み物を胸元へ寄せた。']
     },
     east:{
-      good:['「投稿用なら、縦横どちらも使えるように送ります」','「助かります。投稿の組み方まで考えられそうです」'],
-      creepy:['「投稿するときは撮影者タグと僕の名前の紹介、必ずお願いします」','「写真を使うかも、タグを付けるかも私が決めます」<br>カレンの表情から笑みが消えた。']
+      good:['「背景の雰囲気を残すように仕上げます」','「ありがとうございます。そこを大事にしたかったので、楽しみにしてます」'],
+      creepy:['「次は二人きりで、もっと作品っぽい撮影をしませんか？」','「二人きりで撮るつもりはありません」<br>カレンの表情から笑みが消えた。']
     },
     entrance:{
-      good:['「友達が来る前に時間をもらって、ありがとうございました」','「こちらこそ、短くまとめてもらえて助かりました！」'],
-      creepy:['「今度、お友達にも僕を専属カメラマンとして紹介してください」','「専属ではないですし、友達に紹介する予定もないです……」<br>あやは入口の方へ視線を逃がした。']
+      good:['「投稿用なら、縦横どちらも使えるように送ります」','「助かります！ 投稿に使いやすい方を選びたいです」'],
+      creepy:['「投稿するときは撮影者タグと僕の名前の紹介、必ずお願いします」','「写真を使うかも、タグを付けるかも私が決めます……」<br>あやは困ったようにスマホを伏せた。']
     }
   };
 
@@ -2671,16 +2671,27 @@ window.addEventListener('load',()=>{
     return shuffleV642(choices);
   };
 
+  function nebataContinueV645(){
+    theme('talk');
+    if(S.priorRefused&&S.priorRefused.has('east')){
+      loop2WaryVisit('east');
+      return;
+    }
+    loop2ShootOffer('east');
+  }
+
   function nebataSecondStageV642(){
+    theme('rival');
     story('east','粘田','「俺、カレンちゃんが一番かわいく見える角度、全部分かってるから」<br>粘田は頼まれてもいないのに、カメラを構えながら指の位置まで指定し始めた。<br><br>カレンは粘田を見ず、こちらへ助けを求めるような視線を向けた。<br><span class="thought">（これは撮影技術の話じゃない。本人の意思を無視するかどうかの話だ。）</span>',[
-      ['「本人が頼んでいない指示はやめましょう」と止める',()=>{S.trust+=2;S.bond.east=(S.bond.east||0)+2;S.camRep=Math.max(-9,S.camRep-1);story('east','粘田','「は？ せっかく教えてあげてるのに」<br>粘田は不満そうにカメラを下げ、その場を離れた。<br><br>カレンが小さく息を吐く。<br>「ありがとうございます。それで……さっきの撮影のお話、続けてもいいですか？」',[['カレンの希望を確認して撮影へ進む',()=>loop2ShootOffer('east')]],NEBATA_IMG)}],
-      ['カレンに「嫌なら断って大丈夫ですよ」と伝える',()=>{S.trust++;S.bond.east=(S.bond.east||0)+1;story('east','カレン','「嫌です。今はこの方と話しています」<br>カレンがはっきり言うと、粘田は「最近のレイヤーは難しいな」と呟いて離れた。<br><span class="thought">（俺が代わりに決めず、本人が言える余地を作った。それでいい。）</span>',[['撮影の話へ戻る',()=>loop2ShootOffer('east')]],NEBATA_IMG)}],
+      ['「本人が頼んでいない指示はやめましょう」と止める',()=>{S.trust+=2;S.bond.east=(S.bond.east||0)+2;S.camRep=Math.max(-9,S.camRep-1);story('east','粘田','「は？ せっかく教えてあげてるのに」<br>粘田は不満そうにカメラを下げ、その場を離れた。<br><br>カレンが小さく息を吐く。<br>「ありがとうございます。それで……さっきの撮影のお話、続けてもいいですか？」',[['カレンとの会話へ戻る',()=>nebataContinueV645()]],NEBATA_IMG)}],
+      ['カレンに「嫌なら断って大丈夫ですよ」と伝える',()=>{S.trust++;S.bond.east=(S.bond.east||0)+1;story('east','カレン','「嫌です。今はこの方と話しています」<br>カレンがはっきり言うと、粘田は「最近のレイヤーは難しいな」と呟いて離れた。<br><span class="thought">（俺が代わりに決めず、本人が言える余地を作った。それでいい。）</span>',[['カレンとの会話へ戻る',()=>nebataContinueV645()]],NEBATA_IMG)}],
       ['粘田と一緒にカレンへポーズを指示する',()=>{S.creep++;S.unease+=2;S.bond.east=Math.max(-3,(S.bond.east||0)-2);refuse('east');story('east','カレン','「お二人で好きに撮影しててください。私は失礼します」<br>カレンは撮影場所から離れた。<br><span class="thought">（粘田を止めるどころか、二人分の圧にした。撮影NGになった。）</span>',[['何も言えずマップへ戻る',()=>show('map')]],NEBATA_IMG)}],
       ['粘田より先にカレンの髪を直そうと手を伸ばす',()=>{recordWarningIncident('east','本人の許可なく髪へ触れようとした');refuse('east');S.bond.east=-3;story('east','カレン','カレンは即座に身を引いた。<br>「触らないでください。撮影もしません」<br>周囲の視線が一斉に集まる。粘田でさえ黙った。<br><span class="thought">（越えてはいけない線を、自分から越えた。）</span>',[['その場を離れる',()=>touchBadEndingV643()]],NEBATA_IMG)}]
     ],NEBATA_IMG);
   }
 
   function nebataEncounterV642(){
+    theme('rival');
     story('east','粘田','「あっ、カレンちゃん！ その立ち方じゃ盛れないよ！」<br><br>太ったカメコが汗を拭いながら、会話へ割り込んできた。粘田だ。<br>カレンの表情が一瞬だけ固まる。<br><br>「……今、この方とお話ししてるんですけど」',[
       ['「カレンさんと話している途中ですよ」と止める',()=>{S.trust++;S.bond.east=(S.bond.east||0)+1;S.camRep=Math.max(-9,S.camRep-1);nebataSecondStageV642()}],
       ['「確かに、その角度のほうが盛れそうですね」と乗る',()=>{S.unease++;S.bond.east=Math.max(-3,(S.bond.east||0)-1);nebataSecondStageV642()}],
@@ -2691,12 +2702,22 @@ window.addEventListener('load',()=>{
 
   const loop2NormalChoicesV641=loop2NormalChoices;
   loop2NormalChoices=function(p){
-    if(p==='east'&&S.loop===2&&!S.nebataSeen){
+    return loop2NormalChoicesV641.apply(this,arguments);
+  };
+
+  /* Trigger Nebata on the first eligible Karen visit in loop 2, regardless of first-loop acquaintance. */
+  const visitLoop2V644=visitLoop2;
+  visitLoop2=function(p){
+    const alreadyDone=!!(S.shotDone&&S.shotDone.has('east'));
+    const refusedToday=!!(S.refused&&S.refused.has('east'));
+    if(p==='east'&&S.loop===2&&!S.nebataSeen&&!alreadyDone&&!refusedToday){
+      S.met.add('east');
       S.nebataSeen=true;
+      theme('rival');
       nebataEncounterV642();
       return;
     }
-    return loop2NormalChoicesV641.apply(this,arguments);
+    return visitLoop2V644.apply(this,arguments);
   };
 
   /* Aya pose 4 contains an unwanted strip at its top. Use a wide, bottom-aligned crop only there. */
@@ -2760,7 +2781,7 @@ window.addEventListener('load',()=>{
   };
 
   const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.44';
+  if(versionEl)versionEl.textContent='Ver. 6.45';
 })();
 </script>
 
