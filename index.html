@@ -3174,4 +3174,181 @@ window.addEventListener('load',()=>{
 })();
 </script>
 
+<script>
+/* === Ver.6.50: 会話の時間・履歴・撮影状態を統一 === */
+(function(){
+  const PLACES_V650=['outdoor','indoor','rest','east','entrance'];
+  function advanceMinutesV650(n){
+    S.timeMin=Math.min(900,Number(S.timeMin||600)+n);
+    try{v2Status()}catch(e){}
+  }
+
+  /* ---------- みく：休憩中 → 休憩待ち → 撮影可能 ---------- */
+  const startShootV650=startShoot;
+  function beginMikuShootV650(){S.restReadyV650=true;S.restWaitingV650=false;return startShootV650('rest')}
+  function mikuReadySceneV650(){
+    S.restReadyV650=true;S.restWaitingV650=false;
+    story('rest','みく','みくが飲み物をしまって立ち上がった。<br>「お待たせしました。今なら大丈夫です」<br><span class="thought">（休憩は終わった。ここから撮影の時間だ。）</span>',[
+      ['今日撮りたい雰囲気を確認する',()=>{S.trust++;beginMikuShootV650()}],
+      ['撮影を始める',()=>beginMikuShootV650()],
+      ['今日は撮影せず離れる',()=>show('map')]
+    ]);
+  }
+  function waitForMikuV650(){
+    story('rest','みく','「ありがとうございます。休憩が終わったら、こちらから声をかけますね」<br><span class="thought">（“休憩後でいい”と言った。なら、本当に休憩を終えるまで待とう。）</span>',[
+      ['少し離れた場所で待つ',()=>{advanceMinutesV650(15);mikuReadySceneV650()}],
+      ['いったん会場マップへ戻る',()=>{S.restWaitingV650=true;advanceMinutesV650(15);show('map')}]
+    ]);
+  }
+  startShoot=function(place='outdoor'){
+    if(place==='rest'&&!S.restReadyV650)return waitForMikuV650();
+    return startShootV650.apply(this,arguments);
+  };
+  const otherV650=other;
+  other=function(p,good){
+    if(p==='rest'&&good&&!S.restReadyV650){S.trust++;S.bond.rest=(S.bond.rest||0)+1;return waitForMikuV650()}
+    return otherV650.apply(this,arguments);
+  };
+  const observeV650=observe;
+  observe=function(p){
+    if(p==='rest'){S.trust++;S.bond.rest=(S.bond.rest||0)+1;advanceMinutesV650(15);return mikuReadySceneV650()}
+    return observeV650.apply(this,arguments);
+  };
+  const loop2ShootOfferV650=loop2ShootOffer;
+  loop2ShootOffer=function(p){
+    if(p==='rest'){
+      if(!S.restReadyV650)return waitForMikuV650();
+      story('rest','みく','「休憩、終わりました。今なら大丈夫です」<br><span class="thought">（前回会っていても、今日の休憩は今日のものだ。待って正解だった。）</span>',[
+        ['今日の希望を確認して撮影する',()=>{S.trust++;S.bond.rest=(S.bond.rest||0)+2;beginMikuShootV650()}],
+        ['撮影を始める',()=>beginMikuShootV650()],
+        ['今日はやめておく',()=>show('map')]
+      ]);return;
+    }
+    return loop2ShootOfferV650.apply(this,arguments);
+  };
+  function handleRestWaitingV650(){
+    if(S.restWaitingV650&&!S.shotDone.has('rest')&&!S.refused.has('rest')){mikuReadySceneV650();return true}
+    return false;
+  }
+  const visitV650=visit;
+  visit=function(p){if(p==='rest'&&handleRestWaitingV650())return;return visitV650.apply(this,arguments)};
+  const visitLoop2V650=visitLoop2;
+  visitLoop2=function(p){if(p==='rest'&&handleRestWaitingV650())return;return visitLoop2V650.apply(this,arguments)};
+
+  /* ---------- カメコ：1周目の接触関係を2周目へ保存 ---------- */
+  const startSecondLoopV650=startSecondLoop;
+  startSecondLoop=function(){
+    const seen=!!(S.v4RivalsComplete||(S.camMet&&S.camMet.size));
+    const relation=!seen?'none':(S.camHostile||S.camRep<=-3||(S.camMet&&S.camMet.has('hostile')))?'conflict':S.camRep>=2?'good':'neutral';
+    const metFlags=[...(S.camMet||[])];
+    const r=startSecondLoopV650.apply(this,arguments);
+    S.priorCameraSeenV650=seen;S.priorCameraRelationV650=relation;S.priorCamMetV650=new Set(metFlags);
+    return r;
+  };
+  function firstCameraMeetingV650(){
+    story('rivals','カメコたち','黒田、田中、リョウ、ヒデが機材の話をしている。田中がこちらに気づき、軽く会釈した。<br><span class="thought">（この人たちとは初対面だ。レイヤー側の悪評を、知らないカメコへの謝罪で帳消しにはできない。）</span>',[
+      ['普通に挨拶して混雑状況を聞く',()=>{S.camRep+=2;S.camMet.add('friendly');story('rivals','田中','「東側は今ちょっと混んでます。西側の方が撮りやすいですよ」',[['礼を言って離れる',()=>v4CompleteRivals()]],IMG.tanaka)}],
+      ['機材の話を少しだけ聞く',()=>{S.camRep++;S.camMet.add('photos');story('rivals','カメコたち','短く機材の話をして、互いに会場へ戻ることにした。',[['会場マップへ戻る',()=>v4CompleteRivals()]],IMG.ryoji)}],
+      ['会釈だけして離れる',()=>v4CompleteRivals()],
+      ['いきなり機材を馬鹿にする',()=>{S.camRep-=3;S.rivalFlags++;S.camMet.add('hostile');story('rivals','黒田','「初対面で、その言い方する？」<br>四人の空気が一気に冷えた。',[['離れる',()=>v4CompleteRivals()]],IMG.kuroda)}]
+    ],IMG.tanaka);
+  }
+  function familiarCameraMeetingV650(){
+    const good=S.priorCameraRelationV650==='good';
+    story('rivals','田中',good?'「マボさん、また来てたんですね。今日はどこ回ってます？」<br>前回と同じように、田中が自然に声をかけてきた。':'「どうも。今回も来てたんですね」<br>田中が軽く会釈し、黒田たちもこちらを見る。',[
+      ['普通に挨拶して今日の混雑情報を聞く',()=>{S.camRep+=2;story('rivals','田中','「西側がそろそろ空くと思いますよ」',[['礼を言って離れる',()=>v4CompleteRivals()]],IMG.tanaka)}],
+      ['前回と同じく、会釈だけして離れる',()=>v4CompleteRivals()],
+      ['急に機材マウントを取る',()=>{S.camRep-=3;S.rivalFlags++;story('rivals','黒田','「前回は普通だったのに、何それ」<br>黒田の表情が固くなった。',[['離れる',()=>v4CompleteRivals()]],IMG.kuroda)}]
+    ],good?IMG.tanaka:IMG.ryoji);
+  }
+  const cameraEncounterLoop2V650=cameraEncounterLoop2;
+  cameraEncounterLoop2=function(){
+    if(!S.priorCameraSeenV650)return firstCameraMeetingV650();
+    if(S.priorCameraRelationV650!=='conflict')return familiarCameraMeetingV650();
+    return cameraEncounterLoop2V650.apply(this,arguments);
+  };
+
+  /* ---------- 前回撮影していない相手に「前回の写真」「前回と同じ」を言わせない ---------- */
+  const loop2RepOfferV650=loop2RepOffer;
+  loop2RepOffer=function(p){
+    if(S.loop===2&&!(S.priorShot&&S.priorShot.has(p))){
+      const first={outdoor:'「今日は少しなら大丈夫です。撮りたい雰囲気を教えてください」',indoor:'「この衣装を撮るなら、黒の質感は残してほしいです」',rest:'「休憩が終わったので、今なら大丈夫です」',east:'「背景をどう使うか、先に聞かせてください」',entrance:'「友達が来るまでなら、少し大丈夫です」'};
+      return first[p]||'「少しなら大丈夫です」';
+    }
+    return loop2RepOfferV650.apply(this,arguments);
+  };
+  const loop2RepGreetingV650=loop2RepGreeting;
+  loop2RepGreeting=function(p){
+    let line=loop2RepGreetingV650.apply(this,arguments);
+    if(S.loop!==2||(S.priorShot&&S.priorShot.has(p))||typeof line!=='string')return line;
+    const neutral={outdoor:'「前のイベントにもいましたよね？」<br>雪奈は少し考えてから会釈した。',indoor:'「前にも見かけました」<br>りおは短く返した。',rest:'「前のイベントにもいましたよね」<br>みくは飲み物を持ったまま会釈した。',east:'「前にもこの辺にいましたよね」<br>カレンは背景からこちらへ視線を移した。',entrance:'「前にもいましたよね？」<br>あやは友人の方を確認してから返した。'};
+    const thought='<br><span class="thought">（前回、顔は合わせた。でも撮影はしていない。“前回の写真”は存在しない。）</span>';
+    return (neutral[p]||neutral.outdoor)+thought;
+  };
+
+  /* 閉じた旧関数から出る選択肢も、表示直前に撮影履歴と合わせる。 */
+  const storyV650=story;
+  story=function(p,sp,text,choices,img){
+    if(p==='rest'&&!S.restReadyV650&&typeof text==='string'&&(text.includes('お待たせしました。今なら大丈夫です')||text.includes('休憩、終わりました'))){
+      S.restReadyV650=true;S.restWaitingV650=false;advanceMinutesV650(15);
+    }
+    if(S.loop===2&&PLACES_V650.includes(p)&&!(S.priorShot&&S.priorShot.has(p))){
+      if(typeof text==='string')text=text.replace('（二回目だからこそ、雑にしない。前回の正解をコピーするんじゃなく、今日の希望を聞く。）','（この人を撮るのは初めてだ。まず、今日の希望を聞こう。）');
+      if(Array.isArray(choices))choices=choices.map(ch=>{
+        if(!Array.isArray(ch)||ch[0]!=='「前回と同じ感じで」とすぐ撮り始める')return ch;
+        return ['自分のイメージだけですぐ撮り始める',()=>{
+          S.unease++;S.bond[p]=(S.bond[p]||0)-1;
+          storyV650(p,people[p].name,'「どんな感じにするか、先に聞いてもいいですか？」<br><span class="thought">（初めてなのに、希望も聞かず始めようとした。）</span>',[
+            ['希望を聞き直す',()=>{S.trust++;startShoot(p)}],
+            ['今日はやめておく',()=>show('map')]
+          ]);
+        }];
+      });
+    }
+    if(p==='entrance'&&S.shotDone&&S.shotDone.has('entrance')&&!S.ayaArrivalShownV650){
+      S.ayaArrivalShownV650=true;
+      text=(text||'')+'<br><br>あやのスマホが震えた。<br>「友達、着いたみたいです」<br><span class="thought">（約束した短い時間に収まった。ここで会話を長引かせず、締めよう。）</span>';
+    }
+    return storyV650(p,sp,text,choices,img);
+  };
+
+  /* ---------- HAPPY ENDは写真品質と候補選びを両方満たす ---------- */
+  const individualEndingV650=individualEnding;
+  individualEnding=function(p){
+    const eligible=Object.keys(S.photoScores||{}).filter(k=>Number(S.photoScores[k])>=78&&Number(S.bond?.[k]||0)>=2);
+    if(!(Number(S.photoScores?.[p])>=78&&Number(S.bond?.[p]||0)>=2)&&eligible.length){
+      eligible.sort((a,b)=>(Number(S.photoScores[b])+Number(S.bond?.[b]||0)*10)-(Number(S.photoScores[a])+Number(S.bond?.[a]||0)*10));
+      return individualEndingV650(eligible[0]);
+    }
+    return individualEndingV650.apply(this,arguments);
+  };
+  const endingGoodV650=endingGood;
+  endingGood=function(big){
+    if(big){
+      const scores=Object.values(S.photoScores||{}).filter(v=>typeof v==='number');
+      const badX=Object.values(S.photoXCountsV648||{}).some(v=>Number(v)>=2);
+      if(scores.some(v=>v<70)||badX){
+        const eligible=Object.keys(S.photoScores||{}).filter(k=>Number(S.photoScores[k])>=78&&Number(S.bond?.[k]||0)>=2);
+        if(eligible.length){eligible.sort((a,b)=>Number(S.photoScores[b])-Number(S.photoScores[a]));return individualEnding(eligible[0])}
+        return individualEnding(Object.keys(S.photoScores||{})[0]||'outdoor');
+      }
+    }
+    return endingGoodV650.apply(this,arguments);
+  };
+  const layerRepNameV650=layerRepName;
+  layerRepName=function(){
+    const rank=layerRepNameV650.apply(this,arguments);
+    if(!['信頼されている','人気カメコ'].includes(rank))return rank;
+    const scores=Object.values(S.photoScores||{}).filter(v=>typeof v==='number');
+    const badX=Object.values(S.photoXCountsV648||{}).some(v=>Number(v)>=2);
+    if(scores.length&&(scores.some(v=>v<70)||badX))return '評判が良い';
+    return rank;
+  };
+
+  const versionEl=document.querySelector('.titleVersion');
+  if(versionEl)versionEl.textContent='Ver. 6.50';
+  try{v2Status()}catch(e){}
+})();
+</script>
+
 </body></html>
