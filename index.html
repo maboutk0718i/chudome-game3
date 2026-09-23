@@ -3082,4 +3082,96 @@ window.addEventListener('load',()=>{
 })();
 </script>
 
+<script>
+/* === Ver.6.49: 低評価写真の心情整合 / 2周目レイジ抑止 === */
+(function(){
+  function finishLowPhotoV649(p,line,thought){
+    const P=people[p];
+    story(p,P.name,line+'<br><span class="thought">（'+thought+'）</span>',[
+      ['一礼して離れる',()=>v4ReturnMap()]
+    ]);
+  }
+
+  /* 「送らない」のにAdobeで現像する、という矛盾をなくす。 */
+  const postShootChoicesV649=postShootChoices;
+  postShootChoices=function(p,appeal){
+    let x=0;
+    try{const shot=S.shots&&S.shots[S.selected];x=shot&&typeof photoGrades==='function'?photoGrades(p,shot).xCount:0}catch(e){}
+    if(!x)return postShootChoicesV649.apply(this,arguments);
+    const P=people[p];
+    if(x===1)return [
+      ['「ありがとうございました。もう少し見直してから送ります」',()=>{
+        S.backedOff++;
+        finishLowPhotoV649(p,'「はい。無理に送らなくても大丈夫です」<br>'+P.name+'は短く会釈した。','送るなら、RAWを開いて一度きちんと見直そう。今ここで出来を言い張る場面じゃない。');
+      }],
+      ['「どこが良くなかったか教えてもらえますか？」',()=>{
+        S.unease++;
+        finishLowPhotoV649(p,'「すみません、今ここで講評するのはちょっと……」<br>困らせてしまった。','写真を見せられた側に、改善点まで説明させようとしていた。反省会は自分でやれ。');
+      }],
+      ['「現像すれば、かなり良くなりますから」',()=>{
+        S.unease++;S.bond[p]=Math.max(-3,(S.bond[p]||0)-1);
+        finishLowPhotoV649(p,'「……使うかどうかは、こちらで決めます」','直したいのは写真より、微妙な反応をされた自分の気持ちになっている。');
+      }]
+    ];
+    return [
+      ['「わかりました。この写真は送りません」',()=>{
+        S.backedOff++;
+        finishLowPhotoV649(p,'「はい、お願いします」<br>会話はそこで静かに終わった。','送らないと決めた。現像で救う以前に、撮る段階で失敗していた。');
+      }],
+      ['「ほかの写真なら良いのもあります」と見せ続ける',()=>{
+        S.unease+=2;S.creep++;
+        finishLowPhotoV649(p,'「もう大丈夫です。確認もしなくていいです」<br>'+P.name+'は画面から目を離した。','断られたのは一枚だけだったのに、自分から行動まで駄目にした。');
+      }],
+      ['「現像で直せるので、一度送らせてください」',()=>{
+        S.unease+=2;S.bond[p]=Math.max(-3,(S.bond[p]||0)-2);
+        finishLowPhotoV649(p,'「送らなくて大丈夫です」<br>今度ははっきり断られた。','写真を直したいんじゃない。拒否されたという事実を、現像でなかったことにしたがっている。');
+      }]
+    ];
+  };
+
+  /* レイジは1周目の雪奈ルート限定。古い共通会話へ入っても2周目には出さない。 */
+  const reijiEncounterV649=reijiEncounter;
+  reijiEncounter=function(){
+    if(S.loop===2)return loop2ShootOffer('outdoor');
+    return reijiEncounterV649.apply(this,arguments);
+  };
+
+  /* 1周目で雪奈に会っていなくても、2周目専用の初対面会話を使う。 */
+  const loop2FirstMeetV649=loop2FirstMeet;
+  loop2FirstMeet=function(p){
+    if(p!=='outdoor')return loop2FirstMeetV649.apply(this,arguments);
+    const P=people.outdoor;
+    const intro=P.intro+'<br><span class="thought">（前回は話していない。二周目の俺には見覚えがあっても、雪奈にとっては今日が初対面だ。）</span>';
+    story('outdoor','マボ',intro,[
+      [LAYER_AMBIGUOUS.outdoor.label,()=>ambiguousLayerChoice('outdoor',true)],
+      ['雪奈に短く挨拶する',()=>{
+        story('outdoor','雪奈','「こんにちは。撮影ですか？」<br>雪奈は普通に返してくれた。',[
+          ['今日撮りたい雰囲気を短く伝える',()=>{S.trust++;S.bond.outdoor++;loop2ShootOffer('outdoor')}],
+          ['衣装で見せたい部分を聞く',()=>{S.trust+=2;S.bond.outdoor+=2;loop2ShootOffer('outdoor')}],
+          ['挨拶だけで離れる',()=>{S.backedOff++;show('map')}]
+        ]);
+      }],
+      ['撮影できるタイミングか確認する',()=>{
+        S.trust++;
+        story('outdoor','雪奈','「今なら少し大丈夫です」<br><span class="thought">（初対面だ。前回からの知り合いみたいに振る舞うな。）</span>',[
+          ['今日の希望を聞いてから撮影をお願いする',()=>loop2ShootOffer('outdoor')],
+          ['今日は挨拶だけにする',()=>{S.backedOff++;show('map')}]
+        ]);
+      }],
+      ['「前のイベントからずっと見てました」と距離を詰める',()=>{
+        S.unease+=2;S.bond.outdoor=Math.max(-3,(S.bond.outdoor||0)-1);
+        story('outdoor','雪奈','「え……前のイベントから？」<br>雪奈の笑顔が一瞬だけ止まった。<br><span class="thought">（初対面の相手から“ずっと見ていた”。言い方を完全に間違えた。）</span>',[
+          ['「すみません、言い方が変でした」と謝って離れる',()=>{S.backedOff++;show('map')}],
+          ['それでも撮影をお願いする',()=>{refuse('outdoor');story('outdoor','雪奈','「今日は撮影、大丈夫です」',[['離れる',()=>show('map')]])}]
+        ]);
+      }],
+      ['いったん離れる',()=>show('map')]
+    ]);
+  };
+
+  const versionEl=document.querySelector('.titleVersion');
+  if(versionEl)versionEl.textContent='Ver. 6.49';
+})();
+</script>
+
 </body></html>
