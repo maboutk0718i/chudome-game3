@@ -1342,7 +1342,7 @@ function v4CompositionFeedback(place,pose){
 function poseHint(place,pose){let h={outdoor:['背景を少し入れたい','表情を寄り気味で','全身を見せたい','右側に余白がほしい','少し寄った構図','衣装全体を見せたい'],indoor:['黒衣装の陰影を強調','顔と上半身を寄りで','壁の余白を使いたい','縦のラインを意識','視線の先に余白','衣装の質感を寄りで'],rest:['自然な距離感で','座り姿を少し寄りで','休憩スペースも残す','表情中心','飲み物も入れる','自然な全身寄り'],east:['背景を大きく使う','光の方向へ余白','全身と背景','視線方向を空ける','作品っぽく寄る','背景込みで整える'],entrance:['入口の雰囲気も入れる','短時間なので表情重視','友達待ちの自然さ','視線方向に余白','少し寄って一枚','背景も残して撮る']};return (h[place]||h.outdoor)[pose%6]}
 function applyPoseLook(){let c=S.cam||{pose:0,x:0,z:1};let img=$('#camImg');img.style.filter='none';img.style.width='100%';img.style.height='100%';img.style.objectFit='contain';img.style.objectPosition='center center';img.style.left='50%';img.style.top='50%';img.style.transform=`translate(-50%,-50%) scale(${c.z})`;img.style.transformOrigin='50% 50%';let f=$('.focus');if(f){let fx=Math.max(15,Math.min(85,50+c.x*.42));f.style.left=fx+'%'}}
 let poseChanceTimer=null;
-function currentPoseState(){let elapsed=Math.max(0,performance.now()-((S.cam&&S.cam.poseCycleStart)||performance.now()))%4200;if(elapsed<2000)return {key:'adjusting',label:'ポーズ調整中……',penalty:6};if(elapsed<2700)return {key:'moving',label:'動いている！ ブレそうだ……',penalty:12};return {key:'settled',label:'ポージングが定まった！',penalty:0}}
+function currentPoseState(){let elapsed=Math.max(0,performance.now()-((S.cam&&S.cam.poseCycleStart)||performance.now()))%4200;if(elapsed<2000)return {key:'adjusting',label:'ポーズ調整中……',penalty:10};if(elapsed<2700)return {key:'moving',label:'動いている！ ブレそうだ……',penalty:20};return {key:'settled',label:'ポージングが定まった！',penalty:0}}
 function renderPoseState(){let st=currentPoseState(),view=$('.shootView'),label=$('#poseState');if(view){view.classList.remove('pose-adjusting','pose-moving','pose-settled');view.classList.add('pose-'+st.key)}if(label){label.className='poseState '+st.key;label.textContent=st.label}}
 function startPoseChanceTimer(){if(poseChanceTimer)clearInterval(poseChanceTimer);poseChanceTimer=setInterval(()=>{if($('#shoot').classList.contains('active')&&S.cam)renderPoseState()},100)}
 function stopPoseChanceTimer(){if(poseChanceTimer){clearInterval(poseChanceTimer);poseChanceTimer=null}}
@@ -1350,16 +1350,24 @@ function resetPoseCycle(){if(S.cam)S.cam.poseCycleStart=performance.now();render
 function startShoot(place='outdoor'){S.currentShoot=place;theme('shoot');show('shoot');S.shots=[];S.cam={x:0,z:1,pose:0,poseCycleStart:performance.now()};setImageNoFlash($('#camImg'),poseImage(place,0));let old=$('.shootName');if(old)old.remove();let nm=document.createElement('div');nm.className='shootName';nm.textContent='撮影：'+people[place].name;$('.shootView').appendChild(nm);let oldh=$('#shotHint');if(oldh)oldh.remove();let hint=document.createElement('div');hint.id='shotHint';hint.className='shotHint';$('.shootView').appendChild(hint);renderCam();resetPoseCycle();startPoseChanceTimer();v2Advance(20)}
 function renderCam(){let c=S.cam;applyPoseLook();let n=6-S.shots.length;$('#remain').textContent=`あと ${n} / 6 枚`;$('#countBig').textContent=`あと ${n} / 6 枚`;let h=$('#shotHint');if(h)h.innerHTML='構図ヒント：'+poseHint(S.currentShoot,c.pose)+'<br><b>'+v4CompositionFeedback(S.currentShoot,c.pose)+'</b>';renderPoseState()}
 $$('[data-cam]').forEach(b=>b.onclick=()=>{click();let c=S.cam,a=b.dataset.cam;if(a==='left')c.x=Math.max(-70,c.x-18);if(a==='right')c.x=Math.min(70,c.x+18);if(a==='in')c.z=Math.min(1.30,c.z+.08);if(a==='out')c.z=Math.max(.82,c.z-.08);if(a==='center'){c.x=0;c.z=1}renderCam()});
-$('#shutter').onclick=()=>{if(S.shots.length>=6)return;let st=currentPoseState();shotFx();let f=$('#flash');f.classList.remove('go');void f.offsetWidth;f.classList.add('go');let c=S.cam,ideal=(SHOTIDEAL[S.currentShoot]||SHOTIDEAL.outdoor)[c.pose%6],dx=Math.abs(c.x-ideal[0]),dz=Math.abs(c.z-ideal[1]);let composition=Math.round(Math.max(0,100-dx*1.15));let distance=Math.round(Math.max(0,100-dz*210));let baseScore=Math.round(composition*.62+distance*.38);let score=Math.max(35,Math.min(99,baseScore-st.penalty));S.shots.push({score,baseScore,composition,distance,poseState:st.key,pose:c.pose,img:poseImage(S.currentShoot,c.pose)});if(score>=90){if(S.bond&&S.bond[S.currentShoot]!==undefined)S.bond[S.currentShoot]++}else if(score<50){S.unease=Math.min(S.unease+0,99)}if(S.shots.length<6){c.pose=(c.pose+1)%6;setImageNoFlash($('#camImg'),poseImage(S.currentShoot,c.pose));c.x=0;c.z=1;resetPoseCycle()}renderCam();if(S.shots.length===6){stopPoseChanceTimer();setTimeout(photoSelect,350)}};
+$('#shutter').onclick=()=>{if(S.shots.length>=6)return;let st=currentPoseState();shotFx();let f=$('#flash');f.classList.remove('go');void f.offsetWidth;f.classList.add('go');let c=S.cam,ideal=(SHOTIDEAL[S.currentShoot]||SHOTIDEAL.outdoor)[c.pose%6],dx=Math.abs(c.x-ideal[0]),dz=Math.abs(c.z-ideal[1]);let composition=Math.round(Math.max(0,100-dx*1.15));let distance=Math.round(Math.max(0,100-dz*210));let baseScore=Math.round(composition*.62+distance*.38);let mistakeCount=(composition<55?1:0)+(distance<55?1:0)+(st.key==='moving'?1:0);let cap=mistakeCount>=2?59:mistakeCount===1?69:99;let score=Math.max(35,Math.min(cap,baseScore-st.penalty));S.shots.push({score,baseScore,composition,distance,poseState:st.key,pose:c.pose,img:poseImage(S.currentShoot,c.pose)});if(score>=90){if(S.bond&&S.bond[S.currentShoot]!==undefined)S.bond[S.currentShoot]++}else if(score<50){S.unease=Math.min(S.unease+0,99)}if(S.shots.length<6){c.pose=(c.pose+1)%6;setImageNoFlash($('#camImg'),poseImage(S.currentShoot,c.pose));c.x=0;c.z=1;resetPoseCycle()}renderCam();if(S.shots.length===6){stopPoseChanceTimer();setTimeout(photoSelect,350)}};
 function v4ReturnMap(){v4SetProgressTime();if(v4AllLayerResultsResolved()&&S.v4RivalsComplete){S.timeMin=900;v2Status();return v4Closing()}if(S.timeMin>=900)return v4Closing();show('map')}
 const PHOTO_TASTE={outdoor:{best:[1,4],good:[0,5],labels:['表情','自然さ','雰囲気']},indoor:{best:[0,5],good:[3,4],labels:['質感','世界観','陰影']},rest:{best:[0,2],good:[1,4],labels:['自然さ','表情','空気感']},east:{best:[2,4],good:[1,5],labels:['構図','背景','作品感']},entrance:{best:[1,3],good:[0,5],labels:['表情','明るさ','SNS映え']}};
 function photoTasteBonus(p,s){let t=PHOTO_TASTE[p]||PHOTO_TASTE.outdoor;return t.best.includes(s.pose)?12:t.good.includes(s.pose)?5:-6}
-function photoAppeal(p,s){return Math.max(35,Math.min(99,s.score+photoTasteBonus(p,s)))}
-function photoTraits(p,s){let t=PHOTO_TASTE[p]||PHOTO_TASTE.outdoor;let c=s.composition>=88?'◎':s.composition>=72?'○':'△';let d=s.distance>=88?'◎':s.distance>=72?'○':'△';let fit=t.best.includes(s.pose)?'◎':t.good.includes(s.pose)?'○':'△';let moment=s.poseState==='settled'?'◎':s.poseState==='adjusting'?'○':'△';return `${t.labels[0]}${c} / 瞬間${moment} / ${t.labels[1]}${fit} / ${t.labels[2]}${d}`}
+function photoGrades(p,s){let t=PHOTO_TASTE[p]||PHOTO_TASTE.outdoor;let c=s.composition>=88?'◎':s.composition>=72?'○':s.composition>=55?'△':'×';let d=s.distance>=88?'◎':s.distance>=72?'○':s.distance>=55?'△':'×';let fit=t.best.includes(s.pose)?'◎':t.good.includes(s.pose)?'○':'△';let moment=s.poseState==='settled'?'◎':s.poseState==='adjusting'?'△':'×';return {c,d,fit,moment,xCount:[c,d,moment].filter(v=>v==='×').length}}
+function photoAppeal(p,s){let x=photoGrades(p,s).xCount,cap=x>=2?59:x===1?69:99;return Math.max(35,Math.min(cap,s.score+photoTasteBonus(p,s)))}
+function photoTraits(p,s){let t=PHOTO_TASTE[p]||PHOTO_TASTE.outdoor,g=photoGrades(p,s);return `${t.labels[0]}${g.c} / 瞬間${g.moment} / ${t.labels[1]}${g.fit} / ${t.labels[2]}${g.d}`}
+const POOR_PHOTO_REACTIONS={
+ outdoor:{1:['「……ありがとうございます。あとで見ておきます」','返事が短い。これは、あまり刺さっていない。'],2:['「今回は投稿には使わないと思います」','はっきり言われた。構図を外しすぎたか……。'],3:['「この写真は送らなくて大丈夫です」','完全に失敗した。これ以上話しかけるのはやめよう。']},
+ indoor:{1:['「ありがとうございます。ちょっと好みとは違うかもです」','遠回しではない。だが、その方がありがたい。'],2:['「この仕上がりなら、掲載はしないです」','黒衣装の質感も構図も外した。これは自分の失敗だ。'],3:['「すみません、データは送らなくて大丈夫です」','完全に見切られた。静かに下がろう。']},
+ rest:{1:['「あっ……ありがとうございます」','「あっ」の後が長かった。察しよう。'],2:['「今回は記念用にしておきますね」','投稿しない、を最大限やわらかく言ってくれた。'],3:['「ごめんなさい。この写真は送らなくて大丈夫です」','笑顔が消えた。これ以上ここにいるのはまずい。']},
+ east:{1:['「……ほかの写真もありますか？」','この一枚では駄目らしい。反応が正直だ。'],2:['「これは使わないです。ごめんなさい」','迷いがない。完全に撮影で外した。'],3:['「もう確認しなくて大丈夫です」','終了の合図だ。余計な言い訳はしない方がいい。']},
+ entrance:{1:['「ありがとうございます。何枚か確認してみますね」','声は優しい。でも、さっきまでの笑顔がない。'],2:['「せっかく撮っていただいたんですけど、今回は投稿には使わないかもです」','かなり言葉を選んでくれている。つまり、そういうことだ。'],3:['「すみません、この写真は送らなくて大丈夫です」','優しい人にここまで言わせてしまった。黙って引こう。']}
+};
 function finishPostShootChoice(p,line){let P=people[p];story(p,P.name,line+'<br><span class="thought">（写真の出来だけじゃなく、最後の一言も印象に残る。）</span>',[['一礼して離れる',()=>v4ReturnMap()]])}
 function postShootChoices(p,appeal){let P=people[p];return [['「ありがとうございました。また機会があればお願いします」',()=>{S.rep++;S.trust++;S.bond[p]=(S.bond[p]||0)+1;finishPostShootChoice(p,'「はい、こちらこそありがとうございました！」')}],['「かなりいいの撮れました。あとで送りますね」',()=>{if(appeal>=80){S.rep++;S.trust++;finishPostShootChoice(p,'「ありがとうございます。楽しみにしてます！」')}else{S.unease++;finishPostShootChoice(p,'「あ、はい……確認しますね」<br>少しだけ反応が控えめだった。')}}],['「撮影が終わっても、しばらく近くにいていいですか？」',()=>{S.creep++;S.unease+=2;S.bond[p]=Math.max(-3,(S.bond[p]||0)-1);finishPostShootChoice(p,'「……いえ、もう撮影は終わったので」<br>'+P.name+'は明らかに距離を取った。')}]]}
 function photoSelect(){stopPoseChanceTimer();let p=S.currentShoot||'outdoor',P=people[p];markShot(p);v4SetProgressTime();show('select');$('#selectTitle').textContent=P.name+'の写真を選ぶ';$('#selectSub').textContent='6枚から1枚';$('#selectDialog').innerHTML=P.name+'へ渡す一枚を選ぶ。<br><span class="thought">（構図だけでなく、ポーズが定まった瞬間も見て選ぼう。）</span>';$('#sendPhoto').textContent='この写真に決める';let g=$('#selectGrid');g.innerHTML='';S.selected=null;S.shots.forEach((s,i)=>{let b=document.createElement('button');b.className='thumb';b.innerHTML=`<img src="${s.img}"><span>${i+1}<br>${photoTraits(p,s)}</span>`;b.onclick=()=>{$$('.thumb').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');S.selected=i;click()};g.appendChild(b)})}
-$('#sendPhoto').onclick=()=>{if(S.selected===null){alert('写真を1枚選んでください');return}let p=S.currentShoot||'outdoor',shot=S.shots[S.selected],score=shot.score,appeal=photoAppeal(p,shot),P=people[p];S.photoScores[p]=score;if(p==='outdoor')S.photo=score;if(S.bond&&S.bond[p]!==undefined){S.bond[p]+=appeal>=90?2:appeal>=78?1:appeal<60?-1:0}S.rep+=appeal>=92?1:0;S.trust+=appeal>=85?1:0;S.unease+=appeal<55?1:0;let reaction='';if(appeal>=90){reaction=p==='outdoor'?'「えっ、これすごく好きです！ 表情も雰囲気もめっちゃいい……！」':p==='indoor'?'「すごい……この雰囲気、かなり好きです！」':p==='rest'?'「え、これ私すごく好きです！ 自然な感じがいいです」':p==='east'?'「これ作品っぽい！ 背景までちゃんと活きてて好きです」':'「えっ、これ好きです！ 投稿にも使いたいです」'}else if(appeal>=80){reaction=p==='outdoor'?'「いいですね！ これ、使わせてもらいたいです」':p==='indoor'?'「いい感じです。雰囲気、好きです」':p==='rest'?'「いいですね！ 自然な感じで嬉しいです」':p==='east'?'「構図いいですね。背景との感じも好きです」':'「いいですね！ これ友達にも見せたいです」'}else if(appeal>=70){reaction='「ありがとうございます。いい感じですね」'}else if(appeal>=55){reaction='「ありがとうございます。確認しておきますね」<br>悪くはなさそうだが、強い反応でもない。'}else{reaction='「あ……ありがとうございます。受け取っておきますね」<br>反応は少し薄かった。'}let taste=photoTasteBonus(p,shot)>=12?'本人の好みにかなり合った気がする。':photoTasteBonus(p,shot)>=5?'雰囲気は合っていそうだ。':'技術的には悪くなくても、好みとは少しズレたかもしれない。';story(p,P.name,reaction+'<br><span class="thought">（'+taste+'）</span><br><br><b>撮影後、どう締める？</b>',postShootChoices(p,appeal))}
+$('#sendPhoto').onclick=()=>{if(S.selected===null){alert('写真を1枚選んでください');return}let p=S.currentShoot||'outdoor',shot=S.shots[S.selected],score=shot.score,appeal=photoAppeal(p,shot),P=people[p],grades=photoGrades(p,shot),xCount=grades.xCount;S.photoScores[p]=score;if(p==='outdoor')S.photo=score;if(S.bond&&S.bond[p]!==undefined){S.bond[p]+=appeal>=90?2:appeal>=78?1:appeal<60?-1:0}S.rep+=appeal>=92?1:0;S.trust+=appeal>=85?1:0;S.unease+=appeal<55?1:0;if(xCount>0){let level=Math.min(3,xCount),poor=POOR_PHOTO_REACTIONS[p][level];S.bond[p]=Math.max(-3,(S.bond[p]||0)-1);let body=poor[0]+'<br><span class="thought">（'+poor[1]+'）</span>';if(xCount>=3){story(p,P.name,body,[['何も言わず、その場を離れる',()=>v4ReturnMap()]]);return}story(p,P.name,body+'<br><br><b>撮影後、どう締める？</b>',postShootChoices(p,appeal));return}let reaction='';if(appeal>=90){reaction=p==='outdoor'?'「えっ、これすごく好きです！ 表情も雰囲気もめっちゃいい……！」':p==='indoor'?'「すごい……この雰囲気、かなり好きです！」':p==='rest'?'「え、これ私すごく好きです！ 自然な感じがいいです」':p==='east'?'「これ作品っぽい！ 背景までちゃんと活きてて好きです」':'「えっ、これ好きです！ 投稿にも使いたいです」'}else if(appeal>=80){reaction=p==='outdoor'?'「いいですね！ これ、使わせてもらいたいです」':p==='indoor'?'「いい感じです。雰囲気、好きです」':p==='rest'?'「いいですね！ 自然な感じで嬉しいです」':p==='east'?'「構図いいですね。背景との感じも好きです」':'「いいですね！ これ友達にも見せたいです」'}else if(appeal>=70){reaction='「ありがとうございます。いい感じですね」'}else if(appeal>=55){reaction='「ありがとうございます。確認しておきますね」<br>悪くはなさそうだが、強い反応でもない。'}else{reaction='「あ……ありがとうございます。受け取っておきますね」<br>反応は少し薄かった。'}let taste=photoTasteBonus(p,shot)>=12?'本人の好みにかなり合った気がする。':photoTasteBonus(p,shot)>=5?'雰囲気は合っていそうだ。':'技術的には悪くなくても、好みとは少しズレたかもしれない。';story(p,P.name,reaction+'<br><span class="thought">（'+taste+'）</span><br><br><b>撮影後、どう締める？</b>',postShootChoices(p,appeal))}
 const V8IMG={map:'poses/embedded_d1fd251629b3f36e.jpg',bad:'poses/embedded_72c81b2a72e5808e.jpg',badPhone:'poses/embedded_35bcea3cb489f714.jpg',good:'poses/embedded_f0d8992119de1749.jpg',goodClose:'poses/embedded_a41e77553da29fe8.jpg',gallery:'poses/embedded_a41e77553da29fe8.jpg'};
 const COMMON_WARNING_SNS='poses/embedded_24fb47e241790106.png';
 function endingBad(type){setEndPosterMode('bad');theme('bad');show('end');$('#ending').className='endScene bad';if(type==='camera'){$('#endTitle').textContent='BAD END　カメコ界隈から消ゆ';$('#endBody').innerHTML=`<div class="endGallery storyGallery"><img class="wide" src="${IMG.kuroda}"><img src="${IMG.tanaka}"><img src="${V8IMG.badPhone}"></div><div class="endChapter">イベント当日の夜 ― カメコのグループDM</div><div class="endText">黒田たちとの会話は、笑って終わったように見えた。だが帰宅してしばらくすると、知らないところでスクリーンショットが回り始めた。<br>機材を馬鹿にした言葉。突き放すような態度。切り取られた一言だけが、本人より先に歩いていく。</div><div class="post"><b>カメラマンA</b><br>今日いたマボって人、ちょっと感じ悪くない？<br><br><b>カメラマンB</b><br>機材でマウント取ってきた。もう一緒に撮りたくない。<br><br><b>カメラマンC</b><br>関わらない方がいいかも。共有しとく。</div><div class="endChapter">翌朝 ― SNS</div><div class="endText">今度はカメラマン側の公開アカウントで名前が出た。<br>「マナー悪い野良カメコ」「人の機材を馬鹿にする」「一緒に回ると空気が悪くなる」。<br>事実に尾ひれがつき、知らないカメラマンまで話に加わっていく。<b>レイヤーから晒されたのではない。機材マウントで反感を買ったカメラマンたちが、マボの悪評を広げていた。</b></div><div class="endGallery storyGallery"><img class="wide" src="${V8IMG.bad}"><img src="${IMG.ryoji}"><img src="${IMG.hide}"></div><div class="endChapter">次のちゅどーむ ― 孤立</div><div class="endText">いつもの撮影エリアへ行く。黒田は目を合わせない。田中は会釈だけして離れた。リョウとヒデの会話に入ろうとすると、自然に輪が閉じる。<br><br>撮影場所の情報も、混雑の話も、誰も教えてくれない。レイヤーに声を掛ける以前に、カメラマン同士の居場所を失っていた。</div><div class="endImpact">シャッターを切る者同士だからこそ、敵に回した時の噂は速かった。</div><div class="endText"><b>マボの名前は写真ではなく悪評で広がり、カメコの輪から静かに消えていった。</b></div>`}else if(type==='distance'){$('#endTitle').textContent='BAD END　距離を置かれる';$('#endBody').innerHTML=`<div class="endGallery storyGallery"><img class="wide" src="${IMG.venue}"><img src="${IMG.karen}"><img src="${IMG.yukina}"></div><div class="endChapter">次のちゅどーむ</div><div class="endText">前回は会話の距離感を何度か間違えた。撮影を断られることもあった。<br><br>それでも、相手が「今日は大丈夫です」と言ったあとに追い続けることはしなかった。</div><div class="endChapter">少しだけ遠い距離</div><div class="endText">次のイベントで顔を合わせる。挨拶には返事がある。怒られているわけでも、注意喚起が出たわけでもない。<br><br>ただ、以前より会話が短い。撮影をお願いしても「今日はちょっと……」とやんわり断られることが増えた。</div><div class="endImpact">大きなトラブルにはならなかった。<br>でも、一度できた違和感は、少しだけ距離として残った。</div><div class="endText"><b>嫌われたわけではない。好かれたわけでもない。<br>マボは次こそ、相手のペースをもっと見ることにした。</b></div>`}else if(type==='warning'){
@@ -2671,13 +2679,79 @@ window.addEventListener('load',()=>{
     return shuffleV642(choices);
   };
 
+  const loop2ShootOfferV645=loop2ShootOffer;
+  const otherV645=other;
+
+  function nebataShouldStartV646(p){
+    return p==='east'&&S.loop===2&&!S.nebataSeen&&
+      !(S.shotDone&&S.shotDone.has('east'))&&
+      !(S.refused&&S.refused.has('east'));
+  }
+
+  /* Start Nebata only when Karen's conversation is about to advance to photography. */
+  loop2ShootOffer=function(p){
+    if(nebataShouldStartV646(p)){
+      S.nebataSeen=true;
+      S.nebataResumeV646='offer';
+      S.nebataPreRankV646=typeof layerRepName==='function'?layerRepName():'';
+      S.nebataPreRumorSourceV646=nebataRumorSourceV646();
+      theme('rival');
+      nebataEncounterV642();
+      return;
+    }
+    return loop2ShootOfferV645.apply(this,arguments);
+  };
+
+  other=function(p,good){
+    if(good&&nebataShouldStartV646(p)){
+      S.nebataSeen=true;
+      S.nebataResumeV646='other';
+      S.nebataPreRankV646=typeof layerRepName==='function'?layerRepName():'';
+      S.nebataPreRumorSourceV646=nebataRumorSourceV646();
+      theme('rival');
+      nebataEncounterV642();
+      return;
+    }
+    return otherV645.apply(this,arguments);
+  };
+
+  function nebataRumorSourceV646(){
+    const layerRumor=Number(S.priorLayerRumorLevel||S.priorRumorLevel||0);
+    const camRumor=Number(S.priorCamRumorLevel||0);
+    const currentLayerTrouble=(S.warningIncidents||[]).length>0||(S.pressureLog||[]).length>0||
+      Number(S.creep||0)>=2||Number(S.rude||0)>=2;
+    const layerBad=layerRumor>0||currentLayerTrouble;
+    const cameraBad=camRumor>0||Number(S.camRep||0)<=-3;
+    return layerBad&&cameraBad?'both':cameraBad?'camera':'layer';
+  }
+
   function nebataContinueV645(){
     theme('talk');
     if(S.priorRefused&&S.priorRefused.has('east')){
       loop2WaryVisit('east');
       return;
     }
-    loop2ShootOffer('east');
+
+    const rank=S.nebataPreRankV646||(typeof layerRepName==='function'?layerRepName():'');
+    if(rank==='要警戒カメコ'||rank==='ブラックリスト級カメコ'){
+      const source=S.nebataPreRumorSourceV646||nebataRumorSourceV646();
+      const rumorLine=source==='both'
+        ?'いろいろな方から話を聞いているので、今日はお断りします'
+        :source==='camera'
+          ?'カメラマンさんたちから話を聞いているので、今日はお断りします'
+          :'他のレイヤーさんたちから話を聞いているので、今日はお断りします';
+      refuse('east');
+      story('east','カレン','「粘田さんを止めてくれたことは、ありがとうございます」<br>「でも、撮影の件は別です。'+rumorLine+'」<br><span class="thought">（粘田への対応は見てもらえた。でも、これまでの評判まで消えたわけではない。）</span>',[
+        ['「わかりました」と離れる',()=>{S.backedOff++;show('map')}]
+      ],IMG.karen);
+      return;
+    }
+
+    if(S.nebataResumeV646==='other'){
+      otherV645('east',true);
+      return;
+    }
+    loop2ShootOfferV645('east');
   }
 
   function nebataSecondStageV642(){
@@ -2703,21 +2777,6 @@ window.addEventListener('load',()=>{
   const loop2NormalChoicesV641=loop2NormalChoices;
   loop2NormalChoices=function(p){
     return loop2NormalChoicesV641.apply(this,arguments);
-  };
-
-  /* Trigger Nebata on the first eligible Karen visit in loop 2, regardless of first-loop acquaintance. */
-  const visitLoop2V644=visitLoop2;
-  visitLoop2=function(p){
-    const alreadyDone=!!(S.shotDone&&S.shotDone.has('east'));
-    const refusedToday=!!(S.refused&&S.refused.has('east'));
-    if(p==='east'&&S.loop===2&&!S.nebataSeen&&!alreadyDone&&!refusedToday){
-      S.met.add('east');
-      S.nebataSeen=true;
-      theme('rival');
-      nebataEncounterV642();
-      return;
-    }
-    return visitLoop2V644.apply(this,arguments);
   };
 
   /* Aya pose 4 contains an unwanted strip at its top. Use a wide, bottom-aligned crop only there. */
@@ -2781,7 +2840,7 @@ window.addEventListener('load',()=>{
   };
 
   const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.45';
+  if(versionEl)versionEl.textContent='Ver. 6.47';
 })();
 </script>
 
