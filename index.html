@@ -3351,4 +3351,142 @@ window.addEventListener('load',()=>{
 })();
 </script>
 
+<style>
+/* Ver.6.51: ending content is composed and its images are primed before reveal. */
+#end.v651EndFade{background:#000;opacity:0;visibility:hidden;transition:opacity 1.15s ease}
+#end.v651EndFade.active{display:block}
+#end.v651EndFade.v651EndVisible{opacity:1;visibility:visible}
+@media (prefers-reduced-motion:reduce){#end.v651EndFade{transition-duration:.25s}}
+</style>
+
+<script>
+/* === Ver.6.51: dialogue/state consistency + smooth ending reveal === */
+(function(){
+  /* First camera meeting: do not know Mabo's name before he introduces himself,
+     and do not offer to show photos before any layer has been photographed. */
+  cameraEncounter=function(){
+    const hasPhotos=!!(S.shotDone&&S.shotDone.size);
+    const choices=[
+      ['普通に挨拶して情報交換する',()=>{
+        S.camRep+=2;S.rep++;S.camMet.add('friendly');
+        story('rivals','田中','「田中です。そちらは？」<br>「マボです」<br>短く名乗り合い、会場の混雑状況の話に移った。<br><span class="thought">（これで次からは「マボさん」でいい。）</span>',[
+          ['情報交換を続ける',()=>camEncounter2()]
+        ],IMG.tanaka);
+      }],
+      hasPhotos
+        ?['今日撮った写真を見せて感想を聞く',()=>{S.camRep+=1;S.camMet.add('photos');camEncounter2()}]
+        :['撮影しやすい場所を聞く',()=>{S.camRep+=1;S.camMet.add('info');camEncounter2()}],
+      ['撮影場所の使い方について黒田に一言言う',()=>cameraSquabble()],
+      ['「レイヤーとしか話さない」と言う',()=>{S.camRep-=2;S.camMet.add('cold');camEncounter2()}],
+      ['機材を馬鹿にしてマウントを取る',()=>{S.camRep-=3;S.rivalFlags++;S.camMet.add('hostile');if(S.camRep<=-5)return endingBad('camera');camEncounter2()}],
+      ['会釈だけして離れる',()=>v4CompleteRivals()]
+    ];
+    story('rivals','カメコ遭遇','黒田、田中、リョウ、ヒデが機材の話で盛り上がっている。こちらに気づいた田中が手を上げた。<br>「どうも。今日はどこ回ってるんです？」<br><span class="thought">（初対面だ。まずは普通に名乗ればいい。）</span>',choices,IMG.tanaka);
+  };
+
+  /* Kuroda only refers to the east-side shoot when it actually happened. */
+  const cameraSquabbleV651=cameraSquabble;
+  cameraSquabble=function(){
+    if(S.shotDone&&S.shotDone.has('east'))return cameraSquabbleV651.apply(this,arguments);
+    const visited=!!(S.met&&S.met.has('east'));
+    const oldStory=story;
+    story=function(p,sp,text,choices,img){
+      story=oldStory;
+      if(p==='rivals'&&sp==='黒田'&&typeof text==='string'){
+        const lead=visited
+          ?'「さっき東側にいましたよね。次、俺らもあの辺使いたいんで」'
+          :'「東側の撮影場所、次俺らも使いたいんで。長居はお互いなしで」';
+        text=text.replace('「さっき東側で撮ってた場所、次俺ら使うから。長居しないでね」',lead);
+      }
+      return oldStory(p,sp,text,choices,img);
+    };
+    return cameraSquabbleV651.apply(this,arguments);
+  };
+
+  /* Remember the selected sign-off so Aya's friend's arrival matches its tone. */
+  const postShootChoicesV651=postShootChoices;
+  postShootChoices=function(p,appeal){
+    const list=postShootChoicesV651.apply(this,arguments);
+    if(p!=='entrance'||!Array.isArray(list))return list;
+    return list.map(ch=>{
+      if(!Array.isArray(ch)||typeof ch[1]!=='function')return ch;
+      const label=String(ch[0]||''),fn=ch[1];
+      return [ch[0],()=>{
+        S.ayaClosingToneV651=/近くにいて|見続け|フォルダ|タグ付け|現像で直せ|見せ続け|送らせ/.test(label)?'creepy':/送りません|見直してから/.test(label)?'poor':'normal';
+        return fn();
+      }];
+    });
+  };
+
+  const storyV651=story;
+  story=function(p,sp,text,choices,img){
+    if(typeof text==='string'){
+      text=text.replace(/「友達が来るまで2〜3分だけ」と確認する/g,'「友達が来るまで、短時間だけ」と確認する')
+               .replace('雪奈ちゃんも前から知ってるよね？','雪奈ちゃんとも前から知り合いでさ。ね？');
+    }
+    if(Array.isArray(choices))choices=choices.map(ch=>{
+      if(!Array.isArray(ch))return ch;
+      return [String(ch[0]||'').replace('「友達が来るまで2〜3分だけ」と確認する','「友達が来るまで、短時間だけ」と確認する'),ch[1]];
+    });
+    const ayaPending=p==='entrance'&&S.shotDone&&S.shotDone.has('entrance')&&!S.ayaArrivalShownV650;
+    if(ayaPending&&typeof text==='string'&&text.includes('撮影後、どう締める？')){
+      S.ayaArrivalShownV650=true;
+      const r=storyV651(p,sp,text,choices,img);
+      S.ayaArrivalShownV650=false;
+      return r;
+    }
+    if(ayaPending){
+      S.ayaArrivalShownV650=true;
+      const tone=S.ayaClosingToneV651||'poor';
+      const arrival=tone==='creepy'
+        ?'<br><br>あやのスマホが震えた。<br>「友達、着いたみたいなので、もう行きますね」<br><span class="thought">（会話を終わらせたのは、俺ではなく友達の到着だった。）</span>'
+        :tone==='poor'
+          ?'<br><br>あやのスマホが震えた。<br>「友達、着いたみたいです」<br><span class="thought">（写真の話を蒸し返す場面じゃない。ここで終わろう。）</span>'
+          :'<br><br>あやのスマホが震えた。<br>「友達、着いたみたいです」<br><span class="thought">（短時間の約束どおり、ここで気持ちよく終わろう。）</span>';
+      text=(text||'')+arrival;
+    }
+    return storyV651(p,sp,text,choices,img);
+  };
+
+  /* SPECIAL END needs enough current-loop work to support its plural requests. */
+  const secondLoopEndingV651=secondLoopEnding;
+  secondLoopEnding=function(){
+    const done=S.shotDone?S.shotDone.size:0;
+    if(S.loop===2&&done<3){
+      const rankFn=layerRepName;
+      layerRepName=function(){
+        const rank=rankFn.apply(this,arguments);
+        return rank==='信頼されている'||rank==='人気カメコ'?'評判が良い':rank;
+      };
+      try{return secondLoopEndingV651.apply(this,arguments)}finally{layerRepName=rankFn}
+    }
+    return secondLoopEndingV651.apply(this,arguments);
+  };
+
+  /* Fade the fully composed ending instead of exposing a one-frame black jump. */
+  const showV651=show;
+  let endRevealToken=0;
+  show=function(id){
+    if(id!=='end')return showV651.apply(this,arguments);
+    const end=document.getElementById('end');
+    const token=++endRevealToken;
+    if(end){end.classList.add('v651EndFade');end.classList.remove('v651EndVisible')}
+    const r=showV651.apply(this,arguments);
+    setTimeout(()=>{
+      if(token!==endRevealToken||!end||!end.classList.contains('active'))return;
+      const imgs=[...end.querySelectorAll('img')];
+      const ready=Promise.all(imgs.map(im=>im.complete?Promise.resolve():new Promise(resolve=>{im.addEventListener('load',resolve,{once:true});im.addEventListener('error',resolve,{once:true})})));
+      Promise.race([ready,new Promise(resolve=>setTimeout(resolve,450))]).then(()=>{
+        if(token!==endRevealToken)return;
+        requestAnimationFrame(()=>requestAnimationFrame(()=>end.classList.add('v651EndVisible')));
+      });
+    },0);
+    return r;
+  };
+
+  const versionEl=document.querySelector('.titleVersion');
+  if(versionEl)versionEl.textContent='Ver. 6.51';
+})();
+</script>
+
 </body></html>
