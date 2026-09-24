@@ -3797,4 +3797,45 @@ window.addEventListener('load',()=>{
 })();
 </script>
 
+<script>
+/* === Ver.6.57: first-loop endings must not narrate a second visit before loop 2 begins === */
+(function(){
+  const endingBadV657=endingBad;
+  endingBad=function(type){
+    const r=endingBadV657.apply(this,arguments);
+    if(S.loop!==1)return r;
+    const body=document.getElementById('endBody');
+    if(!body)return r;
+
+    if(type==='distance'){
+      body.innerHTML=`
+        <div class="endGallery storyGallery">
+          <img class="wide" src="${IMG.venue}">
+          <img src="${IMG.karen}">
+          <img src="${IMG.yukina}">
+        </div>
+        <div class="endChapter">イベント終盤 ― ちゅどーむ会場</div>
+        <div class="endText">今日は会話の距離感を何度か間違えた。撮影を断られることもあった。<br><br>それでも、相手が「今日は大丈夫です」と言ったあとに追い続けることはしなかった。</div>
+        <div class="endChapter">少しだけ遠い距離</div>
+        <div class="endText">会場を回るうち、挨拶には返事があるものの、会話は少しずつ短くなっていった。撮影をお願いしても「今日はちょっと……」と、やんわり断られることが増えていく。</div>
+        <div class="endImpact">大きなトラブルにはならなかった。<br>でも、今日つくった違和感は、少しだけ距離として残った。</div>
+        <div class="endText"><b>嫌われたと決まったわけではない。好かれたわけでもない。<br>マボは次に会う時こそ、相手のペースをもっと見ることにした。</b></div>`;
+    }else if(type==='camera'){
+      body.innerHTML=body.innerHTML
+        .replace('次のちゅどーむ ― 孤立','翌週 ― 広がった悪評')
+        .replace('いつもの撮影エリアへ行く。黒田は目を合わせない。田中は会釈だけして離れた。リョウとヒデの会話に入ろうとすると、自然に輪が閉じる。<br><br>撮影場所の情報も、混雑の話も、誰も教えてくれない。レイヤーに声を掛ける以前に、カメラマン同士の居場所を失っていた。','イベント後も、黒田たちのグループではマボの名前が出続けた。田中は返事を濁し、リョウとヒデも次第に会話へ加わらなくなった。<br><br>次のイベントへ行く前から、撮影場所の情報も混雑の話も届かなくなった。マボは、カメラマン同士のつながりを失っていた。');
+    }else if(type!=='warning'){
+      body.innerHTML=body.innerHTML
+        .replace('次のイベント。声を掛けようとすると、レイヤー同士が一瞬だけ目配せする。','イベント終盤。別の場所で声を掛けようとすると、レイヤー同士が一瞬だけ目配せする。')
+        .replace('最後の日','閉場前')
+        .replace('マボは静かに、界隈の外へ押し出されていった。','マボはその日、誰とも目を合わせないまま会場をあとにした。');
+    }
+    return r;
+  };
+
+  const versionEl=document.querySelector('.titleVersion');
+  if(versionEl)versionEl.textContent='Ver. 6.57';
+})();
+</script>
+
 </body></html>
