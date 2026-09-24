@@ -4074,4 +4074,77 @@ window.addEventListener('load',()=>{
 })();
 </script>
 
+<script>
+/* === Ver.6.60: camera-group bad reputation lock and loop-2 carryover === */
+(function(){
+  function cameraBadV660(){
+    return !!(S.camHostile||Number(S.camRep||0)<=-3||
+      (S.camMet&&S.camMet.has('hostile'))||
+      (Number(S.rivalFlags||0)>=2&&Number(S.camRep||0)<0));
+  }
+  function cameraClosedVisitV660(){
+    const hostile=cameraBadV660();
+    theme('rival');
+    if(hostile){
+      story('rivals','カメコたち','黒田たちはマボに気づいたが、さっきまでの会話を止めた。<br>田中も一度こちらを見ただけで、すぐに視線を戻す。<br><span class="thought">（もう会話へ入り直せる空気ではない。この周回で関係を戻そうとするほど、さらに悪くなる。）</span>',[
+        ['会釈だけして離れる',()=>{S.backedOff++;show('map')}],
+        ['何も言わず離れる',()=>show('map')]
+      ],IMG.kuroda);
+      return;
+    }
+    story('rivals','カメコたち','田中が軽く会釈した。黒田たちは、もうそれぞれの撮影へ戻るところだ。<br><span class="thought">（さっきの会話は終わっている。何度も同じ話へ入り直す場面じゃない。）</span>',[
+      ['「では、また」と離れる',()=>show('map')],
+      ['会釈だけして離れる',()=>show('map')]
+    ],S.camRep>=1?IMG.tanaka:IMG.ryoji);
+  }
+
+  /* 同一周回では、カメコルート完了後に通常会話を再開させない。 */
+  const visitV660=visit;
+  visit=function(p){
+    if(p==='rivals'&&S.v4RivalsComplete)return cameraClosedVisitV660();
+    return visitV660.apply(this,arguments);
+  };
+
+  /* 1周目の悪評を引き継いだ2周目専用会話。回復は最大一段階だけ。 */
+  const cameraEncounterLoop2V660=cameraEncounterLoop2;
+  cameraEncounterLoop2=function(){
+    if(S.priorCameraRelationV650!=='conflict')return cameraEncounterLoop2V660.apply(this,arguments);
+    theme('rival');
+    story('rivals','黒田','「……また来たんだ」<br>黒田がこちらを見ると、田中たちの会話も止まった。<br>前回の悪評は、その場限りでは終わっていない。<br><span class="thought">（普通の機材話へ戻れる状態じゃない。今日は関係を直すとしても、一段階だけだ。）</span>',[
+      ['「前回は自分の言い方が悪かったです」と短く謝る',()=>{
+        S.camRep=Math.min(-1,Number(S.camRep||0)+1);S.backedOff++;S.cameraRepairV660='partial';
+        story('rivals','田中','「……分かりました。謝る気があるなら、それは聞きます」<br>黒田は何も言わない。空気はまだ固いままだ。<br><span class="thought">（許されたわけでも、普通に戻ったわけでもない。ただ、悪評が一段階だけ薄くなった。）</span>',[
+          ['それ以上話さず離れる',()=>v4CompleteRivals()]
+        ],IMG.tanaka);
+      }],
+      ['会釈だけして距離を置く',()=>{
+        S.backedOff++;
+        story('rivals','カメコたち','田中だけが小さく会釈を返した。黒田たちは会話を再開する。<br><span class="thought">（悪評は残ったまま。ただ、今日はこれ以上悪くしなかった。）</span>',[
+          ['その場を離れる',()=>v4CompleteRivals()]
+        ],IMG.kuroda);
+      }],
+      ['黒田ではなく田中にだけ事情を説明する',()=>{
+        S.camRep=Math.min(-1,Number(S.camRep||0)+1);S.cameraRepairV660='partial';
+        story('rivals','田中','「事情は分かりました。でも、黒田さんたちがどう受け取るかは別なので」<br>田中はそこで話を切った。<br><span class="thought">（説明は届いた。でも、田中一人に話して悪評が全部消えるわけじゃない。）</span>',[
+          ['礼を言って離れる',()=>v4CompleteRivals()]
+        ],IMG.tanaka);
+      }],
+      ['「まだ根に持ってるんですか」と笑う',()=>{
+        S.camRep-=3;S.rivalFlags++;S.camHostile=true;
+        story('rivals','黒田','「そういうところだよ」<br>黒田はそれだけ言うと、完全に背を向けた。田中も取りなそうとはしない。<br><span class="thought">（悪評を、自分でもう一度証明してしまった。）</span>',[
+          ['何も言えず離れる',()=>v4CompleteRivals()]
+        ],IMG.kuroda);
+      }],
+      ['前回の件を蒸し返して言い返す',()=>{
+        S.camRep-=5;S.rivalFlags+=2;S.camHostile=true;endingBad('camera');
+      }]
+    ],IMG.kuroda);
+  };
+
+  window.__CHUDOME_V660__={cameraBad:cameraBadV660};
+  const versionEl=document.querySelector('.titleVersion');
+  if(versionEl)versionEl.textContent='Ver. 6.60';
+})();
+</script>
+
 </body></html>
