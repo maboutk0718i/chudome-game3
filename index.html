@@ -3489,4 +3489,85 @@ window.addEventListener('load',()=>{
 })();
 </script>
 
+<script>
+/* === Ver.6.53: BAD END表示・みく休憩再訪・カメコ選択肢の整合性修正 === */
+(function(){
+  /*
+   * みくの休憩終了後にマップへ戻っても、休憩中の導入へ巻き戻さない。
+   * restReadyV650 はその周回中ずっと「休憩終了済み」を表す。
+   */
+  function mikuReadyRevisitV653(){
+    story('rest','みく','休憩を終えたみくが、撮影場所の様子を確認している。<br>「今なら大丈夫です。撮影しますか？」<br><span class="thought">（もう休憩中ではない。今度は急かさず、撮影するかどうかを決めよう。）</span>',[
+      ['撮りたい雰囲気を確認してから始める',()=>{S.trust++;S.bond.rest=(S.bond.rest||0)+1;startShoot('rest')}],
+      ['撮影を始める',()=>startShoot('rest')],
+      ['今回は撮影せず離れる',()=>show('map')]
+    ]);
+  }
+  function shouldResumeMikuV653(p){
+    return p==='rest'&&S.restReadyV650&&!S.shotDone.has('rest')&&!S.refused.has('rest');
+  }
+  const visitV653=visit;
+  visit=function(p){
+    if(shouldResumeMikuV653(p))return mikuReadyRevisitV653();
+    return visitV653.apply(this,arguments);
+  };
+  const visitLoop2V653=visitLoop2;
+  visitLoop2=function(p){
+    if(shouldResumeMikuV653(p))return mikuReadyRevisitV653();
+    return visitLoop2V653.apply(this,arguments);
+  };
+
+  /* 曖昧な「囲み」を、実際に何をする悪手なのか分かる表現へ変更。 */
+  camEncounter2=function(){
+    const lead=S.camRep>=2?'田中が少し嬉しそうにスマホを見せてきた。':'黒田がレンズを拭きながらこちらを見る。';
+    story('rivals','カメコたち',lead+'<br>「このあと東側、光いいらしいですよ」<br>リョウが続ける。「一緒に回ります？」<br><span class="thought">（付き合い方ひとつで、味方にも面倒な相手にもなりそうだ。）</span>',[
+      ['礼を言って撮影情報だけ聞く',()=>{S.camRep+=2;S.rep++;cameraResult()}],
+      ['おすすめのレイヤーを聞く',()=>{S.camRep+=1;cameraResult()}],
+      ['一緒に回るが、レイヤーへの声掛けは自分で確認する',()=>{S.camRep+=2;S.trust++;cameraResult()}],
+      ['「空いてる撮影場所、先に押さえに行きましょう」と煽る',()=>{
+        S.camRep-=1;S.unease+=2;S.rivalFlags++;
+        story('rivals','カメコたち','「場所を占領するみたいなのは、ちょっと……」<br>田中の笑顔が消え、リョウも返事を濁した。<br><span class="thought">（撮影場所は取り合うものじゃない。自分から面倒なカメコに寄ってどうする。）</span>',[
+          ['話を切り上げて離れる',()=>cameraResult()]
+        ],IMG.kuroda);
+      }],
+      ['「お前らと一緒にされたくない」と断る',()=>{S.camHostile=true;S.camRep=Math.min(-4,S.camRep-4);S.rivalFlags+=2;cameraResult()}]
+    ],S.camRep>=2?IMG.tanaka:IMG.kuroda);
+  };
+
+  /*
+   * 旧フェード処理は show('end') の active 付与より先に判定して終了する場合があった。
+   * active になるまでフレーム単位で待ち、画像待ち＋最終フォールバックで必ず表示する。
+   */
+  const showV653=show;
+  let endTokenV653=0;
+  show=function(id){
+    const token=++endTokenV653;
+    const r=showV653.apply(this,arguments);
+    if(id!=='end')return r;
+    const end=document.getElementById('end');
+    let frames=0;
+    const waitForActive=()=>{
+      if(token!==endTokenV653||!end)return;
+      if(!end.classList.contains('active')&&frames++<45){requestAnimationFrame(waitForActive);return;}
+      const imgs=[...end.querySelectorAll('img')];
+      const loaded=Promise.all(imgs.map(im=>im.complete?Promise.resolve():new Promise(resolve=>{
+        im.addEventListener('load',resolve,{once:true});
+        im.addEventListener('error',resolve,{once:true});
+      })));
+      Promise.race([loaded,new Promise(resolve=>setTimeout(resolve,500))]).then(()=>{
+        if(token===endTokenV653&&end.classList.contains('active'))requestAnimationFrame(()=>end.classList.add('v651EndVisible'));
+      });
+    };
+    requestAnimationFrame(waitForActive);
+    setTimeout(()=>{
+      if(token===endTokenV653&&end&&end.classList.contains('active'))end.classList.add('v651EndVisible');
+    },1200);
+    return r;
+  };
+
+  const versionEl=document.querySelector('.titleVersion');
+  if(versionEl)versionEl.textContent='Ver. 6.53';
+})();
+</script>
+
 </body></html>
