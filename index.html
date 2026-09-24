@@ -1058,7 +1058,7 @@ function loop2FirstMeet(p){
  if(p==='indoor'){
   story(p,'マボ',intro,[
    ['「暗めの雰囲気で撮りたい」と提案する',()=>{S.trust++;S.bond.indoor++;other('indoor',true)}],
-   ['衣装の一部を指して「そこ触って直していい？」と聞く',()=>layerTrap('indoor')],
+   ['衣装の一部を指して「そこ触って直していい？」と聞く',()=>rioTouchNgV656()],
    [LAYER_AMBIGUOUS.indoor.label,()=>ambiguousLayerChoice('indoor',true)],
    ['衣装の質感について聞く',()=>rioTextureTalk()],
    ['マップへ戻る',()=>show('map')]
@@ -1215,7 +1215,7 @@ function visit(p){
  if(S.shotDone.has(p)){postShootVisit(p);return}
  if(S.refused.has(p)){story(p,P.name,P.intro+'<br><span class="thought">（この人には一度撮影を断られている。今日はもう撮影をお願いしない。）</span>',[['挨拶だけする',()=>{S.rep++;show('map')}],['静かにその場を離れる',()=>show('map')],['マップへ戻る',()=>show('map')]]);return}
  if(p==='outdoor'){story(p,'マボ',P.intro+'<br><span class="thought">（いきなりカメラを向けるのは違う。まず、どう入る……？）</span>',[[LAYER_AMBIGUOUS.outdoor.label,()=>ambiguousLayerChoice('outdoor')],['脳内で声かけを3回リハーサルする',()=>yukinaRehearsal()],['撮影できるタイミングか確認する',()=>{S.trust++;talk(p)}],['雪奈に短く挨拶する',()=>talk(p)],['マップへ戻る',()=>show('map')]]);return}
- if(p==='indoor'){story(p,'マボ',P.intro+'<br><span class="thought">（黒衣装と壁の陰影が合いそうだ。……でも知ったかぶりは一発でバレる。作品の話を聞くか、俺の撮りたい絵を短く伝えるか。）</span>',[[LAYER_AMBIGUOUS.indoor.label,()=>ambiguousLayerChoice('indoor')],['衣装の一部を指して「そこ触って直していい？」と聞く',()=>layerTrap('indoor')],['「暗めの雰囲気で撮りたい」と提案する',()=>{S.trust++;S.bond.indoor++;other('indoor',true)}],['衣装の質感について聞く',()=>rioTextureTalk()],['マップへ戻る',()=>show('map')]]);return}
+ if(p==='indoor'){story(p,'マボ',P.intro+'<br><span class="thought">（黒衣装と壁の陰影が合いそうだ。……でも知ったかぶりは一発でバレる。作品の話を聞くか、俺の撮りたい絵を短く伝えるか。）</span>',[[LAYER_AMBIGUOUS.indoor.label,()=>ambiguousLayerChoice('indoor')],['衣装の一部を指して「そこ触って直していい？」と聞く',()=>rioTouchNgV656()],['「暗めの雰囲気で撮りたい」と提案する',()=>{S.trust++;S.bond.indoor++;other('indoor',true)}],['衣装の質感について聞く',()=>rioTextureTalk()],['マップへ戻る',()=>show('map')]]);return}
  if(p==='rest'){story(p,'マボ',P.intro+'<br><span class="thought">（休憩中だ。ここで撮影を急かしたら、写真以前の問題になる。……でも声だけ掛けて存在を覚えてもらいたい欲もある。欲、引っ込め。）</span>',[[LAYER_AMBIGUOUS.rest.label,()=>ambiguousLayerChoice('rest')],['「休憩してる自然な感じも一枚いい？」と頼む',()=>layerTrap('rest')],['休憩が終わるまで離れて待つ',()=>{S.trust+=2;S.bond.rest+=2;observe('rest')}],['「休憩後で大丈夫です」とだけ伝える',()=>{S.trust++;S.bond.rest++;other('rest',true)}],['マップへ戻る',()=>show('map')]]);return}
  if(p==='east'){story(p,'マボ',P.intro+'<br><span class="thought">（背景と光を見ている。カレンは作品としての完成度を気にしてそうだ。どこまで任せて、どこから自分の意図を出すか……。）</span>',[['「カレンさんのやりやすい感じでお願いします」と任せる',()=>layerTrap('east')],[LAYER_AMBIGUOUS.east.label,()=>ambiguousLayerChoice('east')],['カレンの希望する構図を聞く',()=>{S.trust+=2;S.bond.east+=2;other('east',true)}],['「この背景を活かして撮りたい」と話す',()=>{S.trust+=2;S.bond.east+=2;other('east',true)}],['マップへ戻る',()=>show('map')]]);return}
  story(p,'マボ',P.intro+'<br><span class="thought">（友達待ちなら長話はできない。短時間で済むことを先に伝える。……「せっかく来たんだから」は俺の都合。飲み込め。）</span>',[['まず軽く挨拶して待ち時間を聞く',()=>{S.trust++;S.bond.entrance++;talk('entrance')}],[LAYER_AMBIGUOUS.entrance.label,()=>ambiguousLayerChoice('entrance')],['「友達が来てもあと5分だけ」と先に頼む',()=>layerTrap('entrance')],['「友達が来るまで2〜3分だけ」と確認する',()=>{S.trust+=2;S.bond.entrance+=2;other('entrance',true)}],['マップへ戻る',()=>show('map')]])
@@ -3593,7 +3593,12 @@ window.addEventListener('load',()=>{
     story('rest','みく','「今日は、休憩前より少し落ち着いた感じで撮ってほしいです。表情も、作り込みすぎない自然な感じで」<br><span class="thought">（休憩中を勝手に撮るのとは違う。今は本人から希望を聞いた。その雰囲気を写真にしよう。）</span>',[
       ['「落ち着いた自然な感じですね」と確認して撮影する',()=>{S.trust++;S.bond.rest=(S.bond.rest||0)+1;startShoot('rest')}],
       ['立ち位置と背景も相談してから撮影する',()=>{S.trust+=2;S.bond.rest=(S.bond.rest||0)+2;story('rest','みく','「この辺なら人も少ないし、背景もすっきりしそうです」<br>みくと立ち位置を確認した。<br><span class="thought">（一方的に決めるんじゃない。一緒に一枚を作る。）</span>',[['撮影を始める',()=>startShoot('rest')]])}],
-      ['希望を聞いたうえで、今回は撮影せず離れる',()=>show('map')]
+      ['「休憩中ずっと見てたので、さっきの表情も飲み方も覚えてます。そのまま再現してください」と言う',()=>{
+        S.creep+=2;S.unease+=3;S.bond.rest=Math.max(-5,(S.bond.rest||0)-3);refuse('rest');
+        story('rest','みく','「……休憩中、ずっと見てたんですか？」<br>みくは飲み物をバッグにしまい、明らかに距離を取った。<br>「すみません。やっぱり撮影はやめておきます」<br><span class="thought">（“自然な表情を撮りたい”が、“休憩中ずっと観察していた”という告白になった。）</span>',[
+          ['「すみません」と謝って離れる',()=>{S.backedOff++;show('map')}]
+        ]);
+      }]
     ]);
   }
 
@@ -3697,6 +3702,98 @@ window.addEventListener('load',()=>{
 
   const versionEl=document.querySelector('.titleVersion');
   if(versionEl)versionEl.textContent='Ver. 6.54';
+})();
+</script>
+
+<style>
+/* Ver.6.55: reserve the final poster area before the BAD/GOOD ending art is decoded. */
+#postend .posterFrame{width:100%;height:100%;min-height:0}
+#postend .posterArt{
+  flex:1 1 auto!important;
+  width:100%!important;
+  height:calc(100dvh - 92px - env(safe-area-inset-bottom))!important;
+  max-width:920px!important;
+  max-height:calc(100dvh - 92px - env(safe-area-inset-bottom))!important;
+  min-width:0!important;
+  min-height:0!important;
+  object-fit:contain!important;
+  transform:none!important;
+  transition:none!important;
+}
+</style>
+
+<script>
+/* === Ver.6.55: ending poster waits for decode and never grows from intrinsic size === */
+(function(){
+  let posterTokenV655=0;
+  showEndPoster=function(){
+    const token=++posterTokenV655;
+    const places=['outdoor','indoor','rest','east','entrance'];
+    const ng=[...(S.refused||[])].filter(p=>places.includes(p)&&!(S.shotDone&&S.shotDone.has(p))).length;
+    if(ng>0&&endPosterMode!=='bad')endPosterMode='continue';
+    const mode=['bad','good','continue','god'].includes(endPosterMode)?endPosterMode:'good';
+    const ps=document.getElementById('posterScene');
+    const img=document.getElementById('posterImg');
+    if(!ps||!img)return;
+
+    ps.className='posterScene '+mode;
+    ps.classList.remove('posterVisible','posterLeaving');
+    img.alt=mode==='bad'?'BAD END アート':mode==='continue'?'CONTINUE END アート':mode==='god'?'GOD END アート':'HAPPY END アート';
+
+    /* Show only the already-sized black stage while the bitmap is decoded. */
+    show('postend');
+    window.scrollTo({top:0,behavior:'auto'});
+    const src=EXTRA_ENDING_ART[mode]||EXTRA_ENDING_ART.good;
+    if(img.getAttribute('src')!==src)img.src=src;
+
+    const decoded=()=>{
+      if(img.complete&&img.naturalWidth){
+        return typeof img.decode==='function'?img.decode().catch(()=>{}):Promise.resolve();
+      }
+      return new Promise(resolve=>{
+        img.addEventListener('load',resolve,{once:true});
+        img.addEventListener('error',resolve,{once:true});
+      });
+    };
+    Promise.race([decoded(),new Promise(resolve=>setTimeout(resolve,1800))]).then(()=>{
+      if(token!==posterTokenV655)return;
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        if(token===posterTokenV655)ps.classList.add('posterVisible');
+      }));
+    });
+  };
+
+  const versionEl=document.querySelector('.titleVersion');
+  if(versionEl)versionEl.textContent='Ver. 6.55';
+})();
+</script>
+
+<script>
+/* === Ver.6.56: boundary-crossing choices now cause an irreversible shooting refusal === */
+(function(){
+  window.rioTouchNgV656=function(){
+    S.unease+=3;S.creep++;S.bond.indoor=Math.max(-5,(S.bond.indoor||0)-3);
+    refuse('indoor');
+    story('indoor','りお','「触らないでください。衣装は自分で直します」<br>りおは衣装を押さえながら一歩下がった。<br>「すみません。撮影も今回は大丈夫です」<br><span class="thought">（許可を取れば触っていい、ではない。撮影を頼む前から距離感を間違えた。）</span>',[
+      ['「すみません」と謝って離れる',()=>{S.backedOff++;show('map')}],
+      ['「直した方が写りがよくなるので」と説明を続ける',()=>{
+        S.unease+=2;S.rude++;S.bond.indoor=Math.max(-5,(S.bond.indoor||0)-1);
+        story('indoor','りお','「そういう問題じゃないです。触られたくないので」<br>りおの返事は短く、撮影を受ける空気は完全になくなった。<br><span class="thought">（写真の出来を理由にすれば、境界を越えていいわけじゃない。）</span>',[
+          ['もう何も言わず離れる',()=>{S.backedOff++;show('map')}]
+        ]);
+      }],
+      ['「少しくらいいいでしょ」と食い下がる',()=>{
+        S.unease+=3;S.creep+=2;S.rude++;
+        recordWarningIncident('indoor','衣装への接触を拒否された後も触ろうと迫る');
+        story('indoor','りお','「やめてください。スタッフ呼びますよ」<br>近くにいた人たちが一斉にこちらを見た。<br><span class="thought">（撮影どころじゃない。拒否されたあとも迫った時点で、完全に越えた。）</span>',[
+          ['その場を離れる',()=>endingBad('warning')]
+        ]);
+      }]
+    ]);
+  };
+
+  const versionEl=document.querySelector('.titleVersion');
+  if(versionEl)versionEl.textContent='Ver. 6.56';
 })();
 </script>
 
