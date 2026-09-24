@@ -3838,4 +3838,117 @@ window.addEventListener('load',()=>{
 })();
 </script>
 
+<script>
+/* === Ver.6.58: NG-priority endings, history-aware loop-2 dialogue, expanded Nebata choices === */
+(function(){
+  const LAYERS_V658=['outdoor','indoor','rest','east','entrance'];
+  function currentStatsV658(){
+    const done=LAYERS_V658.filter(p=>S.shotDone&&S.shotDone.has(p)).length;
+    const ng=LAYERS_V658.filter(p=>S.refused&&S.refused.has(p)&&!(S.shotDone&&S.shotDone.has(p))).length;
+    return {done,ng};
+  }
+  function severeBadV658(){
+    return !!((S.warningIncidents||[]).length||(S.pressureLog||[]).length||
+      (S.camHostile&&Number(S.camRep||0)<=-5)||Number(S.creep||0)+Number(S.rude||0)>=4);
+  }
+  function manyNgEndingV658(loop2){
+    const q=currentStatsV658();
+    S._badCarrySeverity=Math.max(1,Number(S._badCarrySeverity||0));
+    S._badCarryType='many-ng';S._badCarryDomain='layer';S.badResultKindV648='distance';
+    setEndPosterMode('bad');theme('bad');show('end');
+    document.getElementById('ending').className='endScene bad';
+    document.getElementById('endTitle').textContent=q.done===1?'BAD END　撮れたのは一人だけ':'BAD END　撮影NGが広がる';
+    document.getElementById('endBody').innerHTML=`
+      <div class="endGallery storyGallery"><img class="wide" src="${IMG.venue}"><img src="${IMG.yukina}"><img src="${IMG.karen}"></div>
+      <div class="endChapter">${loop2?'二度目のちゅどーむ ― 閉場前':'イベント終盤 ― ちゅどーむ会場'}</div>
+      <div class="endText">撮影できたのは${q.done}人。撮影を断られた相手は${q.ng}人だった。<br><br>一枚の写真が残っていても、何人もの相手がカメラの前に立ちたくないと判断した事実は消えない。</div>
+      <div class="endImpact">写真の点数だけでは、撮影する人としての評価は取り戻せなかった。</div>
+      <div class="endText">会場を出るころには、マボが声を掛けるより先に距離を取る人もいた。<br><br><b>撮影済 ${q.done}人 ／ 撮影NG ${q.ng}人<br>レイヤー評判：${typeof layerRepName==='function'?layerRepName():'要警戒カメコ'}</b></div>`;
+  }
+
+  /* Major incidents first, then refusal count, then the existing photo/score endings. */
+  const finishDayEndingV658=finishDayEnding;
+  finishDayEnding=function(){
+    if(S.loop!==1)return finishDayEndingV658.apply(this,arguments);
+    const q=currentStatsV658();
+    if(severeBadV658())return finishDayEndingV658.apply(this,arguments);
+    if(q.ng>=3)return manyNgEndingV658(false);
+    if(q.ng===2)return endingBad('distance');
+    return finishDayEndingV658.apply(this,arguments);
+  };
+  const secondLoopEndingV658=secondLoopEnding;
+  secondLoopEnding=function(){
+    const q=currentStatsV658();
+    if(severeBadV658())return secondLoopEndingV658.apply(this,arguments);
+    if(q.ng>=3)return manyNgEndingV658(true);
+    if(q.ng===2)return secondLoopBadEnding('distance');
+    return secondLoopEndingV658.apply(this,arguments);
+  };
+
+  /* The cautious conversation now reflects what actually happened with that person in loop 1. */
+  loop2WaryVisit=function(p){
+    const P=people[p];
+    const shot=!!(S.priorShot&&S.priorShot.has(p));
+    const refused=!!(S.priorRefused&&S.priorRefused.has(p));
+    const score=Number(S.priorPhotoScores?.[p]||0);
+    let intro,thought,safeLabel,safeReply,pressureLabel;
+    if(shot){
+      intro='「……前回の撮影とは別に、少し話を聞いてます」<br>'+P.name+'の返事は丁寧だが、警戒が混じっている。';
+      thought='（前回は撮影できた。今の警戒は、本人との撮影とは別の場所から届いた評判だ。）';
+      safeLabel='「前回は撮影ありがとうございました。今日はお願いせず離れます」';
+      safeReply=score>=80
+        ?'「……写真はありがとうございました。でも、今日は撮影の話はなしでお願いします」'
+        :score>0
+          ?'「前回はありがとうございました。今日はもう大丈夫です」'
+          :'「分かりました。今日はそれでお願いします」';
+      pressureLabel='「前回も撮らせてもらったので、今回も一枚だけ」と頼む';
+    }else if(refused){
+      intro=(typeof LOOP2_WARY!=='undefined'&&LOOP2_WARY[p])?LOOP2_WARY[p]:'「前回のこと、覚えています」<br>'+P.name+'ははっきり距離を取った。';
+      thought='（前回、この人から撮影を断られている。謝罪は撮影許可を取り直すための道具じゃない。）';
+      safeLabel='「前回はすみませんでした」と短く謝って離れる';
+      safeReply='「……はい。今日はもう声を掛けないでもらえると助かります」';
+      pressureLabel='「今回は大丈夫なので、一枚だけ」と頼む';
+    }else{
+      intro='「ほかの方から、少し話を聞いています」<br>'+P.name+'は初対面の距離を保ったまま、こちらを警戒している。';
+      thought='（この人とは前回会っていない。知り合いのように謝るのも、説明を迫るのも違う。）';
+      safeLabel='初対面なので、撮影は頼まず一礼して離れる';
+      safeReply='「……はい」<br>'+P.name+'は短く会釈した。';
+      pressureLabel='「噂だけで決めず、一枚だけ」と頼む';
+    }
+    story(p,P.name,intro+'<br><span class="thought">'+thought+'</span>',[
+      [safeLabel,()=>{S.backedOff++;S.unease++;refuse(p);story(p,P.name,safeReply+'<br><span class="thought">（ここで撮影へつなげようとしない。それが今できる最低限だ。）</span>',[['何も足さず離れる',()=>show('map')]])}],
+      ['今日は撮影を頼まず、挨拶だけする',()=>{S.backedOff++;S.unease++;refuse(p);story(p,P.name,'「……こんにちは。今日はこれで失礼します」<br>'+P.name+'は会話が終わるのを待っている。',[['そのまま離れる',()=>show('map')]])}],
+      [pressureLabel,()=>{S.unease+=3;refuse(p);story(p,P.name,'「前回どうだったかや、噂が正しいかとは別に、今日は撮影しません」<br><span class="thought">（撮影しないという答えに、反論の余地を探すな。）</span>',[['すぐ引く',()=>{S.backedOff++;show('map')}],['もう一度だけ頼む',()=>{recordWarningIncident(p,'2周目の明確な拒否後も再依頼');endingBad('warning')} ]])}],
+      ['何も言わずマップへ戻る',()=>show('map')]
+    ]);
+  };
+
+  /* Add a fifth meaningful choice to both stages of the Nebata interruption. */
+  const storyV658=story;
+  story=function(p,sp,text,choices,img){
+    if(p==='east'&&sp==='粘田'&&Array.isArray(choices)&&choices.length===4){
+      if(typeof text==='string'&&text.includes('その立ち方じゃ盛れない')){
+        const neutralAdvance=choices[2][1];
+        choices=[...choices,['カレンに「粘田さんとは知り合いですか？」と確認する',()=>{
+          S.trust++;S.bond.east=(S.bond.east||0)+1;
+          storyV658('east','カレン','「知り合いというほどではないです。何度か勝手に入ってこられてるだけです」<br>カレンは粘田ではなく、こちらへ向けて答えた。<br><span class="thought">（関係を決めつけず、本人に確認した。少なくとも粘田側の話だけで進めずに済んだ。）</span>',[
+            ['粘田の次の言葉を待つ',()=>{S.unease=Math.max(0,S.unease-1);neutralAdvance()}]
+          ],img);
+        }]];
+      }else if(typeof text==='string'&&text.includes('一番かわいく見える角度')){
+        const firmStop=choices[0][1];
+        choices=[...choices,['「撮影の邪魔ですよ。いったん離れてください」と強く言う',()=>{
+          S.camRep-=2;S.rivalFlags++;S.trust++;S.bond.east=(S.bond.east||0)+1;
+          firmStop();
+        }]];
+      }
+    }
+    return storyV658(p,sp,text,choices,img);
+  };
+
+  const versionEl=document.querySelector('.titleVersion');
+  if(versionEl)versionEl.textContent='Ver. 6.58';
+})();
+</script>
+
 </body></html>
