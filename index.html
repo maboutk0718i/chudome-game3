@@ -3951,4 +3951,127 @@ window.addEventListener('load',()=>{
 })();
 </script>
 
+<script>
+/* === Ver.6.59: final state/history consistency controller === */
+(function(){
+  const LAYERS_V659=['outdoor','indoor','rest','east','entrance'];
+  function historyV659(p){
+    if(S.priorShot&&S.priorShot.has(p))return 'shot';
+    if(S.priorRefused&&S.priorRefused.has(p))return 'refused';
+    if(S.priorMet&&S.priorMet.has(p))return 'met';
+    return 'unmet';
+  }
+  function statsV659(){
+    const done=LAYERS_V659.filter(p=>S.shotDone&&S.shotDone.has(p)).length;
+    const ng=LAYERS_V659.filter(p=>S.refused&&S.refused.has(p)&&!(S.shotDone&&S.shotDone.has(p))).length;
+    return {done,ng};
+  }
+  function outcomeV659({done=0,ng=0,severe=false}={}){
+    if(severe)return 'major_bad';
+    if(ng>=3)return 'many_ng';
+    if(ng===2)return 'distance_bad';
+    if(done===0)return 'no_photo';
+    return 'photo_result';
+  }
+
+  /* NG数と最終評価の食い違いを防ぐ。写真点が高くても拒否人数を無視しない。 */
+  const v2ResultV659=v2Result;
+  v2Result=function(){
+    let r={...v2ResultV659.apply(this,arguments)};
+    const q=statsV659();
+    if(q.ng>=3){
+      r.comm=Math.min(r.comm,44);r.dist=Math.min(r.dist,44);r.total=Math.min(r.total,54);
+      r.grade=r.total>=45?'D':'E';
+    }else if(q.ng===2){
+      r.comm=Math.min(r.comm,59);r.dist=Math.min(r.dist,59);r.total=Math.min(r.total,69);
+      r.grade=r.total>=60?'C':r.total>=45?'D':'E';
+    }else if(q.ng===1&&(r.grade==='S'||r.grade==='A')){
+      r.total=Math.min(r.total,79);r.grade='B';
+    }
+    return r;
+  };
+
+  /* 前回の個人履歴と合わない「謝罪」「写真を褒める」を最終表示直前で除去する。 */
+  const loop2RepGreetingV659=loop2RepGreeting;
+  loop2RepGreeting=function(p){
+    let line=loop2RepGreetingV659.apply(this,arguments);
+    if(typeof line!=='string')return line;
+    const h=historyV659(p),score=Number(S.priorPhotoScores?.[p]||0);
+    if(h!=='shot'){
+      line=line
+        .replace(/前回の写真[^。<]*(?:でした|です)/g,'前回、会場で見かけました')
+        .replace(/この前の写真[^。<]*(?:でした|です)/g,'この前、会場で見かけました');
+    }else if(score>0&&score<80){
+      line=line
+        .replace(/前回の写真[^。<]*(?:よかった|好き|うれしかった)[^。<]*/g,'前回はありがとうございました')
+        .replace(/この前の写真[^。<]*(?:よかった|好き|嬉しかった)[^。<]*/g,'この前はありがとうございました');
+    }
+    return line;
+  };
+
+  const storyV659=story;
+  story=function(p,sp,text,choices,img){
+    let next=Array.isArray(choices)?choices.map(ch=>Array.isArray(ch)?[ch[0],ch[1]]:ch):choices;
+
+    /* みく：希望確認を選んだのに無言で撮影開始しない。 */
+    if(p==='rest'&&Array.isArray(next)&&S.restReadyV650&&!S.shotDone.has('rest')){
+      next=next.map(ch=>{
+        if(!Array.isArray(ch)||!/(今日撮りたい雰囲気|撮りたい雰囲気|今日の希望)を確認/.test(String(ch[0])))return ch;
+        return [ch[0],()=>{
+          S.trust++;S.bond.rest=(S.bond.rest||0)+1;
+          storyV659('rest','みく','「今日は、休憩前より少し落ち着いた感じで撮ってほしいです。表情も、作り込みすぎない自然な感じで」<br><span class="thought">（本人から希望を聞けた。聞いただけで終わらせず、その内容を撮影へ反映しよう。）</span>',[
+            ['「落ち着いた自然な感じですね」と確認して撮影する',()=>startShoot('rest')],
+            ['立ち位置と背景も相談してから撮影する',()=>{S.trust++;S.bond.rest=(S.bond.rest||0)+1;startShoot('rest')}],
+            ['希望を聞いたうえで、今日は撮影せず離れる',()=>{S.unease++;storyV659('rest','みく','「……撮らないんですね」<br>みくは少し戸惑いながら、友人の方へ戻った。<br><span class="thought">（撮影を始める前だから断ること自体はできる。でも、希望まで話してもらってから離れるのは不自然だった。）</span>',[['謝って離れる',()=>show('map')]])}]
+          ],img);
+        }];
+      });
+    }
+
+    /* 2周目の評判回復会話は、その本人との前回履歴に合わせる。 */
+    if(S.loop===2&&LAYERS_V659.includes(p)&&Array.isArray(next)&&typeof text==='string'&&text.includes('今日は撮影を通す場面ではない')){
+      const h=historyV659(p),P=people[p];
+      next=next.map((ch,i)=>{
+        if(i!==0||!Array.isArray(ch))return ch;
+        if(h==='shot')return ['「前回は撮影ありがとうございました。今日はお願いせず離れます」',()=>{
+          S.backedOff++;S.trust++;refuse(p);
+          storyV659(p,P.name,'「……写真は受け取りました。今日はそれでお願いします」<br><span class="thought">（前回撮影できたことを、今回の許可として使わない。礼だけ伝えて離れよう。）</span>',[['何も足さず離れる',()=>show('map')]],img);
+        }];
+        if(h==='refused')return ['「前回はすみませんでした」と短く謝って離れる',ch[1]];
+        if(h==='met')return ['前回の距離感を反省し、今日は撮影を頼まず離れる',ch[1]];
+        return ['初対面なので、撮影を頼まず一礼して離れる',()=>{
+          S.backedOff++;refuse(p);
+          storyV659(p,P.name,'「……はい」<br>'+P.name+'は短く会釈した。<br><span class="thought">（会っていない相手に「前回」を持ち出さず、ここで会話を終える。）</span>',[['そのまま離れる',()=>show('map')]],img);
+        }];
+      });
+    }
+    return storyV659(p,sp,text,next,img);
+  };
+
+  /* 1周目終了後のボタンは、物語上の行き先を明示する。 */
+  const v2FinalizeV659=v2Finalize;
+  v2Finalize=function(){
+    const r=v2FinalizeV659.apply(this,arguments),rb=document.getElementById('restart');
+    if(rb)rb.textContent=S.loop===1?'2周目へ進む':'タイトルへ戻る';
+    return r;
+  };
+
+  /* 開発時にも同じ判定表を確認できる純粋関数を公開。 */
+  window.__CHUDOME_V659__={history:historyV659,stats:statsV659,outcome:outcomeV659};
+  const matrix=[
+    [{done:1,ng:4,severe:false},'many_ng'],
+    [{done:2,ng:3,severe:false},'many_ng'],
+    [{done:3,ng:2,severe:false},'distance_bad'],
+    [{done:4,ng:1,severe:false},'photo_result'],
+    [{done:5,ng:0,severe:false},'photo_result'],
+    [{done:5,ng:0,severe:true},'major_bad'],
+    [{done:0,ng:0,severe:false},'no_photo']
+  ];
+  console.assert(matrix.every(([input,want])=>outcomeV659(input)===want),'Ver.6.59 ending matrix failed');
+
+  const versionEl=document.querySelector('.titleVersion');
+  if(versionEl)versionEl.textContent='Ver. 6.59';
+})();
+</script>
+
 </body></html>
