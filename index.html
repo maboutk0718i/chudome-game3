@@ -3570,4 +3570,134 @@ window.addEventListener('load',()=>{
 })();
 </script>
 
+<style>
+/* Ver.6.54: keep the ending at its final layout size and fade only after image decoding. */
+#end.v654EndStable.v651EndFade{
+  opacity:1!important;visibility:visible!important;transition:none!important;background:#000!important
+}
+#end.v654EndStable .endScene{
+  width:100%;opacity:0;visibility:hidden;transition:opacity 1.25s ease
+}
+#end.v654EndStable.v654EndVisible .endScene{opacity:1;visibility:visible}
+#end.v654EndStable .endGallery{width:100%}
+#end.v654EndStable .endGallery img{
+  display:block;min-width:0;transform:none!important;transition:none!important
+}
+@media (prefers-reduced-motion:reduce){#end.v654EndStable .endScene{transition-duration:.3s}}
+</style>
+
+<script>
+/* === Ver.6.54: 希望確認会話・安定したEND表示・カメコ会話拡張 === */
+(function(){
+  function mikuMoodTalkV654(){
+    story('rest','みく','「今日は、休憩前より少し落ち着いた感じで撮ってほしいです。表情も、作り込みすぎない自然な感じで」<br><span class="thought">（休憩中を勝手に撮るのとは違う。今は本人から希望を聞いた。その雰囲気を写真にしよう。）</span>',[
+      ['「落ち着いた自然な感じですね」と確認して撮影する',()=>{S.trust++;S.bond.rest=(S.bond.rest||0)+1;startShoot('rest')}],
+      ['立ち位置と背景も相談してから撮影する',()=>{S.trust+=2;S.bond.rest=(S.bond.rest||0)+2;story('rest','みく','「この辺なら人も少ないし、背景もすっきりしそうです」<br>みくと立ち位置を確認した。<br><span class="thought">（一方的に決めるんじゃない。一緒に一枚を作る。）</span>',[['撮影を始める',()=>startShoot('rest')]])}],
+      ['希望を聞いたうえで、今回は撮影せず離れる',()=>show('map')]
+    ]);
+  }
+
+  /* Ver.6.50/6.53双方の「雰囲気を確認する」を、会話を飛ばさない分岐へ統一。 */
+  const storyV654=story;
+  story=function(p,sp,text,choices,img){
+    if(p==='rest'&&Array.isArray(choices)){
+      choices=choices.map(ch=>{
+        if(!Array.isArray(ch)||typeof ch[0]!=='string'||!ch[0].includes('雰囲気を確認'))return ch;
+        return [ch[0],()=>mikuMoodTalkV654()];
+      });
+    }
+    return storyV654(p,sp,text,choices,img);
+  };
+
+  /* メインのカメコ会話を6択に戻し、場所取りを煽った後も3通りに分岐。 */
+  camEncounter2=function(){
+    const lead=S.camRep>=2?'田中が少し嬉しそうにスマホを見せてきた。':'黒田がレンズを拭きながらこちらを見る。';
+    story('rivals','カメコたち',lead+'<br>「このあと東側、光いいらしいですよ」<br>リョウが続ける。「一緒に回ります？」<br><span class="thought">（付き合い方ひとつで、味方にも面倒な相手にもなりそうだ。）</span>',[
+      ['礼を言って撮影情報だけ聞く',()=>{S.camRep+=2;S.rep++;cameraResult()}],
+      ['おすすめのレイヤーを聞く',()=>{S.camRep+=1;cameraResult()}],
+      ['一緒に回るが、レイヤーへの声掛けは自分で確認する',()=>{S.camRep+=2;S.trust++;cameraResult()}],
+      ['誘いには乗らず「自分は一人で回ります」と伝える',()=>{S.camRep++;story('rivals','田中','「了解です。またどこかで」<br>無理に群れず、角も立てずに会話を終えた。',[['会場マップへ戻る',()=>cameraResult()]],IMG.tanaka)}],
+      ['「空いてる撮影場所、先に押さえに行きましょう」と煽る',()=>{
+        S.unease+=2;S.rivalFlags++;
+        story('rivals','カメコたち','「場所を占領するみたいなのは、ちょっと……」<br>田中の笑顔が消え、リョウも返事を濁した。<br><span class="thought">（撮影場所は取り合うものじゃない。今の一言を、どう収める。）</span>',[
+          ['「冗談です。譲り合って使いましょう」と引く',()=>{S.backedOff++;S.camRep=Math.max(-8,S.camRep-1);cameraResult()}],
+          ['「空いてるなら早い者勝ちでしょ」と正当化する',()=>{S.camRep-=3;S.rivalFlags++;S.unease+=2;cameraResult()}],
+          ['返事をせず、一人で場所を取りに行く',()=>{S.camRep-=4;S.rivalFlags+=2;S.camHostile=true;cameraResult()}]
+        ],IMG.kuroda);
+      }],
+      ['「お前らと一緒にされたくない」と断る',()=>{S.camHostile=true;S.camRep=Math.min(-4,S.camRep-4);S.rivalFlags+=2;cameraResult()}]
+    ],S.camRep>=2?IMG.tanaka:IMG.kuroda);
+  };
+
+  /* 2周目も関係別に最低5択を用意する。 */
+  cameraEncounterLoop2=function(){
+    const seen=!!S.priorCameraSeenV650;
+    const rel=S.priorCameraRelationV650||'none';
+    if(!seen){
+      story('rivals','カメコたち','黒田、田中、リョウ、ヒデが機材の話をしている。田中がこちらに気づき、軽く会釈した。<br><span class="thought">（前回は接点がなかった。向こうにとっては、今日が初対面だ。）</span>',[
+        ['名乗って混雑状況を聞く',()=>{S.camRep+=2;S.camMet.add('friendly');camEncounter2()}],
+        ['使っているレンズについて聞く',()=>{S.camRep++;S.camMet.add('photos');camEncounter2()}],
+        ['撮影しやすい場所だけ聞く',()=>{S.camRep++;S.camMet.add('info');camEncounter2()}],
+        ['会釈だけして離れる',()=>v4CompleteRivals()],
+        ['初対面で機材を馬鹿にする',()=>{S.camRep-=3;S.rivalFlags++;S.camMet.add('hostile');cameraResult()}]
+      ],IMG.tanaka);return;
+    }
+    if(rel==='conflict'){
+      story('rivals','黒田','「……また来たんだ」<br>黒田がこちらを見る。田中たちも、前回より明らかに距離を取っている。<br><span class="thought">（前回の空気は残っている。ここで何を言うかだ。）</span>',[
+        ['前回の言い方を短く謝る',()=>{S.camRep+=2;S.backedOff++;cameraResult()}],
+        ['挨拶だけして距離を置く',()=>{S.camRep++;v4CompleteRivals()}],
+        ['今日の混雑情報だけ丁寧に聞く',()=>{S.camRep++;cameraResult()}],
+        ['「まだ根に持ってるんですか」と笑う',()=>{S.camRep-=3;S.rivalFlags++;cameraResult()}],
+        ['前回の続きを蒸し返して言い返す',()=>{S.camRep-=5;S.camHostile=true;S.rivalFlags+=2;endingBad('camera')}]
+      ],IMG.kuroda);return;
+    }
+    const good=rel==='good';
+    story('rivals','田中',good?'「マボさん、また来てたんですね。今日はどこ回ってます？」':'「どうも。今回も来てたんですね」',[
+      ['普通に挨拶して混雑情報を聞く',()=>{S.camRep+=2;camEncounter2()}],
+      ['前回教えてもらったことのお礼を言う',()=>{S.camRep+=2;S.rep++;camEncounter2()}],
+      ['今日撮った写真について意見を聞く',()=>{S.camRep++;camEncounter2()}],
+      ['会釈だけして一人で回る',()=>v4CompleteRivals()],
+      ['急に機材マウントを取る',()=>{S.camRep-=3;S.rivalFlags++;cameraResult()}]
+    ],good?IMG.tanaka:IMG.ryoji);
+  };
+
+  /* Safariでdisplay:none解除時に小さな画像を一度合成しないよう、最終レイアウトを先に作る。 */
+  const showV654=show;
+  let endTokenV654=0;
+  show=function(id){
+    const end=document.getElementById('end');
+    const token=++endTokenV654;
+    if(id==='end'&&end){
+      end.classList.add('v654EndStable');
+      end.classList.remove('v654EndVisible');
+    }
+    const r=showV654.apply(this,arguments);
+    if(id!=='end'||!end)return r;
+    let frames=0;
+    const prepare=()=>{
+      if(token!==endTokenV654)return;
+      const body=document.getElementById('endBody');
+      if((!end.classList.contains('active')||!body||!body.children.length)&&frames++<60){requestAnimationFrame(prepare);return;}
+      const imgs=[...body.querySelectorAll('img')];
+      const ready=Promise.all(imgs.map(im=>{
+        if(im.complete&&im.naturalWidth)return typeof im.decode==='function'?im.decode().catch(()=>{}):Promise.resolve();
+        return new Promise(resolve=>{im.addEventListener('load',resolve,{once:true});im.addEventListener('error',resolve,{once:true})});
+      }));
+      Promise.race([ready,new Promise(resolve=>setTimeout(resolve,900))]).then(()=>{
+        if(token!==endTokenV654)return;
+        requestAnimationFrame(()=>requestAnimationFrame(()=>{
+          if(token===endTokenV654)end.classList.add('v654EndVisible');
+        }));
+      });
+    };
+    requestAnimationFrame(prepare);
+    setTimeout(()=>{if(token===endTokenV654&&end.classList.contains('active'))end.classList.add('v654EndVisible')},1800);
+    return r;
+  };
+
+  const versionEl=document.querySelector('.titleVersion');
+  if(versionEl)versionEl.textContent='Ver. 6.54';
+})();
+</script>
+
 </body></html>
