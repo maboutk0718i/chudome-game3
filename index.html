@@ -4147,4 +4147,49 @@ window.addEventListener('load',()=>{
 })();
 </script>
 
+<script>
+/* === Ver.6.61: loop rank caps, GOD title separation, loop-2 camera BAD routing === */
+(function(){
+  /* 2周目のカメコ問題は、どの選択肢からでも2周目専用BADへ送る。 */
+  const endingBadV661=endingBad;
+  endingBad=function(type){
+    if(S.loop===2&&type==='camera')return secondLoopBadEnding('camera');
+    return endingBadV661.apply(this,arguments);
+  };
+
+  /* 「神カメコ」は通常のレイヤー評価ではなく、GOD END限定称号にする。 */
+  const layerRepNameV661=layerRepName;
+  layerRepName=function(){
+    let rank=layerRepNameV661.apply(this,arguments);
+    if(rank==='神カメコ')rank='人気カメコ';
+    if(S.loop===1&&(rank==='信頼されている'||rank==='人気カメコ'))rank='評判が良い';
+    return rank;
+  };
+
+  /* GOD END本文でも、評価と特別称号を明確に分離する。 */
+  const secondLoopEndingV661=secondLoopEnding;
+  secondLoopEnding=function(){
+    const r=secondLoopEndingV661.apply(this,arguments);
+    const title=document.getElementById('endTitle');
+    const body=document.getElementById('endBody');
+    if(title&&body&&/神カメコ|GOD END|TRUE END/.test(title.textContent||'')){
+      body.innerHTML=body.innerHTML
+        .replace(/レイヤー評判：神カメコ/g,'レイヤー評価：人気カメコ')
+        .replace(/レイヤー評価：神カメコ/g,'レイヤー評価：人気カメコ');
+      if(!body.innerHTML.includes('特別称号：神カメコ')){
+        body.insertAdjacentHTML('beforeend','<div class="endImpact"><b>GOD END COMPLETE<br>特別称号：神カメコ</b></div>');
+      }
+    }
+    return r;
+  };
+
+  window.__CHUDOME_V661__={
+    capRank:(loop,rank)=>rank==='神カメコ'?'人気カメコ':(loop===1&&(rank==='信頼されている'||rank==='人気カメコ')?'評判が良い':rank),
+    cameraBadRoute:(loop,type)=>loop===2&&type==='camera'?'secondLoopBadEnding':'endingBad'
+  };
+  const versionEl=document.querySelector('.titleVersion');
+  if(versionEl)versionEl.textContent='Ver. 6.61';
+})();
+</script>
+
 </body></html>
