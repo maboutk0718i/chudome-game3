@@ -2289,7 +2289,7 @@ window.addEventListener('load',()=>{
     if(mode==='blame'){
       S.unease+=2;S.rep--;
       story(p,P.name,'「……そういう言い方をするなら、今日は撮影はやめておきます」<br><span class="thought">（噂を否定するつもりが、自分で補強した。）</span>',[
-        ['言い返さず離れる',()=>{S.backedOff++;refuse(p);show('map')}]
+        ['言い返さず離れる',()=>{S.backedOff++;markSkippedV663(p);show('map')}]
       ]);return;
     }
     if(mode==='photo'){
@@ -2311,7 +2311,7 @@ window.addEventListener('load',()=>{
     }
     S.rude++;S.unease+=2;
     story(p,P.name,'「誰が言ったかは答えません。そうやって相手を探されるのも困ります」<br><span class="thought">（確認のつもりでも、相手には詰め寄りに見えた。）</span>',[
-      ['謝って離れる',()=>{S.backedOff++;refuse(p);show('map')}]
+      ['謝って離れる',()=>{S.backedOff++;markSkippedV663(p);show('map')}]
     ]);
   }
 
@@ -3021,7 +3021,7 @@ window.addEventListener('load',()=>{
     if(S.priorLayerRumorLevel>0)S.priorLayerRumorLevel--;
     if(S.priorRumorLevel>0)S.priorRumorLevel--;
     if(S.priorCamRumorLevel>0)S.priorCamRumorLevel--;
-    refuse(p);
+    markSkippedV663(p);
     story(p,people[p].name,reply+'<br><span class="thought">（'+text+' この人への撮影は、今日は諦める。だが、引くべきところで引いたことは次へ残る。）</span>',[['何も足さず離れる',()=>show('map')]]);
   }
   const layerRepNameRecoveryV648=layerRepName;
@@ -3059,7 +3059,7 @@ window.addEventListener('load',()=>{
     story(p,P.name,lead+'<br><span class="thought">（今日は撮影を通す場面ではない。ここでどう引くかが、次の相手への評判になる。）</span>',[
       correct,
       ['「今回は大丈夫なので、一枚だけ」と頼む',()=>{S.unease+=2;refuse(p);story(p,P.name,'「大丈夫かどうかを決めるのは、あなたではありません」<br>警戒はさらに強くなった。',[['離れる',()=>show('map')]])}],
-      ['何も考えずマップへ戻る',()=>{refuse(p);show('map')}]
+      ['何も考えずマップへ戻る',()=>{markSkippedV663(p);show('map')}]
     ]);
   };
 
@@ -3916,8 +3916,8 @@ window.addEventListener('load',()=>{
       pressureLabel='「噂だけで決めず、一枚だけ」と頼む';
     }
     story(p,P.name,intro+'<br><span class="thought">'+thought+'</span>',[
-      [safeLabel,()=>{S.backedOff++;S.unease++;refuse(p);story(p,P.name,safeReply+'<br><span class="thought">（ここで撮影へつなげようとしない。それが今できる最低限だ。）</span>',[['何も足さず離れる',()=>show('map')]])}],
-      ['今日は撮影を頼まず、挨拶だけする',()=>{S.backedOff++;S.unease++;refuse(p);story(p,P.name,'「……こんにちは。今日はこれで失礼します」<br>'+P.name+'は会話が終わるのを待っている。',[['そのまま離れる',()=>show('map')]])}],
+      [safeLabel,()=>{S.backedOff++;S.unease++;markSkippedV663(p);story(p,P.name,safeReply+'<br><span class="thought">（ここで撮影へつなげようとしない。それが今できる最低限だ。）</span>',[['何も足さず離れる',()=>show('map')]])}],
+      ['今日は撮影を頼まず、挨拶だけする',()=>{S.backedOff++;S.unease++;markSkippedV663(p);story(p,P.name,'「……こんにちは。今日はこれで失礼します」<br>'+P.name+'は会話が終わるのを待っている。',[['そのまま離れる',()=>show('map')]])}],
       [pressureLabel,()=>{S.unease+=3;refuse(p);story(p,P.name,'「前回どうだったかや、噂が正しいかとは別に、今日は撮影しません」<br><span class="thought">（撮影しないという答えに、反論の余地を探すな。）</span>',[['すぐ引く',()=>{S.backedOff++;show('map')}],['もう一度だけ頼む',()=>{recordWarningIncident(p,'2周目の明確な拒否後も再依頼');endingBad('warning')} ]])}],
       ['何も言わずマップへ戻る',()=>show('map')]
     ]);
@@ -4034,13 +4034,13 @@ window.addEventListener('load',()=>{
       next=next.map((ch,i)=>{
         if(i!==0||!Array.isArray(ch))return ch;
         if(h==='shot')return ['「前回は撮影ありがとうございました。今日はお願いせず離れます」',()=>{
-          S.backedOff++;S.trust++;refuse(p);
+          S.backedOff++;S.trust++;markSkippedV663(p);
           storyV659(p,P.name,'「……写真は受け取りました。今日はそれでお願いします」<br><span class="thought">（前回撮影できたことを、今回の許可として使わない。礼だけ伝えて離れよう。）</span>',[['何も足さず離れる',()=>show('map')]],img);
         }];
         if(h==='refused')return ['「前回はすみませんでした」と短く謝って離れる',ch[1]];
         if(h==='met')return ['前回の距離感を反省し、今日は撮影を頼まず離れる',ch[1]];
         return ['初対面なので、撮影を頼まず一礼して離れる',()=>{
-          S.backedOff++;refuse(p);
+          S.backedOff++;markSkippedV663(p);
           storyV659(p,P.name,'「……はい」<br>'+P.name+'は短く会釈した。<br><span class="thought">（会っていない相手に「前回」を持ち出さず、ここで会話を終える。）</span>',[['そのまま離れる',()=>show('map')]],img);
         }];
       });
@@ -4263,6 +4263,152 @@ window.addEventListener('load',()=>{
   window.__CHUDOME_V662__={cameraOverscan:true,mikuSilentWait:true};
   const versionEl=document.querySelector('.titleVersion');
   if(versionEl)versionEl.textContent='Ver. 6.62';
+})();
+</script>
+
+<script>
+/* === Ver.6.63: unified conversation-state and reputation-order fix === */
+function ensureConversationStateV663(){
+  if(!(S.skippedV663 instanceof Set))S.skippedV663=new Set();
+  if(!(S.closedV663 instanceof Set))S.closedV663=new Set();
+  if(!(S.greetedV663 instanceof Set))S.greetedV663=new Set();
+  if(!(S.permissionV663 instanceof Set))S.permissionV663=new Set();
+}
+function markSkippedV663(p){
+  if(!p)return;
+  ensureConversationStateV663();
+  S.skippedV663.add(p);
+  S.closedV663.add(p);
+  S.permissionV663.delete(p);
+  if(S.refused instanceof Set)S.refused.delete(p);
+  updateShotStatus();
+}
+(function(){
+  const PLACES_V663=['outdoor','indoor','rest','east','entrance'];
+
+  /* A real refusal supersedes a voluntary skip; a completed shoot supersedes both. */
+  const refuseV663=refuse;
+  refuse=function(p){
+    ensureConversationStateV663();
+    S.skippedV663.delete(p);S.closedV663.delete(p);S.permissionV663.delete(p);
+    return refuseV663.apply(this,arguments);
+  };
+  const markShotV663=markShot;
+  markShot=function(p){
+    ensureConversationStateV663();
+    S.skippedV663.delete(p);S.closedV663.delete(p);S.permissionV663.delete(p);
+    return markShotV663.apply(this,arguments);
+  };
+
+  /* "Did not ask" is no longer counted as "was refused" in the map or endings. */
+  updateShotStatus=function(){
+    ensureConversationStateV663();
+    document.querySelectorAll('.mapNpc[data-place]').forEach(b=>{
+      const p=b.dataset.place;if(!PLACES_V663.includes(p))return;
+      b.classList.remove('done','ng');
+      const badge=b.querySelector('.statusBadge');if(!badge)return;
+      badge.textContent='';
+      if(S.shotDone.has(p)){b.classList.add('done');badge.textContent='✓ 撮影済'}
+      else if(S.refused.has(p)){b.classList.add('ng');badge.textContent='× 撮影NG'}
+      else if(S.skippedV663.has(p)){badge.textContent='— 撮影見送り'}
+    });
+    const done=S.shotDone.size;
+    const ng=[...S.refused].filter(p=>PLACES_V663.includes(p)&&!S.shotDone.has(p)).length;
+    const skipped=[...S.skippedV663].filter(p=>PLACES_V663.includes(p)&&!S.shotDone.has(p)&&!S.refused.has(p)).length;
+    const resolved=done+ng+skipped;
+    const el=document.getElementById('shotProgress');
+    if(el)el.textContent=`撮影済 ${done} / 5人　撮影NG ${ng}人　見送り ${skipped}人${resolved===5?'　― 全員の結果が確定 ―':''}`;
+    const finish=document.getElementById('finishDay');
+    if(finish)finish.classList.toggle('show',resolved>=1||S.timeMin>=900);
+    try{v2Status()}catch(e){}
+  };
+
+  function badRankV663(){
+    const rank=typeof layerRepName==='function'?layerRepName():'';
+    return rank==='要警戒カメコ'||rank==='ブラックリスト級カメコ';
+  }
+  function firstLoopCautionV663(p){
+    const P=people[p];
+    story(p,P.name,'「……すみません。今日は撮影しません」<br>'+P.name+'は撮影の話へ入る前に、はっきり断った。<br><span class="thought">（先に届いた評判がある。好意的な返事をしてから覆すのではなく、最初から答えは決まっていた。）</span>',[
+      ['「分かりました」と答えて離れる',()=>{S.backedOff++;markSkippedV663(p);show('map')}],
+      ['撮影を頼まず、一礼して離れる',()=>{S.backedOff++;markSkippedV663(p);show('map')}],
+      ['「噂だけで決めず、一枚だけ」と頼む',()=>{S.unease+=2;refuse(p);story(p,P.name,'「噂の説明を聞きたいわけではありません。今日は撮影しません」<br><span class="thought">（断られたあとに理由を崩そうとするのは、確認ではなく交渉だ。）</span>',[
+        ['すぐに離れる',()=>{S.backedOff++;show('map')}],
+        ['それでも食い下がる',()=>{recordWarningIncident(p,'評判による明確な撮影拒否後も食い下がった');endingBad('warning')}]
+      ])}]
+    ],P.img);
+  }
+  function closedVisitV663(p){
+    const P=people[p];
+    story(p,'マボ',P.intro+'<br><span class="thought">（この人とは、今日はすでに会話を終えている。同じ入口からやり直す場面ではない。）</span>',[
+      ['そのまま離れる',()=>show('map')],
+      ['会場マップへ戻る',()=>show('map')]
+    ],P.img);
+  }
+
+  /* Reputation and same-day history are checked before any friendly opening line. */
+  const visitV663=visit;
+  visit=function(p){
+    ensureConversationStateV663();
+    if(!PLACES_V663.includes(p))return visitV663.apply(this,arguments);
+    if(S.shotDone.has(p)||S.refused.has(p))return visitV663.apply(this,arguments);
+    if(S.closedV663.has(p)||S.skippedV663.has(p))return closedVisitV663(p);
+    if(badRankV663()){
+      if(S.loop===2)return loop2WaryVisit(p);
+      return firstLoopCautionV663(p);
+    }
+    return visitV663.apply(this,arguments);
+  };
+
+  function mikuReadyFromRequestedWaitV663(){
+    ensureConversationStateV663();
+    S.timeMin=Math.min(900,Number(S.timeMin||600)+15);
+    S.restReadyV650=true;S.restWaitingV650=false;
+    try{v2Status()}catch(e){}
+    story('rest','マボ','15分ほどして、みくが飲み物をしまった。<br>休憩は終わったようだ。<br><span class="thought">（「少ししたら声をかけて」と言われた。こちらから改めて確認しよう。）</span>',[
+      ['「休憩は終わりましたか？」と確認する',()=>{
+        story('rest','みく','「はい、今なら大丈夫です」',[
+          ['今日撮りたい雰囲気を聞く',()=>{S.trust++;S.bond.rest=(S.bond.rest||0)+1;story('rest','みく','「落ち着いた、自然な感じでお願いします」',[['希望を確認して撮影する',()=>startShoot('rest')]])}],
+          ['撮影を始める',()=>startShoot('rest')],
+          ['今日は撮影せず離れる',()=>{markSkippedV663('rest');show('map')}]
+        ]);
+      }],
+      ['今日は声を掛けず離れる',()=>{markSkippedV663('rest');show('map')}]
+    ]);
+  }
+
+  /* Final display-time guard: remember permissions and close voluntary exits;
+     also replace the remaining old Miku wait route. */
+  const storyV663=story;
+  story=function(p,sp,text,choices,img){
+    ensureConversationStateV663();
+    const isPlace=PLACES_V663.includes(p);
+    const positive=isPlace&&typeof text==='string'&&/(今なら.*大丈夫|少しなら大丈夫|お願いします|撮ってほしい|撮りたい雰囲気)/.test(text)&&!/(撮影しません|今日は大丈夫です」<br>.*距離|無理です)/.test(text);
+    if(positive)S.permissionV663.add(p);
+    if(Array.isArray(choices))choices=choices.map(ch=>{
+      if(!Array.isArray(ch))return ch;
+      const label=String(ch[0]||''),fn=ch[1];
+      if(p==='rest'&&typeof text==='string'&&text.includes('少ししたら声かけてください')&&label==='少し離れて待つ'){
+        return [label,()=>mikuReadyFromRequestedWaitV663()];
+      }
+      if(isPlace&&/(今日は撮影せず離れる|今日はやめておく|今日は声を掛けず離れる)/.test(label)){
+        return [label,()=>{markSkippedV663(p);return typeof fn==='function'?fn():undefined}];
+      }
+      if(isPlace&&label==='挨拶だけする'&&typeof text==='string'&&text.includes('一度撮影を断られている')){
+        return [label,()=>{S.unease++;S.backedOff++;S.greetedV663.add(p);S.closedV663.add(p);storyV663(p,people[p].name,'「……こんにちは」<br>返事はあったが、相手はすぐに視線を戻した。<br><span class="thought">（断られたあとに、また対応させてしまった。挨拶を評判稼ぎに使うな。）</span>',[['何も足さず離れる',()=>show('map')]],img)}];
+      }
+      if(isPlace&&/(挨拶だけ.*離れる|今日は挨拶だけ|一礼して離れる)/.test(label)){
+        return [label,()=>{const repeat=S.greetedV663.has(p);S.greetedV663.add(p);S.closedV663.add(p);const rep=Number(S.rep||0),trust=Number(S.trust||0);const r=typeof fn==='function'?fn():undefined;if(repeat){S.rep=rep;S.trust=trust}return r}];
+      }
+      return ch;
+    });
+    return storyV663(p,sp,text,choices,img);
+  };
+
+  window.__CHUDOME_V663__={markSkipped:markSkippedV663,badRank:badRankV663};
+  const versionEl=document.querySelector('.titleVersion');
+  if(versionEl)versionEl.textContent='Ver. 6.63';
+  updateShotStatus();
 })();
 </script>
 
