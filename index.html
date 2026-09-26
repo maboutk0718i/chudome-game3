@@ -4710,4 +4710,52 @@ function markSkippedV663(p){
 })();
 </script>
 
+<script>
+/* === Ver.6.70: 二周目「撮影NG1人＋撮影成功あり」の誤BADを防止 === */
+(function(){
+  const LAYERS_V670=['outdoor','indoor','rest','east','entrance'];
+  function statsV670(){
+    const done=LAYERS_V670.filter(p=>S.shotDone&&S.shotDone.has(p)).length;
+    const ng=LAYERS_V670.filter(p=>S.refused&&S.refused.has(p)&&!(S.shotDone&&S.shotDone.has(p))).length;
+    return {done,ng};
+  }
+  function majorIncidentV670(){
+    const pressures=S.pressureLog||[];
+    const seriousPressure=pressures.some(x=>/食い下が|さらに|拒否後|断られた後|追って|追う|触|髪|無断|迫った/.test(String(x&&x.action||'')));
+    return !!(
+      (S.warningIncidents||[]).length||
+      seriousPressure||
+      pressures.length>=2||
+      Number(S.creep||0)>=4||
+      Number(S.rude||0)>=4||
+      (S.camHostile&&Number(S.camRep||0)<=-5)
+    );
+  }
+  function oneNgContinueV670(){
+    const q=statsV670();
+    const rank=typeof layerRepName==='function'?layerRepName():'微妙なカメコ';
+    setEndPosterMode('continue');theme('field');show('end');
+    document.getElementById('ending').className='endScene';
+    document.getElementById('endTitle').textContent='CONTINUE END　信頼はまだ戻らない';
+    document.getElementById('endBody').innerHTML=`
+      <div class="endGallery"><img class="wide" src="${IMG.venue}"></div>
+      <div class="endChapter">二度目のちゅどーむ ― 閉場後</div>
+      <div class="endText">撮影を断られた相手は一人いた。けれど、その答えを受け入れて離れ、ほかの相手とは撮影を終えることができた。<br><br>一度の撮影NGだけで、今日うまくできたことまで消えるわけではない。</div>
+      <div class="endImpact">撮れたことと、完全に信頼を取り戻したことは同じではない。だが、前回と同じ失敗を繰り返した一日でもなかった。</div>
+      <div class="endText"><b>撮影済 ${q.done}人 ／ 撮影NG ${q.ng}人<br>レイヤー評判：${rank}<br>SPECIAL ENDING 未到達</b></div>`;
+  }
+
+  const secondLoopEndingV670=secondLoopEnding;
+  secondLoopEnding=function(){
+    const q=statsV670();
+    if(S.loop===2&&q.ng===1&&q.done>=1&&!majorIncidentV670())return oneNgContinueV670();
+    return secondLoopEndingV670.apply(this,arguments);
+  };
+
+  const versionEl=document.querySelector('.titleVersion');
+  if(versionEl)versionEl.textContent='Ver. 6.70';
+  window.__CHUDOME_V670__={stats:statsV670,majorIncident:majorIncidentV670};
+})();
+</script>
+
 </body></html>
