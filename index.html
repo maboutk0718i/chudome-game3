@@ -4192,4 +4192,78 @@ window.addEventListener('load',()=>{
 })();
 </script>
 
+<style id="cameraTopSafeV662">
+/* Ver.6.62: all camera-action photographs use a small bottom-anchored
+   overscan so an unwanted source strip can never remain visible at the top. */
+#shoot .shootView #camImg{
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  transform-origin:50% 100%!important;
+}
+#select .thumb{background:#000!important}
+#select .thumb img{
+  object-fit:cover!important;
+  object-position:center bottom!important;
+  transform:scale(1.12)!important;
+  transform-origin:50% 100%!important;
+}
+</style>
+
+<script>
+/* === Ver.6.62: camera top-edge safe area + silent Miku wait consistency === */
+(function(){
+  /* Apply the same top-edge protection to every one of the 30 poses.
+     Poses 4 and 5 receive a little more overscan because their source
+     pictures contain the widest unwanted upper strip. */
+  const applyPoseLookV662=applyPoseLook;
+  applyPoseLook=function(){
+    applyPoseLookV662.apply(this,arguments);
+    const img=document.getElementById('camImg');
+    if(!img)return;
+    const c=S.cam||{pose:0,z:1};
+    const pose=Number(c.pose||0)%6;
+    const safe=(pose===3||pose===4)?1.16:1.12;
+    img.style.objectFit='contain';
+    img.style.objectPosition='center bottom';
+    img.style.transformOrigin='50% 100%';
+    img.style.transform=`translate(-50%,-50%) scale(${Math.max(.82,Number(c.z||1))*safe})`;
+    const view=document.querySelector('#shoot .shootView');
+    if(view)view.classList.remove('v642-strip-fix');
+  };
+
+  /* This route starts without speaking to Miku.  She therefore does not
+     know that Mabo was waiting and must not say "I kept you waiting". */
+  const observeV662=observe;
+  observe=function(p){
+    if(p!=='rest')return observeV662.apply(this,arguments);
+    S.trust++;
+    S.bond.rest=(S.bond.rest||0)+1;
+    S.timeMin=Math.min(900,Number(S.timeMin||600)+15);
+    try{v2Status()}catch(e){}
+    S.restReadyV650=true;
+    S.restWaitingV650=false;
+    story('rest','マボ','しばらくして、みくが飲み物をしまって立ち上がった。<br>休憩は終わったようだ。<br><span class="thought">（向こうは俺が待っていたことを知らない。ここで改めて声を掛けよう。）</span>',[
+      ['改めて挨拶し、撮影してもよいか確認する',()=>{
+        story('rest','みく','「はい、今なら大丈夫です」<br><span class="thought">（休憩中に急かさず、改めて確認できた。）</span>',[
+          ['今日撮りたい雰囲気を聞く',()=>{
+            S.trust++;S.bond.rest=(S.bond.rest||0)+1;
+            story('rest','みく','「少し落ち着いた、自然な感じで撮ってほしいです」',[
+              ['希望を確認して撮影を始める',()=>startShoot('rest')],
+              ['立ち位置と背景も相談してから撮影する',()=>{S.trust++;S.bond.rest=(S.bond.rest||0)+1;startShoot('rest')}]
+            ]);
+          }],
+          ['撮影を始める',()=>startShoot('rest')],
+          ['今日は声を掛けず離れる',()=>show('map')]
+        ]);
+      }],
+      ['今日は声を掛けず、そのまま離れる',()=>show('map')]
+    ]);
+  };
+
+  window.__CHUDOME_V662__={cameraOverscan:true,mikuSilentWait:true};
+  const versionEl=document.querySelector('.titleVersion');
+  if(versionEl)versionEl.textContent='Ver. 6.62';
+})();
+</script>
+
 </body></html>
