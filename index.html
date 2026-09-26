@@ -4412,4 +4412,127 @@ function markSkippedV663(p){
 })();
 </script>
 
+<script>
+/* === Ver.6.64: authoritative conversation controller ===
+   Legacy blocks keep their scene text and minigames, but every layer-map entry
+   now passes through this single state/reputation router first. */
+(function(){
+  const PLACES=['outdoor','indoor','rest','east','entrance'];
+  const STATE=Object.freeze({FRESH:'fresh',PERMITTED:'permitted',SKIPPED:'skipped',REFUSED:'refused',SHOT:'shot',CLOSED:'closed'});
+
+  function ensure(){ensureConversationStateV663()}
+  function stateOf(p){
+    ensure();
+    if(S.shotDone.has(p))return STATE.SHOT;
+    if(S.refused.has(p))return STATE.REFUSED;
+    if(S.skippedV663.has(p))return STATE.SKIPPED;
+    if(S.closedV663.has(p))return STATE.CLOSED;
+    if(S.permissionV663.has(p))return STATE.PERMITTED;
+    return STATE.FRESH;
+  }
+  function rankOf(){return typeof layerRepName==='function'?layerRepName():'無名カメコ'}
+  function blockedRank(rank=rankOf()){return rank==='要警戒カメコ'||rank==='ブラックリスト級カメコ'}
+  function route(input){
+    if(input.shot)return STATE.SHOT;
+    if(input.refused)return STATE.REFUSED;
+    if(input.skipped)return STATE.SKIPPED;
+    if(input.closed)return STATE.CLOSED;
+    if(input.permitted)return STATE.PERMITTED;
+    if(input.blocked)return 'reputation_block';
+    return STATE.FRESH;
+  }
+  function mapBack(){show('map')}
+
+  function closedScene(p,kind){
+    const P=people[p];
+    const thought=kind===STATE.SKIPPED
+      ?'（今日は自分から撮影を見送った。初回の会話へ巻き戻してはいけない。）'
+      :'（今日の会話はすでに終わっている。同じ入り口からやり直さない。）';
+    story(p,'マボ',P.intro+'<br><span class="thought">'+thought+'</span>',[
+      ['そのまま離れる',mapBack],['会場マップへ戻る',mapBack]
+    ],P.img);
+  }
+  function permittedScene(p){
+    const P=people[p];
+    story(p,P.name,'「撮影の準備、大丈夫です」<br><span class="thought">（撮影許可はもう確認できている。また初対面の会話へ戻る必要はない。）</span>',[
+      ['撮影を始める',()=>startShoot(p)],
+      ['今日は撮影を見送る',()=>{markSkippedV663(p);mapBack()}]
+    ],P.img);
+  }
+  function refusedScene(p){
+    const P=people[p];
+    const again=S.loop===2?'二周目でも、今日出た答えは変わらない。':'今日はすでに撮影を断られている。';
+    story(p,P.name,'「今日はもう撮影しません」<br><span class="thought">（'+again+'ここからは撮影交渉ではなく、食い下がりになる。）</span>',[
+      ['「分かりました」と離れる',()=>{S.backedOff++;mapBack()}],
+      ['何も言わず離れる',mapBack],
+      ['「一枚だけでも」と再び頼む',()=>{
+        recordWarningIncident(p,'当日の明確な撮影NG後に再依頼した');
+        story(p,P.name,'「何回言えば分かりますか？」<br>周囲の視線がこちらへ向いた。',[
+          ['それでも食い下がる',()=>endingBad('warning')],
+          ['ようやく離れる',()=>{S.backedOff++;mapBack()}]
+        ],P.img);
+      }]
+    ],P.img);
+  }
+  function reputationScene(p){
+    const P=people[p],rank=rankOf();
+    let lead;
+    if(S.loop===2){
+      if(S.priorShot&&S.priorShot.has(p))lead='「前回の撮影とは別に、少し話を聞いています」';
+      else if(S.priorRefused&&S.priorRefused.has(p))lead='「前回のこと、覚えています」';
+      else if(S.priorMet&&S.priorMet.has(p))lead='「前のイベントにもいましたよね。少し話を聞いています」';
+      else lead='「ほかの方から、少し話を聞いています」';
+    }else lead='「……すみません。今日は撮影しません」';
+    story(p,P.name,lead+'<br>'+P.name+'は撮影の話へ入る前に距離を取った。<br><span class="thought">（レイヤー評価：'+rank+'。「大丈夫」と言った後に覆すのではなく、最初から撮影NGとして会話する。）</span>',[
+      ['撮影を頼まず、短く会釈して離れる',()=>{S.backedOff++;markSkippedV663(p);mapBack()}],
+      ['何も言わず離れる',()=>{markSkippedV663(p);mapBack()}],
+      ['「噂だけで決めないで」と撮影を頼む',()=>{
+        S.unease+=2;refuse(p);
+        story(p,P.name,'「噂の説明を聞きたいわけではありません。今日は撮影しません」',[
+          ['すぐ離れる',()=>{S.backedOff++;mapBack()}],
+          ['もう一度だけ頼む',()=>{recordWarningIncident(p,'評判による明確な拒否後も再依頼した');endingBad('warning')}]
+        ],P.img);
+      }]
+    ],P.img);
+  }
+
+  const legacyVisit=visit;
+  visit=function(p){
+    if(!PLACES.includes(p))return legacyVisit.apply(this,arguments);
+    ensure();
+    const r=route({
+      shot:S.shotDone.has(p),refused:S.refused.has(p),skipped:S.skippedV663.has(p),
+      closed:S.closedV663.has(p),permitted:S.permissionV663.has(p),blocked:blockedRank()
+    });
+    if(r===STATE.SHOT)return legacyVisit.apply(this,arguments);
+    if(r===STATE.REFUSED)return refusedScene(p);
+    if(r===STATE.SKIPPED||r===STATE.CLOSED)return closedScene(p,r);
+    if(r===STATE.PERMITTED)return permittedScene(p);
+    if(r==='reputation_block')return reputationScene(p);
+    return legacyVisit.apply(this,arguments);
+  };
+
+  const legacyStartShoot=startShoot;
+  startShoot=function(p='outdoor'){
+    ensure();
+    S.permissionV663.delete(p);S.closedV663.delete(p);S.skippedV663.delete(p);
+    return legacyStartShoot.apply(this,arguments);
+  };
+
+  const tests=[
+    [{shot:true,refused:true,blocked:true},STATE.SHOT,'撮影済が最優先'],
+    [{refused:true,blocked:true},STATE.REFUSED,'当日NGが評判より優先'],
+    [{skipped:true,blocked:true},STATE.SKIPPED,'自主見送りをNGにしない'],
+    [{closed:true},STATE.CLOSED,'会話終了後は初回へ戻さない'],
+    [{permitted:true},STATE.PERMITTED,'許可後は許可済み会話'],
+    [{blocked:true},'reputation_block','評判拒否を好意的台詞より先に出す'],
+    [{},STATE.FRESH,'通常初回のみ旧シーンへ渡す']
+  ];
+  const testResults=tests.map(([input,want,name])=>({name,want,got:route(input),pass:route(input)===want}));
+  console.assert(testResults.every(t=>t.pass),'Ver.6.64 conversation routing test failed',testResults);
+  window.__CHUDOME_V664__={STATE,stateOf,route,tests:testResults};
+  const versionEl=document.querySelector('.titleVersion');if(versionEl)versionEl.textContent='Ver. 6.64';
+})();
+</script>
+
 </body></html>
