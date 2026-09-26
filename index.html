@@ -4758,4 +4758,24 @@ function markSkippedV663(p){
 })();
 </script>
 
+<script>
+/* === Ver.6.71: 「微妙なカメコ」は総合ランク上限C === */
+(function(){
+  const v2ResultV671=v2Result;
+  v2Result=function(){
+    const result={...v2ResultV671.apply(this,arguments)};
+    const rank=typeof layerRepName==='function'?layerRepName():'';
+    if(rank==='微妙なカメコ'&&['S','A','B'].includes(result.grade)){
+      result.total=Math.min(Number(result.total||0),69);
+      result.grade='C';
+    }
+    return result;
+  };
+
+  const versionEl=document.querySelector('.titleVersion');
+  if(versionEl)versionEl.textContent='Ver. 6.71';
+  window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
+})();
+</script>
+
 </body></html>
