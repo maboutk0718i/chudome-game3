@@ -4476,6 +4476,7 @@ function markSkippedV663(p){
   }
   function reputationScene(p){
     const P=people[p],rank=rankOf();
+    const personallyRefused=S.loop===2&&S.priorRefused&&S.priorRefused.has(p);
     let lead;
     if(S.loop===2){
       if(S.priorShot&&S.priorShot.has(p))lead='「前回の撮影とは別に、少し話を聞いています」';
@@ -4483,16 +4484,28 @@ function markSkippedV663(p){
       else if(S.priorMet&&S.priorMet.has(p))lead='「前のイベントにもいましたよね。少し話を聞いています」';
       else lead='「ほかの方から、少し話を聞いています」';
     }else lead='「……すみません。今日は撮影しません」';
-    story(p,P.name,lead+'<br>'+P.name+'は撮影の話へ入る前に距離を取った。<br><span class="thought">（レイヤー評価：'+rank+'。「大丈夫」と言った後に覆すのではなく、最初から撮影NGとして会話する。）</span>',[
-      ['撮影を頼まず、短く会釈して離れる',()=>{S.backedOff++;markSkippedV663(p);mapBack()}],
-      ['何も言わず離れる',()=>{markSkippedV663(p);mapBack()}],
-      ['「噂だけで決めないで」と撮影を頼む',()=>{
+    const historyThought=personallyRefused
+      ?'（'+P.name+'自身が、前回の行動を覚えている。これは人づての噂ではない。最初から撮影NGとして会話する。）'
+      :'（レイヤー評価：'+rank+'。人づてに聞いた話を警戒しているため、最初から撮影NGとして会話する。）';
+    const thirdChoice=personallyRefused
+      ?['「前回のことは反省しています。もう一度だけ話を聞いてください」と頼む',()=>{
+        S.unease+=2;refuse(p);
+        story(p,P.name,'「反省しているなら、今日はここで終わりにしてください。撮影はしません」<br><span class="thought">（謝罪は、撮影許可を取り直すための交換条件ではない。）</span>',[
+          ['「分かりました」とすぐ離れる',()=>{S.backedOff++;mapBack()}],
+          ['それでも撮影を頼む',()=>{recordWarningIncident(p,'前回の当事者から再び明確に拒否された後も依頼した');endingBad('warning')}]
+        ],P.img);
+      }]
+      :['「噂だけで決めないで」と撮影を頼む',()=>{
         S.unease+=2;refuse(p);
         story(p,P.name,'「噂の説明を聞きたいわけではありません。今日は撮影しません」',[
           ['すぐ離れる',()=>{S.backedOff++;mapBack()}],
           ['もう一度だけ頼む',()=>{recordWarningIncident(p,'評判による明確な拒否後も再依頼した');endingBad('warning')}]
         ],P.img);
-      }]
+      }];
+    story(p,P.name,lead+'<br>'+P.name+'は撮影の話へ入る前に距離を取った。<br><span class="thought">'+historyThought+'</span>',[
+      ['撮影を頼まず、短く会釈して離れる',()=>{S.backedOff++;markSkippedV663(p);mapBack()}],
+      ['何も言わず離れる',()=>{markSkippedV663(p);mapBack()}],
+      thirdChoice
     ],P.img);
   }
 
@@ -4531,7 +4544,7 @@ function markSkippedV663(p){
   const testResults=tests.map(([input,want,name])=>({name,want,got:route(input),pass:route(input)===want}));
   console.assert(testResults.every(t=>t.pass),'Ver.6.64 conversation routing test failed',testResults);
   window.__CHUDOME_V664__={STATE,stateOf,route,tests:testResults};
-  const versionEl=document.querySelector('.titleVersion');if(versionEl)versionEl.textContent='Ver. 6.64';
+  const versionEl=document.querySelector('.titleVersion');if(versionEl)versionEl.textContent='Ver. 6.65';
 })();
 </script>
 
