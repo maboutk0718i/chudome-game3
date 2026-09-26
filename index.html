@@ -981,7 +981,7 @@ function loop2NormalChoices(p){
  const line=loop2RepGreeting(p);
  const good=['前回の話は短くして、今日の希望を聞く',()=>{S.trust+=2;S.bond[p]+=2;loop2ShootOffer(p)}];
  const amb=[LAYER_AMBIGUOUS[p].label,()=>ambiguousLayerChoice(p,true)];
- const mine=['「覚えててくれたんですね！」と嬉しそうに返す',()=>{S.unease+=2;S.bond[p]--;loop2Landmine(p)}];
+ const mine=['「覚えててくれたんですね！ 前より距離が近くなった感じします」と返す',()=>{S.unease+=2;S.bond[p]--;loop2Landmine(p)}];
  const leave=['今日は挨拶だけして離れる',()=>{S.rep++;show('map')}];
  const orders={
   outdoor:[amb,good,leave,mine],
@@ -1964,7 +1964,7 @@ window.addEventListener('load',()=>{
     const line=loop2RepGreeting(p);
     const good=['前回の話は短くして、今日の希望を聞く',()=>{S.trust+=2;S.bond[p]+=2;loop2ShootOffer(p)}];
     const amb=[LAYER_AMBIGUOUS[p].label,()=>ambiguousLayerChoice(p,true)];
-    const mine=['「覚えててくれたんですね！」と嬉しそうに返す',()=>{S.unease+=2;S.bond[p]--;loop2Landmine(p)}];
+    const mine=['「覚えててくれたんですね！ 前より距離が近くなった感じします」と返す',()=>{S.unease+=2;S.bond[p]--;loop2Landmine(p)}];
     const leave=['今日は挨拶だけして離れる',()=>{S.rep++;story(p,P.name,'「それじゃ、また」<br>'+P.name+'は短く会釈した。<br><span class="thought">（撮らないで終わる会話もある。変に一言足さず、今日はここで切る。）</span>',[['そのまま離れる',()=>show('map')]])}];
     const orders={outdoor:[amb,good,leave,mine],indoor:[mine,leave,good,amb],rest:[amb,mine,leave,good],east:[leave,amb,mine,good],entrance:[mine,good,amb,leave]};
     story(p,P.name,line,orders[p]||[amb,good,mine,leave]);
@@ -4544,7 +4544,77 @@ function markSkippedV663(p){
   const testResults=tests.map(([input,want,name])=>({name,want,got:route(input),pass:route(input)===want}));
   console.assert(testResults.every(t=>t.pass),'Ver.6.64 conversation routing test failed',testResults);
   window.__CHUDOME_V664__={STATE,stateOf,route,tests:testResults};
-  const versionEl=document.querySelector('.titleVersion');if(versionEl)versionEl.textContent='Ver. 6.65';
+  const versionEl=document.querySelector('.titleVersion');if(versionEl)versionEl.textContent='Ver. 6.66';
+})();
+</script>
+
+<script>
+/* === Ver.6.67: 要警戒カメコ専用エンディングを最終判定として優先 === */
+(function(){
+  const LAYERS_V667=['outdoor','indoor','rest','east','entrance'];
+  function statsV667(){
+    const done=LAYERS_V667.filter(p=>S.shotDone&&S.shotDone.has(p)).length;
+    const ng=LAYERS_V667.filter(p=>S.refused&&S.refused.has(p)&&!(S.shotDone&&S.shotDone.has(p))).length;
+    return {done,ng};
+  }
+  function severeV667(){
+    return !!(
+      (S.warningIncidents||[]).length||
+      (S.pressureLog||[]).length||
+      Number(S.creep||0)+Number(S.rude||0)>=4||
+      (S.camHostile&&Number(S.camRep||0)<=-5)
+    );
+  }
+  function cautiousRankV667(){
+    return typeof layerRepName==='function'&&layerRepName()==='要警戒カメコ';
+  }
+  function cautiousContinueV667(loop2){
+    const q=statsV667();
+    setEndPosterMode('continue');theme('field');show('end');
+    document.getElementById('ending').className='endScene';
+    document.getElementById('endTitle').textContent='CONTINUE END　信頼はまだ戻らない';
+    document.getElementById('endBody').innerHTML=`
+      <div class="endGallery"><img class="wide" src="${IMG.venue}"></div>
+      <div class="endChapter">${loop2?'二度目のちゅどーむ ― 閉場後':'閉場後 ― ちゅどーむ会場'}</div>
+      <div class="endText">撮影できた相手はいた。写真も残った。<br><br>けれど、以前に生まれた警戒が今日一日だけで消えたわけではない。会話が続いた相手も、最後まで少し距離を残していた。</div>
+      <div class="endImpact">撮れたことと、信頼を取り戻したことは同じではない。</div>
+      <div class="endText">急いで距離を縮めようとせず、次も相手の返事を尊重するしかない。<br><br><b>撮影済 ${q.done}人 ／ 撮影NG ${q.ng}人<br>レイヤー評判：要警戒カメコ</b></div>`;
+  }
+  function cautiousBadV667(loop2){
+    const q=statsV667();
+    S._badCarrySeverity=Math.max(1,Number(S._badCarrySeverity||0));
+    S._badCarryType='caution-remains';S._badCarryDomain='layer';
+    S.badResultKindV648='distance';
+    setEndPosterMode('bad');theme('bad');show('end');
+    document.getElementById('ending').className='endScene bad';
+    document.getElementById('endTitle').textContent='BAD END　残った警戒';
+    document.getElementById('endBody').innerHTML=`
+      <div class="endGallery storyGallery"><img class="wide" src="${IMG.venue}"><img src="${IMG.rio}"><img src="${IMG.yukina}"></div>
+      <div class="endChapter">${loop2?'二度目のちゅどーむ ― 閉場前':'イベント終盤 ― ちゅどーむ会場'}</div>
+      <div class="endText">${q.done===0?'今日は一人も撮影できなかった。':'撮影できた相手もいたが、撮影NGのほうが多く残った。'}<br><br>無理に食い下がらなかったとしても、警戒されている現状まで消えたわけではない。</div>
+      <div class="endImpact">今日は悪評を広げなかった。だが、信頼を取り戻すところまでは届かなかった。</div>
+      <div class="endText"><b>撮影済 ${q.done}人 ／ 撮影NG ${q.ng}人<br>レイヤー評判：要警戒カメコ</b></div>`;
+  }
+
+  const finishDayEndingV667=finishDayEnding;
+  finishDayEnding=function(){
+    if(!cautiousRankV667()||severeV667())return finishDayEndingV667.apply(this,arguments);
+    const q=statsV667();
+    if(q.done===0||q.ng>=3||q.ng>q.done)return cautiousBadV667(false);
+    return cautiousContinueV667(false);
+  };
+
+  const secondLoopEndingV667=secondLoopEnding;
+  secondLoopEnding=function(){
+    if(!cautiousRankV667()||severeV667())return secondLoopEndingV667.apply(this,arguments);
+    const q=statsV667();
+    if(q.done===0||q.ng>=3||q.ng>q.done)return cautiousBadV667(true);
+    return cautiousContinueV667(true);
+  };
+
+  const versionEl=document.querySelector('.titleVersion');
+  if(versionEl)versionEl.textContent='Ver. 6.67';
+  window.__CHUDOME_V667__={stats:statsV667,severe:severeV667};
 })();
 </script>
 
