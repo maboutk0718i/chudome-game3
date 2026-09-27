@@ -2911,7 +2911,7 @@ window.addEventListener('load',()=>{
     ensureV648();
     const P=people[p],score=Number(S.photoScores?.[p]||0),x=Number(S.photoXCountsV648?.[p]||0);
     if(S.postShootRevisitedV648.has(p)){
-      story(p,'マボ',P.name+'の撮影はすでに終わっている。<br><span class="thought">（お礼も伝えた。用事もないのに、何度も近づく場面じゃない。）</span>',[['会場マップへ戻る',()=>show('map')]]);return;
+      story(p,'マボ',P.name+'の撮影はすでに終わっている。<br><span class="thought">（撮影は終わった。用もないのにまた近づくなんて、我ながら気持ち悪い。分かっているのに、足だけが勝手に向いてしまった。）</span>',[['会場マップへ戻る',()=>show('map')]]);return;
     }
     S.postShootRevisitedV648.add(p);
     if(x>=2||score<60){
@@ -4341,8 +4341,7 @@ function markSkippedV663(p){
   function closedVisitV663(p){
     const P=people[p];
     story(p,'マボ',P.intro+'<br><span class="thought">（この人とは、今日はすでに会話を終えている。同じ入口からやり直す場面ではない。）</span>',[
-      ['そのまま離れる',()=>show('map')],
-      ['会場マップへ戻る',()=>show('map')]
+      ['そのまま離れる',()=>show('map')]
     ],P.img);
   }
 
@@ -4449,7 +4448,7 @@ function markSkippedV663(p){
       ?'（今日は自分から撮影を見送った。初回の会話へ巻き戻してはいけない。）'
       :'（今日の会話はすでに終わっている。同じ入り口からやり直さない。）';
     story(p,'マボ',P.intro+'<br><span class="thought">'+thought+'</span>',[
-      ['そのまま離れる',mapBack],['会場マップへ戻る',mapBack]
+      ['そのまま離れる',mapBack]
     ],P.img);
   }
   function permittedScene(p){
@@ -4701,6 +4700,10 @@ function markSkippedV663(p){
   const secondLoopEndingV668=secondLoopEnding;
   secondLoopEnding=function(){
     if(!S.layerRecoveryUsedV668||severeV668())return secondLoopEndingV668.apply(this,arguments);
+    const done=LAYERS_V668.filter(p=>S.shotDone&&S.shotDone.has(p)).length;
+    const ng=LAYERS_V668.filter(p=>S.refused&&S.refused.has(p)&&!(S.shotDone&&S.shotDone.has(p))).length;
+    /* 回復演出よりNG人数の結末判定を優先する。NG多数をCONTINUEへ上書きしない。 */
+    if(ng>=2||ng>done)return secondLoopEndingV668.apply(this,arguments);
     return recoveredEndingV668();
   };
 
@@ -4774,7 +4777,16 @@ function markSkippedV663(p){
 
   const versionEl=document.querySelector('.titleVersion');
   if(versionEl)versionEl.textContent='Ver. 6.71';
-  window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
+window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
+})();
+</script>
+
+<script>
+/* === Ver.6.72: 再訪テキスト・重複ボタン・回復後エンディング優先順位 === */
+(function(){
+  const versionEl=document.querySelector('.titleVersion');
+  if(versionEl)versionEl.textContent='Ver. 6.72';
+  window.__CHUDOME_V672__={revisitText:true,singleLeaveButton:true,recoveryEndingPriority:true};
 })();
 </script>
 
