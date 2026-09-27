@@ -1348,7 +1348,7 @@ function startPoseChanceTimer(){if(poseChanceTimer)clearInterval(poseChanceTimer
 function stopPoseChanceTimer(){if(poseChanceTimer){clearInterval(poseChanceTimer);poseChanceTimer=null}}
 function resetPoseCycle(){if(S.cam)S.cam.poseCycleStart=performance.now();renderPoseState()}
 function startShoot(place='outdoor'){S.currentShoot=place;theme('shoot');show('shoot');S.shots=[];S.cam={x:0,z:1,pose:0,poseCycleStart:performance.now()};setImageNoFlash($('#camImg'),poseImage(place,0));let old=$('.shootName');if(old)old.remove();let nm=document.createElement('div');nm.className='shootName';nm.textContent='撮影：'+people[place].name;$('.shootView').appendChild(nm);let oldh=$('#shotHint');if(oldh)oldh.remove();let hint=document.createElement('div');hint.id='shotHint';hint.className='shotHint';$('.shootView').appendChild(hint);renderCam();resetPoseCycle();startPoseChanceTimer();v2Advance(20)}
-function renderCam(){let c=S.cam;applyPoseLook();let n=6-S.shots.length;$('#remain').textContent=`あと ${n} / 6 枚`;$('#countBig').textContent=`あと ${n} / 6 枚`;let h=$('#shotHint');if(h)h.innerHTML='構図ヒント：'+poseHint(S.currentShoot,c.pose)+'<br><b>'+v4CompositionFeedback(S.currentShoot,c.pose)+'</b>';renderPoseState()}
+function renderCam(){let c=S.cam;applyPoseLook();let n=6-S.shots.length;$('#remain').textContent=`あと ${n} / 6 枚`;$('#countBig').textContent=`あと ${n} / 6 枚`;let h=$('#shotHint');if(h)h.innerHTML='<b>'+v4CompositionFeedback(S.currentShoot,c.pose)+'</b>';renderPoseState()}
 $$('[data-cam]').forEach(b=>b.onclick=()=>{click();let c=S.cam,a=b.dataset.cam;if(a==='left')c.x=Math.max(-70,c.x-18);if(a==='right')c.x=Math.min(70,c.x+18);if(a==='in')c.z=Math.min(1.30,c.z+.08);if(a==='out')c.z=Math.max(.82,c.z-.08);if(a==='center'){c.x=0;c.z=1}renderCam()});
 $('#shutter').onclick=()=>{if(S.shots.length>=6)return;let st=currentPoseState();shotFx();let f=$('#flash');f.classList.remove('go');void f.offsetWidth;f.classList.add('go');let c=S.cam,ideal=(SHOTIDEAL[S.currentShoot]||SHOTIDEAL.outdoor)[c.pose%6],dx=Math.abs(c.x-ideal[0]),dz=Math.abs(c.z-ideal[1]);let composition=Math.round(Math.max(0,100-dx*1.15));let distance=Math.round(Math.max(0,100-dz*210));let baseScore=Math.round(composition*.62+distance*.38);let mistakeCount=(composition<55?1:0)+(distance<55?1:0)+(st.key==='moving'?1:0);let cap=mistakeCount>=2?59:mistakeCount===1?69:99;let score=Math.max(35,Math.min(cap,baseScore-st.penalty));S.shots.push({score,baseScore,composition,distance,poseState:st.key,pose:c.pose,img:poseImage(S.currentShoot,c.pose)});if(score>=90){if(S.bond&&S.bond[S.currentShoot]!==undefined)S.bond[S.currentShoot]++}else if(score<50){S.unease=Math.min(S.unease+0,99)}if(S.shots.length<6){c.pose=(c.pose+1)%6;setImageNoFlash($('#camImg'),poseImage(S.currentShoot,c.pose));c.x=0;c.z=1;resetPoseCycle()}renderCam();if(S.shots.length===6){stopPoseChanceTimer();setTimeout(photoSelect,350)}};
 function v4ReturnMap(){v4SetProgressTime();if(v4AllLayerResultsResolved()&&S.v4RivalsComplete){S.timeMin=900;v2Status();return v4Closing()}if(S.timeMin>=900)return v4Closing();show('map')}
@@ -4330,9 +4330,11 @@ function markSkippedV663(p){
   }
   function firstLoopCautionV663(p){
     const P=people[p];
+    /* 相手が会話開始時点で明確に断っているため「見送り」ではなく撮影NG。 */
+    refuse(p);
     story(p,P.name,'「……すみません。今日は撮影しません」<br>'+P.name+'は撮影の話へ入る前に、はっきり断った。<br><span class="thought">（先に届いた評判がある。好意的な返事をしてから覆すのではなく、最初から答えは決まっていた。）</span>',[
-      ['「分かりました」と答えて離れる',()=>{S.backedOff++;markSkippedV663(p);show('map')}],
-      ['撮影を頼まず、一礼して離れる',()=>{S.backedOff++;markSkippedV663(p);show('map')}],
+      ['「分かりました」と答えて離れる',()=>{S.backedOff++;show('map')}],
+      ['撮影を頼まず、一礼して離れる',()=>{S.backedOff++;show('map')}],
       ['「噂だけで決めず、一枚だけ」と頼む',()=>{S.unease+=2;refuse(p);story(p,P.name,'「噂の説明を聞きたいわけではありません。今日は撮影しません」<br><span class="thought">（断られたあとに理由を崩そうとするのは、確認ではなく交渉だ。）</span>',[
         ['すぐに離れる',()=>{S.backedOff++;show('map')}],
         ['それでも食い下がる',()=>{recordWarningIncident(p,'評判による明確な撮影拒否後も食い下がった');endingBad('warning')}]
@@ -4502,9 +4504,11 @@ function markSkippedV663(p){
           ['もう一度だけ頼む',()=>{recordWarningIncident(p,'評判による明確な拒否後も再依頼した');endingBad('warning')}]
         ],P.img);
       }];
+    /* この場面は最初から撮影NG。安全に離れても結果を「見送り」へ戻さない。 */
+    refuse(p);
     story(p,P.name,lead+'<br>'+P.name+'は撮影の話へ入る前に距離を取った。<br><span class="thought">'+historyThought+'</span>',[
-      ['撮影を頼まず、短く会釈して離れる',()=>{S.backedOff++;markSkippedV663(p);mapBack()}],
-      ['何も言わず離れる',()=>{markSkippedV663(p);mapBack()}],
+      ['撮影を頼まず、短く会釈して離れる',()=>{S.backedOff++;mapBack()}],
+      ['何も言わず離れる',()=>{mapBack()}],
       thirdChoice
     ],P.img);
   }
@@ -4783,12 +4787,105 @@ window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
 </script>
 
 <script>
-/* === Ver.6.73: 厳密神カメコ条件（両周全員撮影＋総合S必須） === */
+/* === Ver.6.74: 撮影ガイド・操作案内・撮影NG表示整合 === */
 (function(){
   const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.73';
+  if(versionEl)versionEl.textContent='Ver. 6.74';
   window.__CHUDOME_V672__={revisitText:true,singleLeaveButton:true,recoveryEndingPriority:true};
   window.__CHUDOME_V673__={strictGodEnding:true,requiresBothLoopsAllFive:true,requiresGradeS:true,requiresTotal90:true};
+  window.__CHUDOME_V674__={cameraGuide:true,actionableFeedback:true,ngDisplayConsistency:true};
+})();
+</script>
+
+<style id="cameraGuideV674Style">
+#cameraHelpV674{position:fixed;z-index:9500;top:calc(12px + env(safe-area-inset-top));right:78px;width:48px;height:48px;border:2px solid #8fd2ff;border-radius:50%;background:#092f50;color:#fff;font-size:27px;font-weight:900;line-height:1;box-shadow:0 3px 12px #0009;display:none}
+#shoot.active #cameraHelpV674{display:block}
+#cameraGuideV674{position:fixed;z-index:20000;inset:0;background:#020914ef;display:none;align-items:center;justify-content:center;padding:18px;overflow-y:auto}
+#cameraGuideV674.open{display:flex}
+.cameraGuideCardV674{width:min(100%,560px);background:#07182a;border:2px solid #79c9ff;border-radius:16px;color:#fff;padding:20px;box-shadow:0 12px 40px #000}
+.cameraGuideCardV674 h2{margin:0 0 14px;text-align:center;color:#9bd8ff;font-size:25px}
+.cameraGuideCardV674 p{font-size:17px;line-height:1.7;margin:9px 0}
+.cameraGuideStepsV674{background:#020b15;border:1px solid #39688b;border-radius:10px;padding:12px 14px;margin:14px 0}
+.cameraGuideGradesV674{display:grid;grid-template-columns:1fr 1fr;gap:7px;font-size:16px;margin:14px 0}
+.cameraGuideGradesV674 span{background:#102a42;border-radius:7px;padding:8px}
+.cameraGuideHideV674{display:flex;gap:9px;align-items:center;font-size:15px;margin:13px 0}
+.cameraGuideHideV674 input{width:21px;height:21px}
+#cameraGuideCloseV674{width:100%;min-height:52px;border:2px solid #8fd2ff;border-radius:9px;background:#0d426d;color:#fff;font-weight:900;font-size:19px}
+#shotHint .v674Ready{color:#74ffae;font-size:20px}
+#shotHint .v674Action{color:#ffe27a;font-size:18px}
+</style>
+
+<script>
+/* === Ver.6.74: 初回撮影チュートリアルと操作直結フィードバック === */
+(function(){
+  let guideOpenedAt=0;
+  function ensureCameraGuideV674(){
+    if(document.getElementById('cameraGuideV674'))return;
+    const help=document.createElement('button');
+    help.id='cameraHelpV674';help.type='button';help.setAttribute('aria-label','撮影の遊び方');help.textContent='？';
+    help.onclick=()=>openCameraGuideV674(false);
+    (document.getElementById('shoot')||document.body).appendChild(help);
+    const guide=document.createElement('div');
+    guide.id='cameraGuideV674';guide.setAttribute('role','dialog');guide.setAttribute('aria-modal','true');
+    guide.innerHTML=`<div class="cameraGuideCardV674">
+      <h2>撮影のコツ</h2>
+      <div class="cameraGuideStepsV674">
+        <p><b>① 左・右、寄る・引く</b>で画面の案内に合わせよう。</p>
+        <p><b>②「構図OK」「距離OK」</b>になったら位置合わせ完了。</p>
+        <p><b>③「ポージングが定まった！」</b>の瞬間にシャッターを押そう。</p>
+        <p>「ポーズ調整中」や「動いている！」で撮ると減点されます。</p>
+      </div>
+      <div class="cameraGuideGradesV674"><span><b>◎</b> とても良い</span><span><b>○</b> 良い</span><span><b>△</b> 惜しい</span><span><b>×</b> 大きくズレている</span></div>
+      <label class="cameraGuideHideV674"><input id="cameraGuideHideV674" type="checkbox">次回から自動表示しない</label>
+      <button id="cameraGuideCloseV674" type="button">撮影を始める</button>
+    </div>`;
+    document.body.appendChild(guide);
+    document.getElementById('cameraGuideCloseV674').onclick=closeCameraGuideV674;
+  }
+  function openCameraGuideV674(auto){
+    ensureCameraGuideV674();
+    const guide=document.getElementById('cameraGuideV674');
+    const close=document.getElementById('cameraGuideCloseV674');
+    const hide=document.getElementById('cameraGuideHideV674');
+    if(hide)hide.checked=false;
+    if(close)close.textContent=auto?'撮影を始める':'撮影へ戻る';
+    guideOpenedAt=performance.now();
+    if(poseChanceTimer)clearInterval(poseChanceTimer);
+    guide.classList.add('open');
+  }
+  function closeCameraGuideV674(){
+    const guide=document.getElementById('cameraGuideV674');
+    const hide=document.getElementById('cameraGuideHideV674');
+    if(hide&&hide.checked){try{localStorage.setItem('chudomeCameraGuideHiddenV674','1')}catch(e){}}
+    if(S.cam&&guideOpenedAt)S.cam.poseCycleStart+=performance.now()-guideOpenedAt;
+    guideOpenedAt=0;
+    if(guide)guide.classList.remove('open');
+    if(S.cam){startPoseChanceTimer();renderCam()}
+  }
+  const renderCamV674=renderCam;
+  renderCam=function(){
+    const r=renderCamV674.apply(this,arguments);
+    if(!S.cam)return r;
+    const ideal=(SHOTIDEAL[S.currentShoot]||SHOTIDEAL.outdoor)[S.cam.pose%6];
+    const dx=S.cam.x-ideal[0],dz=S.cam.z-ideal[1];
+    const hOk=Math.abs(dx)<=9,dOk=Math.abs(dz)<=.06;
+    const hText=hOk?'構図OK':(dx>0?'◀ 左へ動かそう':'右へ動かそう ▶');
+    const dText=dOk?'距離OK':(dz>0?'引こう':'寄ろう');
+    const hint=document.getElementById('shotHint');
+    if(hint)hint.innerHTML=hOk&&dOk
+      ?'<b class="v674Ready">構図・距離OK！<br>シャッターチャンスを待とう</b>'
+      :'<b class="v674Action">構図：'+hText+'<br>距離：'+dText+'</b>';
+    return r;
+  };
+  const startShootV674=startShoot;
+  startShoot=function(place){
+    const r=startShootV674.apply(this,arguments);
+    ensureCameraGuideV674();
+    let hidden=false;try{hidden=localStorage.getItem('chudomeCameraGuideHiddenV674')==='1'}catch(e){}
+    if(!hidden&&!S.cameraGuideShownV674){S.cameraGuideShownV674=true;openCameraGuideV674(true)}
+    return r;
+  };
+  ensureCameraGuideV674();
 })();
 </script>
 
