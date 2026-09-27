@@ -1447,7 +1447,8 @@ function secondLoopEnding(){
  if(!protectedRep&&severe)return secondLoopBadEnding('abyss');
  if(!protectedRep&&(S.pressureLog.length>0||S.creep+S.rude>=3||S.unease+S.rivalFlags>=8))return secondLoopBadEnding('distance');
  theme('good');show('end');$('#ending').className='endScene good';
- if(isGodKameko()||(score.grade==='S'&&score.total>=90&&S.priorShot.size===5&&q.done>=5&&q.avg>=90)){
+ /* 神カメコENDは厳密条件をすべて満たしたうえで、総合S・90点以上を必須とする。 */
+ if(isGodKameko()&&score.grade==='S'&&score.total>=90){
   setEndPosterMode('god');
   $('#endTitle').textContent='TRUE END　神カメコ';
   $('#endBody').innerHTML=`<div class="endGallery storyGallery"><img class="wide" src="${ENDIMG.end_good_venue}"><img src="${IMG.yukina}"><img src="${IMG.karen}"></div><div class="endChapter">二度目のちゅどーむ ― 閉場後</div><div class="endText">五人全員の撮影が終わった。誰かに急かされることも、誰かを急かすこともなかった。撮った写真はどれも強く、最高の一枚は${q.max}点。平均は${q.avg}点。</div><div class="endChapter">翌朝 ― 通知が止まらない</div><div class="post"><b>雪奈</b><br>次もお願いしたいです！<br><br><b>カレン</b><br>次は作品撮りで相談できますか？<br><br><b>みく</b><br>友達にもマボさん紹介していいですか？</div><div class="endText">DMは一件ではなかった。イベントで知り合ったレイヤーから、さらに別のレイヤーへ名前が伝わっていく。今度は噂が先ではない。写真が先に届き、その後から名前がついていった。</div><div class="endImpact">「撮ってください」と頼む側だった男が、ついに「撮ってほしい」と頼まれる側になった。</div><div class="endText"><b>レイヤー評判：神カメコ<br>カメコランク：Sクラス<br>マボの名前は、ちゅどーむから消えなかった。写真と一緒に残った。</b></div>`;
@@ -4782,11 +4783,12 @@ window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
 </script>
 
 <script>
-/* === Ver.6.72: 再訪テキスト・重複ボタン・回復後エンディング優先順位 === */
+/* === Ver.6.73: 厳密神カメコ条件（両周全員撮影＋総合S必須） === */
 (function(){
   const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.72';
+  if(versionEl)versionEl.textContent='Ver. 6.73';
   window.__CHUDOME_V672__={revisitText:true,singleLeaveButton:true,recoveryEndingPriority:true};
+  window.__CHUDOME_V673__={strictGodEnding:true,requiresBothLoopsAllFive:true,requiresGradeS:true,requiresTotal90:true};
 })();
 </script>
 
