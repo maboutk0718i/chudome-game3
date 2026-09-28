@@ -4574,9 +4574,10 @@ function markSkippedV663(p){
   }
   function cautiousContinueV667(loop2){
     const q=statsV667();
-    setEndPosterMode('continue');theme('field');show('end');
-    document.getElementById('ending').className='endScene';
-    document.getElementById('endTitle').textContent='CONTINUE END　信頼はまだ戻らない';
+    S.badResultKindV648='distance';
+    setEndPosterMode('bad');theme('bad');show('end');
+    document.getElementById('ending').className='endScene bad';
+    document.getElementById('endTitle').textContent='BAD END　信頼はまだ戻らない';
     document.getElementById('endBody').innerHTML=`
       <div class="endGallery"><img class="wide" src="${IMG.venue}"></div>
       <div class="endChapter">${loop2?'二度目のちゅどーむ ― 閉場後':'閉場後 ― ちゅどーむ会場'}</div>
@@ -4742,6 +4743,19 @@ function markSkippedV663(p){
   function oneNgContinueV670(){
     const q=statsV670();
     const rank=typeof layerRepName==='function'?layerRepName():'微妙なカメコ';
+    if(rank==='要警戒カメコ'){
+      S.badResultKindV648='distance';
+      setEndPosterMode('bad');theme('bad');show('end');
+      document.getElementById('ending').className='endScene bad';
+      document.getElementById('endTitle').textContent='BAD END　信頼はまだ戻らない';
+      document.getElementById('endBody').innerHTML=`
+        <div class="endGallery"><img class="wide" src="${IMG.venue}"></div>
+        <div class="endChapter">二度目のちゅどーむ ― 閉場後</div>
+        <div class="endText">撮影できた相手はいた。けれど、断られた相手との距離は埋まらず、以前からの警戒も残った。</div>
+        <div class="endImpact">写真を撮れたことだけでは、失った信頼は戻らない。</div>
+        <div class="endText">次に会うときも、相手の返事を尊重するしかない。<br><br><b>撮影済 ${q.done}人 ／ 撮影NG ${q.ng}人<br>レイヤー評判：要警戒カメコ<br>SPECIAL ENDING 未到達</b></div>`;
+      return;
+    }
     setEndPosterMode('continue');theme('field');show('end');
     document.getElementById('ending').className='endScene';
     document.getElementById('endTitle').textContent='CONTINUE END　信頼はまだ戻らない';
@@ -4886,6 +4900,23 @@ window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
     return r;
   };
   ensureCameraGuideV674();
+})();
+</script>
+
+<script>
+/* === Ver.6.77: 要警戒カメコの総合評価はC以下 === */
+(function(){
+  const previousResult=v2Result;
+  v2Result=function(){
+    const result={...previousResult.apply(this,arguments)};
+    if(typeof layerRepName==='function'&&layerRepName()==='要警戒カメコ'&&['S','A','B'].includes(result.grade)){
+      result.total=Math.min(Number(result.total||0),69);
+      result.grade='C';
+    }
+    return result;
+  };
+  const versionEl=document.querySelector('.titleVersion');
+  if(versionEl)versionEl.textContent='Ver. 6.77';
 })();
 </script>
 
