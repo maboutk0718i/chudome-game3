@@ -4790,16 +4790,15 @@ window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
 /* === Ver.6.74: 撮影ガイド・操作案内・撮影NG表示整合 === */
 (function(){
   const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.74';
+  if(versionEl)versionEl.textContent='Ver. 6.75';
   window.__CHUDOME_V672__={revisitText:true,singleLeaveButton:true,recoveryEndingPriority:true};
   window.__CHUDOME_V673__={strictGodEnding:true,requiresBothLoopsAllFive:true,requiresGradeS:true,requiresTotal90:true};
   window.__CHUDOME_V674__={cameraGuide:true,actionableFeedback:true,ngDisplayConsistency:true};
+  window.__CHUDOME_V675__={guideBeforeEveryShoot:true,helpButtonRemoved:true};
 })();
 </script>
 
 <style id="cameraGuideV674Style">
-#cameraHelpV674{position:fixed;z-index:9500;top:calc(12px + env(safe-area-inset-top));right:78px;width:48px;height:48px;border:2px solid #8fd2ff;border-radius:50%;background:#092f50;color:#fff;font-size:27px;font-weight:900;line-height:1;box-shadow:0 3px 12px #0009;display:none}
-#shoot.active #cameraHelpV674{display:block}
 #cameraGuideV674{position:fixed;z-index:20000;inset:0;background:#020914ef;display:none;align-items:center;justify-content:center;padding:18px;overflow-y:auto}
 #cameraGuideV674.open{display:flex}
 .cameraGuideCardV674{width:min(100%,560px);background:#07182a;border:2px solid #79c9ff;border-radius:16px;color:#fff;padding:20px;box-shadow:0 12px 40px #000}
@@ -4821,10 +4820,6 @@ window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
   let guideOpenedAt=0;
   function ensureCameraGuideV674(){
     if(document.getElementById('cameraGuideV674'))return;
-    const help=document.createElement('button');
-    help.id='cameraHelpV674';help.type='button';help.setAttribute('aria-label','撮影の遊び方');help.textContent='？';
-    help.onclick=()=>openCameraGuideV674(false);
-    (document.getElementById('shoot')||document.body).appendChild(help);
     const guide=document.createElement('div');
     guide.id='cameraGuideV674';guide.setAttribute('role','dialog');guide.setAttribute('aria-modal','true');
     guide.innerHTML=`<div class="cameraGuideCardV674">
@@ -4882,7 +4877,7 @@ window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
     const r=startShootV674.apply(this,arguments);
     ensureCameraGuideV674();
     let hidden=false;try{hidden=localStorage.getItem('chudomeCameraGuideHiddenV674')==='1'}catch(e){}
-    if(!hidden&&!S.cameraGuideShownV674){S.cameraGuideShownV674=true;openCameraGuideV674(true)}
+    if(!hidden)openCameraGuideV674(true);
     return r;
   };
   ensureCameraGuideV674();
