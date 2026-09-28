@@ -4790,11 +4790,12 @@ window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
 /* === Ver.6.74: 撮影ガイド・操作案内・撮影NG表示整合 === */
 (function(){
   const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.75';
+  if(versionEl)versionEl.textContent='Ver. 6.76';
   window.__CHUDOME_V672__={revisitText:true,singleLeaveButton:true,recoveryEndingPriority:true};
   window.__CHUDOME_V673__={strictGodEnding:true,requiresBothLoopsAllFive:true,requiresGradeS:true,requiresTotal90:true};
   window.__CHUDOME_V674__={cameraGuide:true,actionableFeedback:true,ngDisplayConsistency:true};
   window.__CHUDOME_V675__={guideBeforeEveryShoot:true,helpButtonRemoved:true};
+  window.__CHUDOME_V676__={guideSuppressionCurrentRunOnly:true,resetAtTitleStart:true};
 })();
 </script>
 
@@ -4818,6 +4819,11 @@ window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
 /* === Ver.6.74: 初回撮影チュートリアルと操作直結フィードバック === */
 (function(){
   let guideOpenedAt=0;
+  let hideGuideThisRun=false;
+  // A new game begins at the title. Keep the choice through loop two, then reset here.
+  document.getElementById('press').addEventListener('click',()=>{hideGuideThisRun=false});
+  // Clear the old persistent preference from Ver.6.74/6.75.
+  try{localStorage.removeItem('chudomeCameraGuideHiddenV674')}catch(e){}
   function ensureCameraGuideV674(){
     if(document.getElementById('cameraGuideV674'))return;
     const guide=document.createElement('div');
@@ -4851,7 +4857,7 @@ window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
   function closeCameraGuideV674(){
     const guide=document.getElementById('cameraGuideV674');
     const hide=document.getElementById('cameraGuideHideV674');
-    if(hide&&hide.checked){try{localStorage.setItem('chudomeCameraGuideHiddenV674','1')}catch(e){}}
+    if(hide&&hide.checked)hideGuideThisRun=true;
     if(S.cam&&guideOpenedAt)S.cam.poseCycleStart+=performance.now()-guideOpenedAt;
     guideOpenedAt=0;
     if(guide)guide.classList.remove('open');
@@ -4876,8 +4882,7 @@ window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
   startShoot=function(place){
     const r=startShootV674.apply(this,arguments);
     ensureCameraGuideV674();
-    let hidden=false;try{hidden=localStorage.getItem('chudomeCameraGuideHiddenV674')==='1'}catch(e){}
-    if(!hidden)openCameraGuideV674(true);
+    if(!hideGuideThisRun)openCameraGuideV674(true);
     return r;
   };
   ensureCameraGuideV674();
