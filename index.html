@@ -4581,7 +4581,7 @@ function markSkippedV663(p){
     document.getElementById('endBody').innerHTML=`
       <div class="endGallery"><img class="wide" src="${IMG.venue}"></div>
       <div class="endChapter">${loop2?'二度目のちゅどーむ ― 閉場後':'閉場後 ― ちゅどーむ会場'}</div>
-      <div class="endText">撮影できた相手はいた。写真も残った。<br><br>けれど、以前に生まれた警戒が今日一日だけで消えたわけではない。会話が続いた相手も、最後まで少し距離を残していた。</div>
+      <div class="endText">撮影できた相手はいた。写真も残った。<br><br>けれど、${loop2?'前回から残る警戒':'今日生まれた警戒'}が、最後まで消えたわけではない。会話が続いた相手も、少し距離を残していた。</div>
       <div class="endImpact">撮れたことと、信頼を取り戻したことは同じではない。</div>
       <div class="endText">急いで距離を縮めようとせず、次も相手の返事を尊重するしかない。<br><br><b>撮影済 ${q.done}人 ／ 撮影NG ${q.ng}人<br>レイヤー評判：要警戒カメコ</b></div>`;
   }
@@ -4697,7 +4697,7 @@ function markSkippedV663(p){
     setEndPosterMode('continue');theme('field');show('end');
     document.getElementById('ending').className='endScene';
     document.getElementById('endTitle').textContent='CONTINUE END　信頼はまだ戻らない';
-    document.getElementById('endBody').innerHTML=`<div class="endGallery"><img class="wide" src="${IMG.venue}"></div><div class="endChapter">二度目のちゅどーむ ― 閉場後</div><div class="endText">最初に会った相手への撮影は諦めた。その後、撮影できた相手と写真は残った。<br><br>けれど、一度生まれた警戒が今日一日で消えたわけではない。</div><div class="endImpact">撮影できたことと、信頼を取り戻したことは同じではない。</div><div class="endText">それでも、無理に距離を縮めずに終えた今日は、前回とは違う。<br><br><b>撮影済 ${done}人 ／ 撮影NG ${ng}人<br>レイヤー評判：微妙なカメコ<br>SPECIAL ENDING 未到達</b></div>`;
+    document.getElementById('endBody').innerHTML=`<div class="endGallery"><img class="wide" src="${IMG.venue}"></div><div class="endChapter">二度目のちゅどーむ ― 閉場後</div><div class="endText">一人への撮影を見送り、ほかの相手との撮影もできた。写真は残った。<br><br>けれど、一度生まれた警戒が今日一日で消えたわけではない。</div><div class="endImpact">撮影できたことと、信頼を取り戻したことは同じではない。</div><div class="endText">それでも、無理に距離を縮めずに終えた今日は、前回とは違う。<br><br><b>撮影済 ${done}人 ／ 撮影NG ${ng}人<br>レイヤー評判：微妙なカメコ<br>SPECIAL ENDING 未到達</b></div>`;
   }
   function severeV668(){
     return !!((S.warningIncidents||[]).length||(S.pressureLog||[]).length||
@@ -4920,4 +4920,94 @@ window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
 })();
 </script>
 
+<script>
+/* === Ver.6.78: 再訪・評判・見送り・評価表示の整合性 === */
+(function(){
+  const places=['outdoor','indoor','rest','east','entrance'];
+  const names=['無名','顔を覚えられ始めた','少し知られている','好印象','評判が良い','信頼されている','人気カメコ'];
+  const oldCount=v4ResolvedLayerCount;
+  v4ResolvedLayerCount=function(){
+    if(!S.skippedV663||typeof S.skippedV663.has!=='function')return oldCount();
+    return places.filter(p=>S.shotDone.has(p)||S.refused.has(p)||S.skippedV663.has(p)).length;
+  };
+  const oldSkip=markSkippedV663;
+  markSkippedV663=function(p){const result=oldSkip.apply(this,arguments);v4SetProgressTime();return result};
+  const oldShow=show;
+  show=function(id){
+    if(id==='map'&&S.v4RivalsComplete&&v4AllLayerResultsResolved()&&!S.v4ClosingShown)return v4Closing();
+    return oldShow.apply(this,arguments);
+  };
+  function effectiveTier(){
+    const index=names.indexOf(layerRepName());
+    return index<0?layerRepTier():Math.min(layerRepTier(),index);
+  }
+  function withEffectiveTier(fn,args,ctx){
+    const tier=effectiveTier(),previous=layerRepTier;
+    layerRepTier=function(){return tier};
+    try{return fn.apply(ctx,args)}finally{layerRepTier=previous}
+  }
+  const oldGreeting=loop2RepGreeting,oldOffer=loop2RepOffer;
+  loop2RepGreeting=function(){return withEffectiveTier(oldGreeting,arguments,this)};
+  loop2RepOffer=function(){return withEffectiveTier(oldOffer,arguments,this)};
+  const oldPostShoot=postShootVisit;
+  postShootVisit=function(p){
+    if(layerRepName()==='要警戒カメコ'||layerRepName()==='ブラックリスト級カメコ'){
+      story(p,people[p].name,'撮影はすでに終わっている。相手は短く会釈したが、今は距離を置いている。<br><span class="thought">（写真が残ったことと、今の警戒が解けたことは別だ。）</span>',[['こちらも会釈して離れる',()=>{S.backedOff++;show('map')}]],people[p].img);
+      return;
+    }
+    return oldPostShoot.apply(this,arguments);
+  };
+  const oldReiji=reijiEncounter;
+  reijiEncounter=function(){S.reijiSeenV678=true;return oldReiji.apply(this,arguments)};
+  function unresolved(p){
+    return S.met.has(p)&&!S.shotDone.has(p)&&!S.refused.has(p)&&
+      !(S.skippedV663&&S.skippedV663.has(p))&&!(S.closedV663&&S.closedV663.has(p))&&
+      !(S.permissionV663&&S.permissionV663.has(p));
+  }
+  function revisit(p){
+    const P=people[p];
+    story(p,P.name,'さっき話した'+P.name+'がいる。今も相手の都合を確かめてから、短く声を掛けられそうだ。<br><span class="thought">（同じ挨拶を繰り返しても、信頼は増えない。）</span>',[
+      ['撮影できるか、あらためて短く確認する',()=>{
+        if(S.loop===2){
+          if(S.revisitOfferUsedV678?.has(p))return story(p,P.name,'「今日はここまでにしておきます」',[['会場マップへ戻る',()=>{markSkippedV663(p);show('map')}]],P.img);
+          if(!(S.revisitOfferUsedV678 instanceof Set))S.revisitOfferUsedV678=new Set();
+          S.revisitOfferUsedV678.add(p);
+          return loop2ShootOffer(p);
+        }
+        if(p==='outdoor'){
+          if(!S.reijiSeenV678)return reijiEncounter();
+          return story(p,P.name,'「短めなら、今撮影できます」',[['撮影を始める',()=>startShoot(p)],['今日は撮影せず離れる',()=>{markSkippedV663(p);show('map')}]],P.img);
+        }
+        if(p==='rest')return story(p,P.name,'「休憩が終わったので、短めなら大丈夫です」',[['撮影を始める',()=>startShoot(p)],['今日は撮影せず離れる',()=>{markSkippedV663(p);show('map')}]],P.img);
+        return story(p,P.name,'「短めなら大丈夫です。希望を確認しながらお願いします」',[['撮影を始める',()=>startShoot(p)],['今日は撮影せず離れる',()=>{markSkippedV663(p);show('map')}]],P.img);
+      }],
+      ['今日は撮影せず離れる',()=>{markSkippedV663(p);show('map')}],
+      ['マップへ戻る',()=>show('map')]
+    ],P.img);
+  }
+  const oldVisit=visit;
+  visit=function(p){
+    if(!places.includes(p))return oldVisit.apply(this,arguments);
+    if(S.shotDone.has(p))return postShootVisit(p);
+    if(S.refused.has(p)||S.skippedV663?.has(p)||S.closedV663?.has(p)||S.permissionV663?.has(p)){
+      // Ver.6.68 の評判回復演出を、結果確定済みの相手には割り込ませない。
+      const recovery=S.layerRecoveryUsedV668;
+      S.layerRecoveryUsedV668=true;
+      try{return oldVisit.apply(this,arguments)}finally{S.layerRecoveryUsedV668=recovery}
+    }
+    if(unresolved(p)&&!['要警戒カメコ','ブラックリスト級カメコ'].includes(layerRepName()))return revisit(p);
+    return oldVisit.apply(this,arguments);
+  };
+  const oldResultHTML=v2ResultHTML;
+  v2ResultHTML=function(){
+    const html=oldResultHTML.apply(this,arguments),r=v2Result();
+    const average=Math.round((r.tech+r.comm+r.dist+r.cam)/4);
+    if(average===r.total)return html;
+    return html.replace('終了時刻：'+v2Clock()+'　総合：'+r.total,
+      '終了時刻：'+v2Clock()+'　項目平均：'+average+'<br>判定補正後の総合：'+r.total);
+  };
+  const versionEl=document.querySelector('.titleVersion');
+  if(versionEl)versionEl.textContent='Ver. 6.78';
+})();
+</script>
 </body></html>
