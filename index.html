@@ -1801,7 +1801,7 @@ window.addEventListener('load',()=>{
   window.rioTextureTalk=function(){
     S.trust+=1;
     story('indoor','りお','「この生地、光が当たると少し透ける感じになるんです。そこが気に入ってて」<br><span class="thought">（ちゃんと理由があるんだな。ここからの一言で“衣装を見てる人”にも“分かったふりする人”にもなる。）</span>',[
-      ['「じゃあ、その透け感が出る位置で撮りたいです」',()=>{S.trust+=2;S.rep++;S.bond.indoor=(S.bond.indoor||0)+2;story('indoor','りお','「それ、いいですね。光が入るところでお願いします」<br><span class="thought">（見せたい部分を拾えた。これは素直に撮影へつなげてよさそうだ。）</span>',[['撮影をお願いする',()=>other('indoor',true)]])}],
+      ['「じゃあ、その透け感が出る位置で撮りたいです」',()=>{S.trust+=2;S.rep++;S.bond.indoor=(S.bond.indoor||0)+2;story('indoor','りお','「それ、いいですね。光が入るところでお願いします」<br><span class="thought">（見せたい部分を拾えた。六枚、落ち着いて撮ろう。）</span>',[['撮影を始める',()=>startShoot('indoor')]])}],
       ['「なるほど、結構高そうな生地ですね」',()=>{S.unease++;S.bond.indoor=Math.max(-5,(S.bond.indoor||0)-1);story('indoor','りお','「……値段は別に、そこじゃないです」<br>りおは一瞬だけ視線を落とした。<br><span class="thought">（質感の話から値段に飛んだ。聞きたかったのはそこじゃなかったらしい。）</span>',[['話を戻して撮影の希望を聞く',()=>other('indoor',true)],['今日は離れる',()=>show('map')]])}],
       ['「写真なら加工で何とでもなりますよ」',()=>{S.unease+=3;S.rude++;S.bond.indoor=Math.max(-5,(S.bond.indoor||0)-2);story('indoor','りお','「……それなら、衣装を工夫した意味ないですよね」<br>りおの声が明らかに冷たくなった。<br><span class="thought">（最悪だ。相手がこだわってる部分を“後で直せる”で片付けた。）</span>',[['「すみません、言い方が悪かったです」と引く',()=>{S.backedOff++;show('map')}],['それでも撮影をお願いする',()=>{S.unease+=2;refuse('indoor');story('indoor','りお','「今日はやめておきます」',[['離れる',()=>show('map')]])}]])}]
     ]);
@@ -5007,7 +5007,7 @@ window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
       '終了時刻：'+v2Clock()+'　項目平均：'+average+'<br>判定補正後の総合：'+r.total);
   };
   const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.78';
+  if(versionEl)versionEl.textContent='Ver. 6.79';
 })();
 </script>
 </body></html>
