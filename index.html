@@ -1215,9 +1215,9 @@ function visit(p){
  if(S.shotDone.has(p)){postShootVisit(p);return}
  if(S.refused.has(p)){story(p,P.name,P.intro+'<br><span class="thought">（この人には一度撮影を断られている。今日はもう撮影をお願いしない。）</span>',[['挨拶だけする',()=>{S.rep++;show('map')}],['静かにその場を離れる',()=>show('map')],['マップへ戻る',()=>show('map')]]);return}
  if(p==='outdoor'){story(p,'マボ',P.intro+'<br><span class="thought">（いきなりカメラを向けるのは違う。まず、どう入る……？）</span>',[[LAYER_AMBIGUOUS.outdoor.label,()=>ambiguousLayerChoice('outdoor')],['脳内で声かけを3回リハーサルする',()=>yukinaRehearsal()],['撮影できるタイミングか確認する',()=>{S.trust++;talk(p)}],['雪奈に短く挨拶する',()=>talk(p)],['マップへ戻る',()=>show('map')]]);return}
- if(p==='indoor'){story(p,'マボ',P.intro+'<br><span class="thought">（黒衣装と壁の陰影が合いそうだ。……でも知ったかぶりは一発でバレる。作品の話を聞くか、俺の撮りたい絵を短く伝えるか。）</span>',[[LAYER_AMBIGUOUS.indoor.label,()=>ambiguousLayerChoice('indoor')],['衣装の一部を指して「そこ触って直していい？」と聞く',()=>rioTouchNgV656()],['「暗めの雰囲気で撮りたい」と提案する',()=>{S.trust++;S.bond.indoor++;other('indoor',true)}],['衣装の質感について聞く',()=>rioTextureTalk()],['「ノドチンコ撮影させて下さい」と頼む',()=>creepyRequestV681('indoor','throat')],['マップへ戻る',()=>show('map')]]);return}
+ if(p==='indoor'){story(p,'マボ',P.intro+'<br><span class="thought">（黒衣装と壁の陰影が合いそうだ。……でも知ったかぶりは一発でバレる。作品の話を聞くか、俺の撮りたい絵を短く伝えるか。）</span>',[[LAYER_AMBIGUOUS.indoor.label,()=>ambiguousLayerChoice('indoor')],['衣装の一部を指して「そこ触って直していい？」と聞く',()=>rioTouchNgV656()],['「暗めの雰囲気で撮りたい」と提案する',()=>{S.trust++;S.bond.indoor++;other('indoor',true)}],['衣装の質感について聞く',()=>rioTextureTalk()],['「脱いだ靴下、買います」と言う',()=>creepyRequestV681('indoor','socks')],['マップへ戻る',()=>show('map')]]);return}
  if(p==='rest'){story(p,'マボ',P.intro+'<br><span class="thought">（休憩中だ。ここで撮影を急かしたら、写真以前の問題になる。……でも声だけ掛けて存在を覚えてもらいたい欲もある。欲、引っ込め。）</span>',[[LAYER_AMBIGUOUS.rest.label,()=>ambiguousLayerChoice('rest')],['「休憩してる自然な感じも一枚いい？」と頼む',()=>layerTrap('rest')],['休憩が終わるまで離れて待つ',()=>{S.trust+=2;S.bond.rest+=2;observe('rest')}],['「休憩後で大丈夫です」とだけ伝える',()=>{S.trust++;S.bond.rest++;other('rest',true)}],['マップへ戻る',()=>show('map')]]);return}
- if(p==='east'){story(p,'マボ',P.intro+'<br><span class="thought">（背景と光を見ている。カレンは作品としての完成度を気にしてそうだ。どこまで任せて、どこから自分の意図を出すか……。）</span>',[['「カレンさんのやりやすい感じでお願いします」と任せる',()=>layerTrap('east')],[LAYER_AMBIGUOUS.east.label,()=>ambiguousLayerChoice('east')],['カレンの希望する構図を聞く',()=>{S.trust+=2;S.bond.east+=2;other('east',true)}],['「この背景を活かして撮りたい」と話す',()=>{S.trust+=2;S.bond.east+=2;other('east',true)}],['「おヘソ撮影させて下さい」と頼む',()=>creepyRequestV681('east','navel')],['マップへ戻る',()=>show('map')]]);return}
+ if(p==='east'){story(p,'マボ',P.intro+'<br><span class="thought">（背景と光を見ている。カレンは作品としての完成度を気にしてそうだ。どこまで任せて、どこから自分の意図を出すか……。）</span>',[['「カレンさんのやりやすい感じでお願いします」と任せる',()=>layerTrap('east')],[LAYER_AMBIGUOUS.east.label,()=>ambiguousLayerChoice('east')],['カレンの希望する構図を聞く',()=>{S.trust+=2;S.bond.east+=2;other('east',true)}],['「この背景を活かして撮りたい」と話す',()=>{S.trust+=2;S.bond.east+=2;other('east',true)}],['「もっと色っぽくしたいので、胸元を少しずらしてもらえますか？」と頼む',()=>creepyRequestV681('east','neckline')],['マップへ戻る',()=>show('map')]]);return}
  story(p,'マボ',P.intro+'<br><span class="thought">（友達待ちなら長話はできない。短時間で済むことを先に伝える。……「せっかく来たんだから」は俺の都合。飲み込め。）</span>',[['まず軽く挨拶して待ち時間を聞く',()=>{S.trust++;S.bond.entrance++;talk('entrance')}],[LAYER_AMBIGUOUS.entrance.label,()=>ambiguousLayerChoice('entrance')],['「友達が来てもあと5分だけ」と先に頼む',()=>layerTrap('entrance')],['「友達が来るまで2〜3分だけ」と確認する',()=>{S.trust+=2;S.bond.entrance+=2;other('entrance',true)}],['マップへ戻る',()=>show('map')]])
 }
 function yukinaRehearsal(){
@@ -5011,7 +5011,7 @@ window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
 })();
 </script>
 <script>
-/* === Ver.6.81: レイヤー別の非常識な撮影依頼 === */
+/* === Ver.6.83: レイヤー別の非常識な依頼 === */
 function creepyRequestV681(p,kind){
   const P=people[p];
   S.explicitInappropriateRequestV682=true;
@@ -5019,13 +5019,17 @@ function creepyRequestV681(p,kind){
   S.rude+=2;
   S.bond[p]=Math.max(-5,(S.bond[p]||0)-2);
   refuse(p);
-  const reply=kind==='navel'
-    ?'「おヘソだけを撮るんですか？ それは嫌です。今日は撮影しません」<br>カレンは衣装を押さえ、はっきり距離を取った。'
-    :'「口の中を撮るってことですか？ 無理です。今日は撮影しません」<br>りおはスマホを下ろし、一歩離れた。';
-  story(p,P.name,reply+'<br><span class="thought">（作品や衣装の話をせず、身体の一部だけを求めた。警戒されて当然だ。）</span>',[
+  const reply=kind==='neckline'
+    ?'「衣装をずらすつもりはありません。今日は撮影もお断りします」<br>カレンは胸元を押さえ、はっきり距離を取った。'
+    :'「……靴下を売るつもりはありません。撮影もしません」<br>りおはスマホを下ろし、一歩離れた。';
+  const thought=kind==='neckline'
+    ?'（作品の相談に見せかけて、衣装をずらすよう求めた。警戒されて当然だ。）'
+    :'（衣装の質感の話から、急に脱いだ靴下の売買。撮影の話ですらない。）';
+  story(p,P.name,reply+'<br><span class="thought">'+thought+'</span>',[
     ['「すみません」とすぐ離れる',()=>{S.backedOff++;show('map')}],
-    ['「一枚だけ」と食い下がる',()=>{
-      recordWarningIncident(p,kind==='navel'?'へその撮影を断られた後も迫った':'口内の撮影を断られた後も迫った');
+    [kind==='neckline'?'「一枚だけ」と食い下がる':'「片方だけでも」と食い下がる',()=>{
+      S.explicitInappropriateEscalatedV683=true;
+      recordWarningIncident(p,kind==='neckline'?'衣装をずらす撮影を断られた後も迫った':'着用済みの靴下の売買を断られた後も迫った');
       story(p,P.name,'「お断りしました。もう話しかけないでください」<br>周囲もこちらを見ている。<br><span class="thought">（断られた後に重ねて頼んだ。もう取り返しはつかない。）</span>',[
         ['その場を離れる',()=>{S.backedOff++;show('map')}],
         ['それでも追いかける',()=>endingBad('warning')]
@@ -5038,11 +5042,12 @@ function creepyRequestV681(p,kind){
   const previousLayerRepName=layerRepName;
   layerRepName=function(){
     const rank=previousLayerRepName.apply(this,arguments);
+    if(S.explicitInappropriateEscalatedV683)return 'ブラックリスト級カメコ';
     if(S.explicitInappropriateRequestV682&&rank!=='ブラックリスト級カメコ')return '要警戒カメコ';
     return rank;
   };
   const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.82';
+  if(versionEl)versionEl.textContent='Ver. 6.83';
 })();
 </script>
 </body></html>
