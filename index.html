@@ -5014,6 +5014,7 @@ window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
 /* === Ver.6.81: レイヤー別の非常識な撮影依頼 === */
 function creepyRequestV681(p,kind){
   const P=people[p];
+  S.explicitInappropriateRequestV682=true;
   S.unease+=3;
   S.rude+=2;
   S.bond[p]=Math.max(-5,(S.bond[p]||0)-2);
@@ -5032,6 +5033,16 @@ function creepyRequestV681(p,kind){
     }]
   ],P.img);
 }
-(function(){const versionEl=document.querySelector('.titleVersion');if(versionEl)versionEl.textContent='Ver. 6.81'})();
+(function(){
+  /* この二つの依頼は、NG人数だけに頼らず明示的に要警戒へ反映する。 */
+  const previousLayerRepName=layerRepName;
+  layerRepName=function(){
+    const rank=previousLayerRepName.apply(this,arguments);
+    if(S.explicitInappropriateRequestV682&&rank!=='ブラックリスト級カメコ')return '要警戒カメコ';
+    return rank;
+  };
+  const versionEl=document.querySelector('.titleVersion');
+  if(versionEl)versionEl.textContent='Ver. 6.82';
+})();
 </script>
 </body></html>
