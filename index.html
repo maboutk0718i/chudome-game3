@@ -500,7 +500,7 @@
 
 <section id="loading" class="screen active"><div class="loadingInner"><div class="loadingText">NOW LOADING...</div><div class="loadingSub">CHUDOME GAME DATA</div></div></section>
 <section id="pretitle" class="screen"><div class="pretitleInner"><button id="preludeStart" type="button">タップして開始</button><div id="preludeText" aria-live="polite"></div></div></section>
-<section id="title" class="screen"><div class="hero" id="titleTap"><img src="poses/embedded_dd1dcf349d9b5ec1.png"><div class="titleBrand">MABOX<small>presents</small></div><div class="titleVersion">Ver. 6.89</div><div class="titleLogo"><small>COSPLAY PHOTOGRAPHER ADVENTURE</small><h1>ちゅどーむに消ゆ</h1><small>― 野良カメコ・マボの一日 ―</small></div><button class="press" id="press">タップしてスタート</button><div class="fictionNote">本作品はフィクションです。登場する人物・団体・イベントおよび出来事は架空のものであり、実在のものとは関係ありません</div><div class="maker"><span class="mMark">M</span>MABOX<br><small>© 2026 MABOX</small></div></div></section>
+<section id="title" class="screen"><div class="hero" id="titleTap"><img src="poses/embedded_dd1dcf349d9b5ec1.png"><div class="titleBrand">MABOX<small>presents</small></div><div class="titleVersion">Ver. 6.90</div><div class="titleLogo"><small>COSPLAY PHOTOGRAPHER ADVENTURE</small><h1>ちゅどーむに消ゆ</h1><small>― 野良カメコ・マボの一日 ―</small></div><button class="press" id="press">タップしてスタート</button><div class="fictionNote">本作品はフィクションです。登場する人物・団体・イベントおよび出来事は架空のものであり、実在のものとは関係ありません</div><div class="maker"><span class="mMark">M</span>MABOX<br><small>© 2026 MABOX</small></div></div></section>
 <section id="intro" class="screen"><div class="top"><b>PROLOGUE</b><span>09:18</span></div><div class="art"><img src="poses/embedded_2fe3d4ea4c6bcb65.jpg"></div><div class="intro"><h2>ちゅどーむ、到着。</h2><div id="introText">札幌のコスプレイベント。<br>野良のコスプレカメラマン、マボは今日も一人で会場へ来た。<br><br><span class="thought">（今日こそ……「また撮ってください」って言われる写真を撮る。できればSNSにも載せてもらう。いや、まず普通に会話を成立させろ俺。）</span><br><br>会場には、レイヤーとカメラマン、それぞれの思惑が渦巻いている。<br>何気ない一言が、数時間後の評判を変えることもある。</div></div><div class="next"><button class="cmd" id="toMap">▶ 会場へ入る</button></div></section>
 <section class="screen" id="map">
   <div class="panel">
@@ -3919,7 +3919,7 @@ function creepyRequestV681(p,kind){
   const restart=document.getElementById('restart');
   if(restart)restart.onclick=()=>{click();showEndPoster()};
   
-  const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.89';
+  const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.90';
 })();
 </script>
 <script>
@@ -4075,9 +4075,41 @@ function creepyRequestV681(p,kind){
     if(card)card.innerHTML=card.innerHTML.replace(/撮影人数：\d+\/5/g,'撮影人数：'+S.shotDone.size+'/6');
   };
   const version=document.querySelector('.titleVersion');
-  if(version)version.textContent='Ver. 6.89';
+  if(version)version.textContent='Ver. 6.90';
   updateShotStatus();
 })();
 
 </script>
+<style id="momoaHeadSafeV690">
+.mapNpc[data-place="momoa"] .mapFace{padding:0!important;background-image:url('poses/greenhero_p0.png')!important;background-repeat:no-repeat!important;background-size:200% auto!important;background-position:60% 10%!important}
+.mapNpc.rivals{top:76%!important}
+@media(max-width:560px){.mapNpc.rivals{top:78%!important}}
+#shoot .shootView #camImg[src*="greenhero_"]{object-fit:contain!important;object-position:center top!important;transform-origin:50% 0%!important}
+#select .thumb img[src*="greenhero_"]{object-fit:contain!important;object-position:center top!important;transform:none!important}
+#sceneImg[src*="greenhero_"]{object-fit:contain!important;object-position:center top!important}
+</style>
+<script>
+(function(){
+ const face=document.querySelector('[data-area-face="momoa"]');
+ if(face&&face.tagName==='IMG'){
+   const cropped=document.createElement('span');cropped.className='mapFace';cropped.dataset.areaFace='momoa';cropped.setAttribute('role','img');cropped.setAttribute('aria-label','ももあ');face.replaceWith(cropped);
+ }
+ const previousApply=applyPoseLook;
+ applyPoseLook=function(){
+   previousApply.apply(this,arguments);
+   if(S.currentShoot!=='momoa')return;
+   const img=document.getElementById('camImg');
+   img.style.width='100%';img.style.height='calc(100% - 42px)';img.style.top='42px';img.style.left='50%';
+   img.style.transform='translateX(-50%) scale('+Number(S.cam?.z||1)+')';
+   img.style.transformOrigin='50% 0%';img.style.objectPosition='center top';
+ };
+ const previousPoster=showEndPoster;
+ showEndPoster=function(){
+   if(endPosterMode==='good'&&v2Result().grade!=='A')endPosterMode='continue';
+   return previousPoster.apply(this,arguments);
+ };
+ const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.90';
+})();
+</script>
+
 </body></html>
