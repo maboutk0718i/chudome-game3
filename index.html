@@ -494,7 +494,7 @@
  .mapNpc.rivals .mapSpot{top:91px!important;font-size:9px!important}
 }
 </style><style>
-/* Ver.7.23 エンディングの白い投稿枠を読みやすく */
+/* Ver.7.24 エンディングの白い投稿枠を読みやすく */
 .endScene .post{font-size:15px;line-height:1.75;}
 </style>
 </head><body>
@@ -504,7 +504,7 @@
 
 <section id="loading" class="screen active"><div class="loadingInner"><div class="loadingText">NOW LOADING...</div><div class="loadingSub">CHUDOME GAME DATA</div></div></section>
 <section id="pretitle" class="screen"><div class="pretitleInner"><button id="preludeStart" type="button">タップして開始</button><div id="preludeText" aria-live="polite"></div></div></section>
-<section id="title" class="screen"><div class="hero" id="titleTap"><img src="poses/embedded_dd1dcf349d9b5ec1.png"><div class="titleBrand">MABOX<small>presents</small></div><div class="titleVersion">Ver. 7.23</div><div class="titleLogo"><small>COSPLAY PHOTOGRAPHER ADVENTURE</small><h1>ちゅどーむに消ゆ</h1><small>― 野良カメコ・マボの一日 ―</small></div><button class="press" id="press">タップしてスタート</button><div class="fictionNote">本作品はフィクションです。登場する人物・団体・イベントおよび出来事は架空のものであり、実在のものとは関係ありません</div><div class="maker"><span class="mMark">M</span>MABOX<br><small>© 2026 MABOX</small></div></div></section>
+<section id="title" class="screen"><div class="hero" id="titleTap"><img src="poses/embedded_dd1dcf349d9b5ec1.png"><div class="titleBrand">MABOX<small>presents</small></div><div class="titleVersion">Ver. 7.24</div><div class="titleLogo"><small>COSPLAY PHOTOGRAPHER ADVENTURE</small><h1>ちゅどーむに消ゆ</h1><small>― 野良カメコ・マボの一日 ―</small></div><button class="press" id="press">タップしてスタート</button><div class="fictionNote">本作品はフィクションです。登場する人物・団体・イベントおよび出来事は架空のものであり、実在のものとは関係ありません</div><div class="maker"><span class="mMark">M</span>MABOX<br><small>© 2026 MABOX</small></div></div></section>
 <section id="intro" class="screen"><div class="top"><b>PROLOGUE</b><span>09:18</span></div><div class="art"><img src="poses/embedded_2fe3d4ea4c6bcb65.jpg"></div><div class="intro"><h2>ちゅどーむ、到着。</h2><div id="introText">札幌のコスプレイベント。<br>野良のコスプレカメラマン、マボは今日も一人で会場へ来た。<br><br><span class="thought">（今日こそ……「また撮ってください」って言われる写真を撮る。できればSNSにも載せてもらう。いや、まず普通に会話を成立させろ俺。）</span><br><br>会場には、レイヤーとカメラマン、それぞれの思惑が渦巻いている。<br>何気ない一言が、数時間後の評判を変えることもある。</div></div><div class="next"><button class="cmd" id="toMap">▶ 会場へ入る</button></div></section>
 <section class="screen" id="map">
   <div class="panel">
@@ -948,7 +948,7 @@ function layerRepName(){
 function visit(p){
  
  if(p==='rivals'){cameraEncounter();return}
- let P=people[p];S.met.add(p);
+ let P=people[p];
  if(S.shotDone.has(p)){postShootVisit(p);return}
  if(S.refused.has(p)){story(p,P.name,P.intro+'<br><span class="thought">（この人には一度撮影を断られている。今日はもう撮影をお願いしない。）</span>',[['挨拶だけする',()=>{S.rep++;show('map')}],['静かにその場を離れる',()=>show('map')],['マップへ戻る',()=>show('map')]]);return}
  if(p==='outdoor'){story(p,'マボ',P.intro+'<br><span class="thought">（いきなりカメラを向けるのは違う。まず、どう入る……？）</span>',[[LAYER_AMBIGUOUS.outdoor.label,()=>ambiguousLayerChoice('outdoor')],['脳内で声かけを3回リハーサルする',()=>yukinaRehearsal()],['撮影できるタイミングか確認する',()=>{S.trust++;talk(p)}],['雪奈に短く挨拶する',()=>talk(p)],['マップへ戻る',()=>show('map')]]);return}
@@ -3972,7 +3972,7 @@ function creepyRequestV681(p,kind){
   const restart=document.getElementById('restart');
   if(restart)restart.onclick=()=>{click();showEndPoster()};
   
-  const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 7.23';
+  const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 7.24';
 })();
 </script>
 <script>
@@ -4022,7 +4022,6 @@ function creepyRequestV681(p,kind){
   };
 
   function entry(){
-    S.met.add('momoa');
     story('momoa','ももあ','「こんにちは！ 『放課後ヒーロー実習』のコスです。男装なんですけど、撮影は大丈夫ですか？」<br><span class="thought">（肩当てから手首のガードまで、作り込みがすごい。）</span>',[
       ['「ぜひ！ ヒーローらしいポーズをお願いします」',()=>{S.trust++;S.bond.momoa++;costumeTalk()}],
       ['「作品、大好きです！」',()=>fanTalk()],
@@ -4130,7 +4129,7 @@ function creepyRequestV681(p,kind){
     if(card)card.innerHTML=card.innerHTML.replace(/撮影人数：\d+\/5/g,'撮影人数：'+S.shotDone.size+'/6');
   };
   const version=document.querySelector('.titleVersion');
-  if(version)version.textContent='Ver. 7.23';
+  if(version)version.textContent='Ver. 7.24';
   updateShotStatus();
 })();
 
@@ -4163,7 +4162,7 @@ function creepyRequestV681(p,kind){
    if(endPosterMode==='good'&&v2Result().grade!=='A')endPosterMode='continue';
    return previousPoster.apply(this,arguments);
  };
- const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 7.23';
+ const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 7.24';
 })();
 </script>
 
@@ -4281,7 +4280,7 @@ function creepyRequestV681(p,kind){
      body.insertAdjacentHTML('beforeend','<div class="endText">この出会いは次の撮影につながった。今日全体のカメコ評価には、まだ伸ばせるところがある。最後に今日の結果を振り返り、次の一枚へ。</div>');
    }
  };
- const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 7.23';
+ const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 7.24';
 })();
 </script>
 <script>
@@ -4401,7 +4400,7 @@ function creepyRequestV681(p,kind){
 </script>
 
 <script>
-/* Ver.7.23 銀子：あやの撮影前に一度だけ登場 */
+/* Ver.7.24 銀子：あやの撮影前に一度だけ登場 */
 (()=>{
  const art='poses/ginko.png';
  const normalVisit=visit,normalTalk=talk,oldOther=other,oldShoot=startShoot;
@@ -4438,8 +4437,6 @@ function creepyRequestV681(p,kind){
  visit=function(p){
   const firstChoices=eligible(p);const originalStory=story;
   if(!firstChoices)return normalVisit.apply(this,arguments);
-  // Opening the menu alone is not a conversation; keep its choices on re-entry.
-  S.met.delete('entrance');
   story=function(place,sp,text,choices,img){
    if(place==='entrance'&&Array.isArray(choices)){
     choices=choices.map(([label,fn])=>[label,label==='マップへ戻る'?fn:()=>{
@@ -4450,6 +4447,30 @@ function creepyRequestV681(p,kind){
    return originalStory(place,sp,text,choices,img);
   };
   try{return normalVisit.apply(this,arguments)}finally{story=originalStory;}
+ };
+})();
+</script>
+<script>
+/* Ver.7.24 全レイヤー：入場ではなく、最初の行動を選んだ時に会話履歴を記録 */
+(function(){
+ const previousVisit=visit;
+ visit=function(p){
+  if(!people[p]||p==='rivals'||S.met.has(p))return previousVisit.apply(this,arguments);
+  const originalStory=story;
+  story=function(place,speaker,text,choices,img){
+   if(place===p&&Array.isArray(choices)){
+    choices=choices.map(([label,action])=>[label,label==='マップへ戻る'?action:()=>{
+     S.met.add(p);
+     return action();
+    }]);
+   }
+   return originalStory(place,speaker,text,choices,img);
+  };
+  try{return previousVisit.apply(this,arguments)}finally{
+   story=originalStory;
+   // 警戒ルートの入場処理でも、メニューを見ただけでは会話済みにしない。
+   S.met.delete(p);
+  }
  };
 })();
 </script>
