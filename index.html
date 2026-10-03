@@ -474,19 +474,38 @@
   #v2status .camRepCell .statusLabel,#v2status .camRepCell .statusValue{text-align:left!important;}
 }
 </style>
-</head><body>
+<style id="momoaMapV688">
+.mapNpc[data-place="momoa"]{width:106px!important;height:132px!important}
+.mapNpc[data-place="momoa"] .mapFace{width:80px!important;height:94px!important;padding:0!important;object-fit:cover!important;object-position:center 16%!important}
+.mapNpc[data-place="momoa"] .mapName{top:91px!important;font-size:16px!important}
+.mapNpc[data-place="momoa"] .mapSpot{top:117px!important;font-size:11px!important}
+.mapNpc.rivals{width:104px!important;height:126px!important}
+.mapNpc.rivals .mapFace{width:78px!important;height:91px!important}
+.mapNpc.rivals .mapName{top:88px!important;font-size:15px!important}
+.mapNpc.rivals .mapSpot{top:112px!important;font-size:10px!important}
+@media(max-width:560px){
+ .mapNpc[data-place="momoa"]{width:100px!important;height:124px!important}
+ .mapNpc[data-place="momoa"] .mapFace{width:76px!important;height:88px!important}
+ .mapNpc[data-place="momoa"] .mapName{top:84px!important}
+ .mapNpc[data-place="momoa"] .mapSpot{top:108px!important}
+ .mapNpc.rivals{width:78px!important;height:102px!important}
+ .mapNpc.rivals .mapFace{width:62px!important;height:70px!important}
+ .mapNpc.rivals .mapName{top:69px!important;font-size:12px!important;padding:4px 7px!important}
+ .mapNpc.rivals .mapSpot{top:91px!important;font-size:9px!important}
+}
+</style></head><body>
 <div class="audioControl" id="audioControl" aria-label="サウンド切替">
   <button type="button" id="muteBtn" aria-label="ミュート切替" title="ミュート切替" aria-pressed="false">🔊</button>
 </div>
 
 <section id="loading" class="screen active"><div class="loadingInner"><div class="loadingText">NOW LOADING...</div><div class="loadingSub">CHUDOME GAME DATA</div></div></section>
 <section id="pretitle" class="screen"><div class="pretitleInner"><button id="preludeStart" type="button">タップして開始</button><div id="preludeText" aria-live="polite"></div></div></section>
-<section id="title" class="screen"><div class="hero" id="titleTap"><img src="poses/embedded_dd1dcf349d9b5ec1.png"><div class="titleBrand">MABOX<small>presents</small></div><div class="titleVersion">Ver. 6.86</div><div class="titleLogo"><small>COSPLAY PHOTOGRAPHER ADVENTURE</small><h1>ちゅどーむに消ゆ</h1><small>― 野良カメコ・マボの一日 ―</small></div><button class="press" id="press">タップしてスタート</button><div class="fictionNote">本作品はフィクションです。登場する人物・団体・イベントおよび出来事は架空のものであり、実在のものとは関係ありません</div><div class="maker"><span class="mMark">M</span>MABOX<br><small>© 2026 MABOX</small></div></div></section>
+<section id="title" class="screen"><div class="hero" id="titleTap"><img src="poses/embedded_dd1dcf349d9b5ec1.png"><div class="titleBrand">MABOX<small>presents</small></div><div class="titleVersion">Ver. 6.89</div><div class="titleLogo"><small>COSPLAY PHOTOGRAPHER ADVENTURE</small><h1>ちゅどーむに消ゆ</h1><small>― 野良カメコ・マボの一日 ―</small></div><button class="press" id="press">タップしてスタート</button><div class="fictionNote">本作品はフィクションです。登場する人物・団体・イベントおよび出来事は架空のものであり、実在のものとは関係ありません</div><div class="maker"><span class="mMark">M</span>MABOX<br><small>© 2026 MABOX</small></div></div></section>
 <section id="intro" class="screen"><div class="top"><b>PROLOGUE</b><span>09:18</span></div><div class="art"><img src="poses/embedded_2fe3d4ea4c6bcb65.jpg"></div><div class="intro"><h2>ちゅどーむ、到着。</h2><div id="introText">札幌のコスプレイベント。<br>野良のコスプレカメラマン、マボは今日も一人で会場へ来た。<br><br><span class="thought">（今日こそ……「また撮ってください」って言われる写真を撮る。できればSNSにも載せてもらう。いや、まず普通に会話を成立させろ俺。）</span><br><br>会場には、レイヤーとカメラマン、それぞれの思惑が渦巻いている。<br>何気ない一言が、数時間後の評判を変えることもある。</div></div><div class="next"><button class="cmd" id="toMap">▶ 会場へ入る</button></div></section>
 <section class="screen" id="map">
   <div class="panel">
     <h2 style="font-size:24px">ちゅどーむ 会場マップ</h2>
-    <div class="shotProgress" id="shotProgress">撮影済 0 / 5人</div>
+    <div class="shotProgress" id="shotProgress">撮影済 0 / 6人</div>
     <div class="v2status" id="v2status">10:00　レイヤー評判：無名</div>
 
     <div class="venueMapWrap">
@@ -539,7 +558,14 @@
           <span class="mapSpot">屋内撮影</span>
         </button>
 
-        <button class="mapNpc rivals" data-place="rivals" style="left:62%;top:36%">
+        <button class="mapNpc" data-place="momoa" style="left:50%;top:48%">
+          <img class="mapFace" data-area-face="momoa" src="poses/greenhero_p0.png" alt="ももあ">
+          <span class="mapName">ももあ</span>
+          <span class="statusBadge"></span>
+          <span class="mapSpot">中央展示</span>
+        </button>
+
+        <button class="mapNpc rivals" data-place="rivals" style="left:82%;top:84%">
           <img class="mapFace" data-area-face="rivals" alt="黒田">
           <span class="mapName">黒田たち</span>
           <span class="mapSpot">中央通路</span>
@@ -566,11 +592,11 @@ const V44POSE={'outdoor1':'poses/embedded_e18c4f05a0b5dc6c.jpg','outdoor2':'pose
 const V41POSE={'outdoor1':'poses/embedded_e43c59a4dcc30fe2.jpg','outdoor2':'poses/embedded_1dd6948370208c47.jpg','outdoor3':'poses/embedded_fc8cda00fbe34c61.jpg','outdoor4':'poses/embedded_b58a33da676ae206.jpg','outdoor5':'poses/embedded_60ecb4e709d454c9.jpg','outdoor6':'poses/embedded_daf9bed950ce47eb.jpg','indoor1':'poses/embedded_50dd82f405d5e851.jpg','indoor2':'poses/embedded_d1aa39cc133386ad.jpg','indoor3':'poses/embedded_76c0fd3b57da6e9d.jpg','indoor4':'poses/embedded_cf98a96e047e40f5.jpg','indoor5':'poses/embedded_643a14934ebc1dad.jpg','indoor6':'poses/embedded_9c8a1ab9e2d30f20.jpg','rest1':'poses/embedded_7dcaca8a08111c8b.jpg','rest2':'poses/embedded_c4f5ffc6e5d5e88c.jpg','rest3':'poses/embedded_70ae96ccab5690fe.jpg','rest4':'poses/embedded_07fb0d384175e409.jpg','rest5':'poses/embedded_18e1faad81a70fb6.jpg','rest6':'poses/embedded_9fb1c4515918a9d8.jpg','east1':'poses/embedded_8cfd68cbb7cc3aef.jpg','east2':'poses/embedded_60322348a4db3d22.jpg','east3':'poses/embedded_7371cd2be2d2e86f.jpg','east4':'poses/embedded_873a3374f91339ab.jpg','east5':'poses/embedded_c4b2eefb443d9ea1.jpg','east6':'poses/embedded_ac4ac298fe5db8aa.jpg','entrance1':'poses/embedded_eb039433ba799733.jpg','entrance2':'poses/embedded_4bdfd16edab4d9b2.jpg','entrance3':'poses/embedded_65ca157a91f79a90.jpg','entrance4':'poses/embedded_01dd025d8b9bd171.jpg','entrance5':'poses/embedded_52293490bd73002e.jpg','entrance6':'poses/embedded_779a475a92348644.jpg'};
 
 const IMG={"title": "poses/embedded_502aa07988d33113.jpg", "venue": "poses/embedded_2fe3d4ea4c6bcb65.jpg", "indoor": "poses/embedded_974b4c628d01a3d2.jpg", "yukina": "poses/embedded_9788354d56372ea3.jpg", "rio": "poses/embedded_0cf3459683e24d68.jpg", "miku": "poses/embedded_5b27f66ca346d977.jpg", "karen": "poses/embedded_c300abcb515b2682.jpg", "aya": "poses/embedded_855399f589fa2274.jpg", "kuroda": "poses/kuroda.png", "tanaka": "poses/tanaka.png", "ryoji": "poses/ryo.png", "hide": "poses/hide.png", "pose1": "poses/embedded_cb2d18490e0ae63f.jpg", "pose2": "poses/embedded_2f100ba8f1202c6a.jpg", "pose3": "poses/embedded_bf533ab554b7e6ec.jpg", "pose4": "poses/embedded_10cf7f527e3cb319.jpg", "pose5": "poses/embedded_3bde0dc7864a6ddd.jpg", "pose6": "poses/embedded_1a94f2c3517cccd0.jpg"}; const EXTRA_ENDING_ART={good:'poses/end_happy.png',bad:'poses/end_bad.png',continue:'poses/end_continue.png',god:'poses/end_god.png'}; const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];let AC=null,timer=null,first=false,currentTheme=null,audioNeedsResume=false,endPosterMode='good';
-function freshGameState(){return {trust:0,unease:0,rep:0,creep:0,shots:[],selected:null,cam:null,met:new Set(),rivalFlags:0,photo:0,shotDone:new Set(),rude:0,refused:new Set(),currentShoot:null,photoScores:{},bond:{outdoor:0,indoor:0,rest:0,east:0,entrance:0},pushAfterNo:0,backedOff:0,pressureLog:[],warningIncidents:[],timeMin:600,visitCount:{},randomSeen:new Set(),eventLog:[],camRep:0,camMet:new Set(),camHostile:false,v4RivalsComplete:false,v4ClosingShown:false}}let S=freshGameState();
+function freshGameState(){return {trust:0,unease:0,rep:0,creep:0,shots:[],selected:null,cam:null,met:new Set(),rivalFlags:0,photo:0,shotDone:new Set(),rude:0,refused:new Set(),currentShoot:null,photoScores:{},bond:{outdoor:0,indoor:0,rest:0,east:0,entrance:0,momoa:0},pushAfterNo:0,backedOff:0,pressureLog:[],warningIncidents:[],timeMin:600,visitCount:{},randomSeen:new Set(),eventLog:[],camRep:0,camMet:new Set(),camHostile:false,v4RivalsComplete:false,v4ClosingShown:false}}let S=freshGameState();
 
 function v4AllShot(){return ['outdoor','indoor','rest','east','entrance'].every(p=>S.shotDone.has(p))}
 function v4ResolvedLayerCount(){
- const places=['outdoor','indoor','rest','east','entrance'];
+ const places=['outdoor','indoor','rest','east','entrance','momoa'];
  return places.filter(p=>S.shotDone.has(p)||(S.refused&&S.refused.has(p))).length;
 }
 function v4AllLayerResultsResolved(){return v4ResolvedLayerCount()===5}
@@ -592,7 +618,7 @@ function v2Advance(n){v2Status()}
 function v2Status(){let e=$('#v2status');if(!e)return;let r=layerRepScore();let rt=layerRepName();let cr=S.camRep>=2?'良好':S.camRep<=-3?'悪評':'普通';let isBlacklist=rt==='ブラックリスト級カメコ';let lc=isBlacklist?'blacklistRank':((rt==='神カメコ'||r>=9)?'good':'mid');let cc=S.camRep>=2?'good':S.camRep<=-3?'bad':'mid';let blacklistStyle=isBlacklist?' style="color:#ff3b30!important;-webkit-text-fill-color:#ff3b30!important;font-weight:900!important;text-shadow:0 0 10px rgba(255,59,48,.38)!important"':'';e.innerHTML='<div class="statusCell timeCell"><span class="statusLabel">現在時刻</span><span class="statusValue timeValue">'+v2Clock()+'</span></div><div class="statusCell layerRepCell"><span class="statusLabel">レイヤー評判</span><span class="statusValue '+lc+'"'+blacklistStyle+'>'+rt+'</span></div><div class="statusCell camRepCell"><span class="statusLabel">カメコ評判</span><span class="statusValue '+cc+'">'+cr+'</span></div>';}
 function v2Propagation(p){let a=[...S.shotDone].filter(x=>x!==p);if(a.length&&S.rep>=2){let n=people[a[0]]?.name||'別のレイヤー';return '<div class="v2event">💬 「さっき'+n+'さんを撮ってましたよね」<br>会場内で少しずつ名前が伝わっている。</div>'}if(S.unease>=3||S.rude>=2)return '<div class="v2event">💬 一瞬だけ警戒するような視線を感じる。会場では行動も人づてに伝わる。</div>';return ''}
 function v2Result(){let a=Object.values(S.photoScores),avg=a.length?Math.round(a.reduce((x,y)=>x+y,0)/a.length):0;let tech=Math.max(0,Math.min(100,avg)),comm=Math.max(0,Math.min(100,50+(S.trust+S.rep)*8-S.unease*6)),dist=Math.max(0,Math.min(100,80+S.backedOff*6-S.creep*12-S.rude*8-S.warningIncidents.length*40)),cam=Math.max(0,Math.min(100,55+S.camRep*8-S.rivalFlags*4)),total=Math.round((tech+comm+dist+cam)/4),grade=total>=90?'S':total>=80?'A':total>=70?'B':total>=60?'C':total>=45?'D':'E';if(!v4AllShot()&&(grade==='S'||grade==='A'))grade='B';if(true&&grade==='S')grade='A';return {avg,tech,comm,dist,cam,total,grade}}
-function v2ResultHTML(){let r=v2Result();return '<div class="resultCard"><h3>本日のカメコ評価</h3><div class="rankBig">'+r.grade+'</div><div>撮影技術：'+r.tech+'　コミュ力：'+r.comm+'<br>距離感：'+r.dist+'　カメコ評判：'+r.cam+'<br>撮影人数：'+S.shotDone.size+'/5　写真平均：'+r.avg+'点<br>終了時刻：'+v2Clock()+'　総合：'+r.total+'</div><p><b>野良カメコ Lv.'+Math.max(1,Math.floor(r.total/10))+'</b></p></div>'}
+function v2ResultHTML(){let r=v2Result();return '<div class="resultCard"><h3>本日のカメコ評価</h3><div class="rankBig">'+r.grade+'</div><div>撮影技術：'+r.tech+'　コミュ力：'+r.comm+'<br>距離感：'+r.dist+'　カメコ評判：'+r.cam+'<br>撮影人数：'+S.shotDone.size+'/6　写真平均：'+r.avg+'点<br>終了時刻：'+v2Clock()+'　総合：'+r.total+'</div><p><b>野良カメコ Lv.'+Math.max(1,Math.floor(r.total/10))+'</b></p></div>'}
 function setEndPosterMode(mode){let m=['bad','good','continue','god'].includes(mode)?mode:'good';endPosterMode=m}
 function showEndPoster(){let mode=['bad','good','continue','god'].includes(endPosterMode)?endPosterMode:'good';let ps=$('#posterScene'),img=$('#posterImg');if(ps)ps.className='posterScene '+mode;if(img){img.src=EXTRA_ENDING_ART[mode]||EXTRA_ENDING_ART.good;img.alt=mode==='bad'?'BAD END アート':mode==='continue'?'CONTINUE END アート':mode==='god'?'GOD END アート':'HAPPY END アート';}theme(mode==='bad'?'bad':(mode==='continue'?'field':'good'));show('postend');window.scrollTo({top:0,behavior:'auto'});requestAnimationFrame(()=>requestAnimationFrame(()=>ps&&ps.classList.add('posterVisible')))} 
 function v2Finalize(){let b=$('#endBody');if(b&&!b.querySelector('.resultCard'))b.insertAdjacentHTML('beforeend',v2ResultHTML());let rb=$('#restart');if(rb)rb.textContent='エンディンググラフィックを見る';try{localStorage.setItem('chudomeCleared','1')}catch(e){}}
@@ -837,7 +863,7 @@ $('#press').onclick=e=>{
 };
 $('#toMap').onclick=()=>{click();theme('field');show('map')};
 const POSEEX={'indoor1':'poses/embedded_12e3e0347a81f493.jpg','indoor2':'poses/embedded_db5451acc02e6ce0.jpg','indoor3':'poses/embedded_06bd55f295980a04.jpg','indoor4':'poses/embedded_74c44ec11dff802f.jpg','indoor5':'poses/embedded_ec387501e1921362.jpg','indoor6':'poses/embedded_43883657f4e3533b.jpg','rest1':'poses/embedded_95754dee0563b767.jpg','rest2':'poses/embedded_6d8f2aa7567df653.jpg','rest3':'poses/embedded_6a3b2d4a8975050d.jpg','rest4':'poses/embedded_ea04b0bd263cdfb9.jpg','rest5':'poses/embedded_e314800c94a52711.jpg','rest6':'poses/embedded_3b68d46d434ffe2d.jpg','east1':'poses/embedded_a97b79117b9712f9.jpg','east2':'poses/embedded_f1d60535c7b31abc.jpg','east3':'poses/embedded_6470fc572d17a74a.jpg','east4':'poses/embedded_7cad38153dfd5157.jpg','east5':'poses/embedded_08c11f4637a9fab6.jpg','east6':'poses/embedded_8daa2f41b7cea9c6.jpg','entrance1':'poses/embedded_a90be8c85363bed3.jpg','entrance2':'poses/embedded_25848347a845d202.jpg','entrance3':'poses/embedded_72436521b986ab1a.jpg','entrance4':'poses/embedded_a0a62ec89ffe4b57.jpg','entrance5':'poses/embedded_0c0bdd7b4d8964bc.jpg','entrance6':'poses/embedded_e9344654db54ee62.jpg'};
-const people={outdoor:{name:'雪奈',img:IMG.yukina,label:'屋外エリア',intro:'白と青の衣装の雪奈が、友人と別れて撮影場所を探している。'},indoor:{name:'りお',img:IMG.rio,label:'屋内壁際',intro:'黒い衣装のりおがスマホを確認している。'},rest:{name:'みく',img:IMG.miku,label:'休憩スペース',intro:'みくが飲み物を手に座っている。明らかに休憩中だ。'},east:{name:'カレン',img:IMG.karen,label:'東側エリア',intro:'カレンが背景と光を確かめている。撮影へのこだわりが強そうだ。'},entrance:{name:'あや',img:IMG.aya,label:'入口付近',intro:'あやが入口で友人を待っている。'}};
+const people={momoa:{name:'ももあ',img:'poses/greenhero_p0.png',label:'中央展示スペース',intro:'深緑のヒーロー衣装を着たももあが、中央展示スペースで腕のガードを整えている。'},outdoor:{name:'雪奈',img:IMG.yukina,label:'屋外エリア',intro:'白と青の衣装の雪奈が、友人と別れて撮影場所を探している。'},indoor:{name:'りお',img:IMG.rio,label:'屋内壁際',intro:'黒い衣装のりおがスマホを確認している。'},rest:{name:'みく',img:IMG.miku,label:'休憩スペース',intro:'みくが飲み物を手に座っている。明らかに休憩中だ。'},east:{name:'カレン',img:IMG.karen,label:'東側エリア',intro:'カレンが背景と光を確かめている。撮影へのこだわりが強そうだ。'},entrance:{name:'あや',img:IMG.aya,label:'入口付近',intro:'あやが入口で友人を待っている。'}};
 const ENDIMG={"end_bad_room": "poses/embedded_1328842a0199a677.jpg", "end_bad_sns": "poses/embedded_c09ded6e645a1cff.jpg", "end_good_venue": "poses/embedded_f0d8992119de1749.jpg", "end_good_sns": "poses/embedded_a41e77553da29fe8.jpg"};
 function rude(n=1){S.rude+=n;return false}
 function refuse(p){if(p){S.refused.add(p);updateShotStatus();v4SetProgressTime()}}
@@ -863,17 +889,17 @@ function rivalSpeakerImage(sp){
 function story(p,sp,text,choices,img){
  $('#sceneImg').classList.remove('cleanVenueCrop');
  let P=people[p]||people.outdoor;
- let sceneSrc=img||(['outdoor','indoor','rest','east','entrance'].includes(p)?V47POSE[p+'5']:(p==='rivals'?rivalSpeakerImage(sp):P.img));
+ let sceneSrc=img||(['outdoor','indoor','rest','east','entrance','momoa'].includes(p)?(V47POSE[p+'5']||P.img):(p==='rivals'?rivalSpeakerImage(sp):P.img));
  let camScene=p==='rivals'||sceneSrc===REIJI_IMG||sceneSrc==='poses/karen_intruder.png'||sceneSrc===IMG.kuroda||sceneSrc===IMG.tanaka||sceneSrc===IMG.ryoji||sceneSrc===IMG.hide;
  let mk=camScene?'rival':'talk';theme(mk);
  $('#placeLabel').textContent=p==='rivals'?'カメコエリア':P.label;
  setImageNoFlash($('#sceneImg'),sceneSrc);
- let extra='';if(['outdoor','indoor','rest','east','entrance'].includes(p)){S.visitCount[p]=(S.visitCount[p]||0)+1;if(S.visitCount[p]===1){v2Advance(15);extra=v2Propagation(p)}}
+ let extra='';if(['outdoor','indoor','rest','east','entrance','momoa'].includes(p)){S.visitCount[p]=(S.visitCount[p]||0)+1;if(S.visitCount[p]===1){v2Advance(15);extra=v2Propagation(p)}}
  $('#msg').innerHTML='<span class="speaker">'+sp+'</span><br>'+extra+text;
  let c=$('#cmds');c.innerHTML='';choices.forEach(([t,fn])=>{let b=document.createElement('button');b.className='cmd';b.textContent=t;b.onclick=()=>{click();fn()};c.appendChild(b)});
  show('story');
 }
-function markShot(p){if(!['outdoor','indoor','rest','east','entrance'].includes(p))return;S.shotDone.add(p);S.refused.delete(p);updateShotStatus()}function updateShotStatus(){document.querySelectorAll('.mapNpc[data-place]').forEach(b=>{let p=b.dataset.place;if(!['outdoor','indoor','rest','east','entrance'].includes(p))return;b.classList.remove('done','ng');let badge=b.querySelector('.statusBadge');if(!badge)return;badge.textContent='';if(S.shotDone.has(p)){b.classList.add('done');badge.textContent='✓ 撮影済'}else if(S.refused.has(p)){b.classList.add('ng');badge.textContent='× 撮影NG'}});let el=$('#shotProgress');let done=S.shotDone.size,ng=[...S.refused].filter(p=>['outdoor','indoor','rest','east','entrance'].includes(p)&&!S.shotDone.has(p)).length,resolved=done+ng;if(el)el.textContent=`撮影済 ${done} / 5人　撮影NG ${ng}人${resolved===5?'　― 全員の結果が確定 ―':''}`;let finish=$('#finishDay');if(finish)finish.classList.toggle('show',resolved>=1||S.timeMin>=900);v2Status()}
+function markShot(p){if(!['outdoor','indoor','rest','east','entrance','momoa'].includes(p))return;S.shotDone.add(p);S.refused.delete(p);updateShotStatus()}function updateShotStatus(){document.querySelectorAll('.mapNpc[data-place]').forEach(b=>{let p=b.dataset.place;if(!['outdoor','indoor','rest','east','entrance'].includes(p))return;b.classList.remove('done','ng');let badge=b.querySelector('.statusBadge');if(!badge)return;badge.textContent='';if(S.shotDone.has(p)){b.classList.add('done');badge.textContent='✓ 撮影済'}else if(S.refused.has(p)){b.classList.add('ng');badge.textContent='× 撮影NG'}});let el=$('#shotProgress');let done=S.shotDone.size,ng=[...S.refused].filter(p=>['outdoor','indoor','rest','east','entrance'].includes(p)&&!S.shotDone.has(p)).length,resolved=done+ng;if(el)el.textContent=`撮影済 ${done} / 6人　撮影NG ${ng}人${resolved===6?'　― 全員の結果が確定 ―':''}`;let finish=$('#finishDay');if(finish)finish.classList.toggle('show',resolved>=1||S.timeMin>=900);v2Status()}
 $$('.mapbtn').forEach(b=>b.onclick=()=>{click();visit(b.dataset.place)});$('#rivalBack').onclick=()=>show('map');$('#finishDay').onclick=()=>{click();finishDayEnding()};
 function postShootVisit(p){let P=people[p],score=S.photoScores[p]||S.photo||0;story(p,P.name,`「あ、マボさん。さっきはありがとうございました！」<br>撮影はもう終わっている。もう一度カメラを向ける場面ではない。<br><span class="thought">（ここからは撮影後の振る舞いで印象が決まる。）</span>`,[['「こちらこそ、ありがとうございました」とお礼する',()=>{S.rep++;S.trust++;story(p,P.name,'「はい！ また機会があったらお願いします」<br><span class="thought">自然に会話を終えられた。</span>',[['マップへ戻る',()=>show('map')]])}],['「あとで写真送りますね」と伝える',()=>{S.rep++;S.trust++;story(p,P.name,score?`「ありがとうございます！ ${score>=80?'楽しみにしてます！':'確認しますね！'}」`:'「ありがとうございます！ 楽しみにしてます」',[['マップへ戻る',()=>show('map')]])}],['「もう一度撮らせてください」と頼む',()=>{S.unease++;story(p,P.name,'「あ、今日はもう大丈夫です……」<br>さっきより少しだけ距離を取られた。<br><span class="thought">（撮影済みなのに重ねて頼むのは、さすがに違った。）</span>',[['すぐ引く',()=>{S.backedOff++;show('map')}],['さらに食い下がる',()=>{recordWarningIncident(p,'撮影済みで断られた後もさらに迫る');endingBad('warning')} ]])}],['マップへ戻る',()=>show('map')]])}
 
@@ -1021,7 +1047,7 @@ function reijiBrag(){story('outdoor','レイジ','「へえ、誰？ 有名っ�
 ],REIJI_IMG)}
 function shootGate(){if(S.trust-S.unease>=0){story('outdoor','雪奈','「……じゃあ、少しだけお願いします」<br><span class="thought">（来た。喋るな俺。いや必要な指示は喋れ。キモくならない程度に。キモくならない程度って何だ。）</span>',[['撮影を始める',()=>startShoot('outdoor')]])}else{refuse('outdoor');story('outdoor','雪奈','「ごめんなさい、友達のところ行きますね」',[['「わかりました」と引く',()=>{S.backedOff++;show('map')}],['「一分だけ！」と追う',()=>{recordPressure('outdoor','一分だけと追う');S.creep++;S.unease++;story('outdoor','雪奈','「ごめんなさい。本当に今日は大丈夫です」<br>雪奈は友人の方へ体を向けた。',[['ここで引く',()=>{S.backedOff++;show('map')}],['さらに追ってお願いする',()=>{recordWarningIncident('outdoor','明確な拒否後もさらに追う');endingBad('warning')} ]])} ]])}}
 function poseImage(place,pose){
-let v47=V47POSE[place+pose];if(v47)return v47;
+if(place==='momoa')return 'poses/greenhero_p'+(pose%6)+'.png';let v47=V47POSE[place+pose];if(v47)return v47;
 let v45=V45POSE[place+pose];if(v45)return v45;
 let v44=V44POSE[place+pose];if(v44)return v44;let p=pose%6;if(place==='outdoor')return IMG['pose'+(p+1)];return POSEEX[place+(p+1)]||people[place].img}
 const SHOTIDEAL={
@@ -1338,7 +1364,7 @@ window.addEventListener('load',()=>{
 /* === 撮影後4択 + 撮影NG時RAW現像エンディング表示 === */
 (function(){
   function activeShotNgCount(){
-    const places=['outdoor','indoor','rest','east','entrance'];
+    const places=['outdoor','indoor','rest','east','entrance','momoa'];
     return [...(S.refused||[])].filter(p=>places.includes(p)&&!(S.shotDone&&S.shotDone.has(p))).length;
   }
 
@@ -1394,7 +1420,7 @@ window.addEventListener('load',()=>{
   const BASE_LAYER_REP_LABELS=['無名','顔を覚えられ始めた','少し知られている','好印象','評判が良い','信頼されている','人気カメコ'];
 
   function currentNgCount(){
-    const places=['outdoor','indoor','rest','east','entrance'];
+    const places=['outdoor','indoor','rest','east','entrance','momoa'];
     return [...(S.refused||[])].filter(p=>places.includes(p)&&!(S.shotDone&&S.shotDone.has(p))).length;
   }
   function repDangerLevel(){
@@ -2801,7 +2827,7 @@ window.addEventListener('load',()=>{
   let posterTokenV655=0;
   showEndPoster=function(){
     const token=++posterTokenV655;
-    const places=['outdoor','indoor','rest','east','entrance'];
+    const places=['outdoor','indoor','rest','east','entrance','momoa'];
     const ng=[...(S.refused||[])].filter(p=>places.includes(p)&&!(S.shotDone&&S.shotDone.has(p))).length;
     if(ng>0&&endPosterMode!=='bad')endPosterMode='continue';
     const mode=['bad','good','continue','god'].includes(endPosterMode)?endPosterMode:'good';
@@ -3219,7 +3245,7 @@ function markSkippedV663(p){
   updateShotStatus();
 }
 (function(){
-  const PLACES_V663=['outdoor','indoor','rest','east','entrance'];
+  const PLACES_V663=['outdoor','indoor','rest','east','entrance','momoa'];
 
   /* A real refusal supersedes a voluntary skip; a completed shoot supersedes both. */
   const refuseV663=refuse;
@@ -3252,7 +3278,7 @@ function markSkippedV663(p){
     const skipped=[...S.skippedV663].filter(p=>PLACES_V663.includes(p)&&!S.shotDone.has(p)&&!S.refused.has(p)).length;
     const resolved=done+ng+skipped;
     const el=document.getElementById('shotProgress');
-    if(el)el.textContent=`撮影済 ${done} / 5人　撮影NG ${ng}人　見送り ${skipped}人${resolved===5?'　― 全員の結果が確定 ―':''}`;
+    if(el)el.textContent=`撮影済 ${done} / 6人　撮影NG ${ng}人　見送り ${skipped}人${resolved===6?'　― 全員の結果が確定 ―':''}`;
     const finish=document.getElementById('finishDay');
     if(finish)finish.classList.toggle('show',resolved>=1||S.timeMin>=900);
     try{v2Status()}catch(e){}
@@ -3353,7 +3379,7 @@ function markSkippedV663(p){
    Legacy blocks keep their scene text and minigames, but every layer-map entry
    now passes through this single state/reputation router first. */
 (function(){
-  const PLACES=['outdoor','indoor','rest','east','entrance'];
+  const PLACES=['outdoor','indoor','rest','east','entrance','momoa'];
   const STATE=Object.freeze({FRESH:'fresh',PERMITTED:'permitted',SKIPPED:'skipped',REFUSED:'refused',SHOT:'shot',CLOSED:'closed'});
 
   function ensure(){ensureConversationStateV663()}
@@ -3648,7 +3674,7 @@ window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
 <script>
 /* === Ver.6.78: 再訪・評判・見送り・評価表示の整合性 === */
 (function(){
-  const places=['outdoor','indoor','rest','east','entrance'];
+  const places=['outdoor','indoor','rest','east','entrance','momoa'];
   const names=['無名','顔を覚えられ始めた','少し知られている','好印象','評判が良い','信頼されている','人気カメコ'];
   const oldCount=v4ResolvedLayerCount;
   v4ResolvedLayerCount=function(){
@@ -3770,9 +3796,9 @@ function creepyRequestV681(p,kind){
 })();
 </script>
 <script>
-/* === Ver.6.86: 単周の配点と結末を整合 === */
+/* === Ver.6.87: 単周配点とAランクの余韻 === */
 (function(){
-  const places=['outdoor','indoor','rest','east','entrance'];
+  const places=['outdoor','indoor','rest','east','entrance','momoa'];
   const clamp=n=>Math.max(0,Math.min(100,Math.round(n)));
   const stats=()=>{
     const scores=places.map(p=>Number(S.photoScores?.[p])).filter(Number.isFinite);
@@ -3797,7 +3823,7 @@ function creepyRequestV681(p,kind){
   }
   function godReady(){
     const r=rawResult();
-    return r.done===5&&S.v4RivalsComplete&&cleanRun()&&r.avg>=90&&r.max>=96&&
+    return r.done===6&&S.v4RivalsComplete&&cleanRun()&&r.avg>=90&&r.max>=96&&
       r.total>=86&&layerRepScore()>=12&&S.camRep>=0;
   }
   isGodKameko=godReady;
@@ -3807,8 +3833,8 @@ function creepyRequestV681(p,kind){
     if(rank==='ブラックリスト級カメコ'||rank==='要警戒カメコ'||rank==='微妙なカメコ')return rank;
     if(godReady())return '神カメコ';
     const r=rawResult();
-    if(cleanRun()&&r.done===5&&r.avg>=86&&layerRepScore()>=12)return '人気カメコ';
-    if(cleanRun()&&r.done>=4&&r.avg>=80&&layerRepScore()>=10)return '信頼されている';
+    if(cleanRun()&&r.done===6&&r.avg>=86&&layerRepScore()>=12)return '人気カメコ';
+    if(cleanRun()&&r.done>=5&&r.avg>=80&&layerRepScore()>=10)return '信頼されている';
     return rank;
   };
   v2Result=function(){
@@ -3821,7 +3847,7 @@ function creepyRequestV681(p,kind){
       const camera=S.badResultKindV648==='camera';
       total=Math.min(total,severe?39:camera?49:r.ng>=3?54:59);
     }
-    total=Math.min(total,[39,54,65,75,85,100][r.done]);
+    total=Math.min(total,[39,54,65,75,85,92,100][r.done]);
     let grade=total>=86?'S':total>=76?'A':total>=66?'B':total>=55?'C':total>=40?'D':'E';
     if(r.avg<85&&grade==='S'){total=85;grade='A'}
     if((rank==='微妙なカメコ'||rank==='要警戒カメコ')&&['S','A','B'].includes(grade))grade='C';
@@ -3831,7 +3857,7 @@ function creepyRequestV681(p,kind){
   v2ResultHTML=function(){
     const r=v2Result(),base=rawResult().total;
     return '<div class="resultCard"><h3>本日のカメコ評価</h3><div class="rankBig">'+r.grade+'</div><div>撮影技術：'+r.tech+'　コミュ力：'+r.comm+
-      '<br>距離感：'+r.dist+'　カメコ評判：'+r.cam+'<br>撮影人数：'+S.shotDone.size+'/5　写真平均：'+r.avg+
+      '<br>距離感：'+r.dist+'　カメコ評判：'+r.cam+'<br>撮影人数：'+S.shotDone.size+'/6　写真平均：'+r.avg+
       '点<br>終了時刻：'+v2Clock()+'　総合：'+r.total+(base!==r.total?'（評判・結末による補正前 '+base+'）':'')+
       '</div><p><b>野良カメコ Lv.'+Math.max(1,Math.floor(r.total/10))+'</b></p><small>総合は撮影技術40％、コミュ力25％、距離感20％、カメコ評判15％で算出。撮影人数と迷惑行為による上限あり。</small></div>';
   };
@@ -3865,11 +3891,11 @@ function creepyRequestV681(p,kind){
       '断られたことも、撮影できたことも、今日の結果だ。');
     if(godReady()&&rank==='神カメコ'){
       end('GOD END　神カメコ','god','閉場後 ― ちゅどーむ',
-        '五人全員を撮影し、写真平均は'+q.avg+'点。最高の一枚は'+q.max+'点だった。<br><br>翌朝、五人から写真への返信が届く。相手の希望を聞いて撮った一枚一枚が、マボの名前と一緒に残った。<br><br><b>レイヤー評判：神カメコ<br>カメコランク：'+score.grade+'クラス<br>GOD END COMPLETE</b>',
+        '六人全員を撮影し、写真平均は'+q.avg+'点。最高の一枚は'+q.max+'点だった。<br><br>翌朝、六人から写真への返信が届く。相手の希望を聞いて撮った一枚一枚が、マボの名前と一緒に残った。<br><br><b>レイヤー評判：神カメコ<br>カメコランク：'+score.grade+'クラス<br>GOD END COMPLETE</b>',
         '撮影技術も距離感も、今日のすべてがつながった。');
       return;
     }
-    if(q.done>=4&&q.avg>=80&&score.grade!=='C'&&score.grade!=='D'&&score.grade!=='E')return endingGood(true);
+    if(q.done>=5&&q.avg>=80&&score.grade!=='C'&&score.grade!=='D'&&score.grade!=='E')return endingGood(true);
     const eligible=places.filter(p=>S.shotDone.has(p)&&Number(S.photoScores[p])>=78&&Number(S.bond?.[p]||0)>=2);
     if(eligible.length){eligible.sort((a,b)=>Number(S.photoScores[b])-Number(S.photoScores[a]));return individualEnding(eligible[0])}
     if(q.done===0)return end('END　今日の撮影はここまで','continue','閉場後 ― ちゅどーむ',
@@ -3884,11 +3910,174 @@ function creepyRequestV681(p,kind){
     oldFinalize.apply(this,arguments);
     const button=document.getElementById('restart');if(button)button.textContent='エンディンググラフィックを見る';
     const teaser=document.querySelector('.finalEndingTeaser');if(teaser)teaser.remove();
+    const body=document.getElementById('endBody');
+    if(v2Result().grade==='A'&&endPosterMode!=='bad'&&body&&!body.querySelector('.rankAHint')){
+      const card=body.querySelector('.resultCard');
+      if(card)card.insertAdjacentHTML('beforebegin','<div class="endImpact rankAHint">写真への反応は良い。ここまで来たなら、次はさらに上のカメコを目指そう。</div>');
+    }
   };
   const restart=document.getElementById('restart');
   if(restart)restart.onclick=()=>{click();showEndPoster()};
   
-  const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.86';
+  const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.89';
 })();
+</script>
+<script>
+/* Ver.6.88: ももあ／6人用進行・結末 */
+(function(){
+  const places=['outdoor','indoor','rest','east','entrance','momoa'];
+  const portrait='poses/greenhero_p0.png';
+  const isResolved=p=>S.shotDone.has(p)||S.refused.has(p)||(S.skippedV663&&S.skippedV663.has(p));
+
+  v4AllShot=function(){return places.every(p=>S.shotDone.has(p))};
+  v4ResolvedLayerCount=function(){return places.filter(isResolved).length};
+  v4AllLayerResultsResolved=function(){return v4ResolvedLayerCount()===places.length};
+  v4SetProgressTime=function(){
+    const units=v4ResolvedLayerCount()+(S.v4RivalsComplete?1:0);
+    S.timeMin=Math.min(900,600+Math.floor(units*300/7));v2Status();
+  };
+
+  const previousStatus=updateShotStatus;
+  updateShotStatus=function(){
+    previousStatus.apply(this,arguments);
+    const done=places.filter(p=>S.shotDone.has(p)).length;
+    const ng=places.filter(p=>S.refused.has(p)&&!S.shotDone.has(p)).length;
+    const skipped=places.filter(p=>S.skippedV663?.has(p)&&!S.shotDone.has(p)&&!S.refused.has(p)).length;
+    const badge=document.querySelector('.mapNpc[data-place="momoa"] .statusBadge');
+    if(badge){
+      badge.textContent=S.shotDone.has('momoa')?'✓ 撮影済':S.refused.has('momoa')?'× 撮影NG':S.skippedV663?.has('momoa')?'— 撮影見送り':'';
+      badge.style.display=badge.textContent?'block':'none';
+    }
+    const el=document.getElementById('shotProgress');
+    if(el)el.textContent=`撮影済 ${done} / 6人　撮影NG ${ng}人　見送り ${skipped}人${done+ng+skipped===6?'　― 全員の結果が確定 ―':''}`;
+  };
+
+  const oldInit=initVenueMap;
+  initVenueMap=function(){
+    oldInit.apply(this,arguments);
+    const im=document.querySelector('[data-area-face="momoa"]');
+    if(im){im.src=portrait;im.style.objectFit='cover';im.style.objectPosition='center 16%'}
+    updateShotStatus();
+  };
+
+  SHOTIDEAL.momoa=[[-12,1.16],[15,1.12],[-20,1.02],[18,.95],[-14,.88],[12,.86]];
+  PHOTO_TASTE.momoa={best:[2,5],good:[0,3],labels:['ヒーロー感','衣装','ポーズ']};
+  POOR_PHOTO_REACTIONS.momoa={
+    1:['「あ、ありがとうございます……腕のガード、少し切れちゃいましたね」','こだわりの部分を収めきれなかった。'],
+    2:['「今回は投稿用には使わないでおきます」','表情も衣装も狙いから外れた。'],
+    3:['「すみません。この写真は送らなくて大丈夫です」','撮影の意図を伝えられなかった。']
+  };
+
+  function entry(){
+    S.met.add('momoa');
+    story('momoa','ももあ','「こんにちは！ 『放課後ヒーロー実習』のコスです。男装なんですけど、撮影は大丈夫ですか？」<br><span class="thought">（肩当てから手首のガードまで、作り込みがすごい。）</span>',[
+      ['「ぜひ！ ヒーローらしいポーズをお願いします」',()=>{S.trust++;S.bond.momoa++;costumeTalk()}],
+      ['「作品、大好きです！」',()=>fanTalk()],
+      ['「男装は初めてですが、撮ってみたいです」',()=>{S.bond.momoa++;costumeTalk()}],
+      ['「すみません、今日は男装は撮らないんです」',()=>decline()],
+      ['「女の子っぽいポーズなら撮ります」',()=>{S.unease++;S.bond.momoa--;story('momoa','ももあ','「今日はヒーローとして撮ってほしいので……」<br><span class="thought">（衣装の意図を無視してしまった。）</span>',[
+        ['「失礼しました。ヒーローとして撮らせてください」',()=>{S.backedOff++;costumeTalk()}],
+        ['「分かりました。撮影は控えます」',()=>decline()]
+      ],portrait)}],
+      ['マップへ戻る',()=>show('map')]
+    ],portrait);
+  }
+  function decline(){
+    S.rep=Math.max(-1,S.rep-1); // 好みの違いは小さな機会損失のみ。悪評・NGではない。
+    markSkippedV663('momoa');
+    story('momoa','ももあ','「分かりました！ 好みは人それぞれですもんね」<br>ももあは笑顔でうなずいた。<br><span class="thought">（撮るかどうかは自由。相手の衣装を否定せずに伝えられた。）</span>',[
+      ['「ありがとう」と伝えて離れる',()=>show('map')]
+    ],portrait);
+  }
+  function fanTalk(){
+    S.bond.momoa+=2;S.trust++;
+    story('momoa','ももあ','「えっ、本当ですか!?　私、主人公が強くなった瞬間より、失敗したあとにもう一度立つところが好きで！　衣装も、何度も実習して直した跡がある感じにしたくて、腕のガードは自分で何回も作り直したんです。首の形も、初期案から変えて……」<br><br>肩当てやベルトの話まで、作品愛が止まらない。',[
+      ['「その腕のガード、こだわりが伝わります」',()=>{S.bond.momoa+=2;shootOffer('「気づいてくれました!?　そこが一番見てほしかった所です！」')}],
+      ['「失敗しても立ち上がる場面、いいですよね」',()=>{S.bond.momoa+=2;shootOffer('「そうなんです！　あの場面の表情を写真でも出したくて！」')}],
+      ['「おすすめの場面をもう少し聞きたいです」',()=>{S.bond.momoa++;shootOffer('「いいんですか!?　じゃあ、実習編のここが……って、私ばっかり喋っちゃった！」')}],
+      ['「そろそろ撮影をお願いしてもいいですか？」',()=>shootOffer('「あ、はい！　作品の話を聞いてくれてありがとうございます」')],
+      ['「長いので、もう撮っていいですか？」',()=>{S.unease++;S.bond.momoa--;shootOffer('「あっ、すみません。熱くなっちゃいました……」')}]
+    ],portrait);
+  }
+  function costumeTalk(){
+    story('momoa','ももあ','「腕から手首までのガード、ヒーローらしく見えるように作ったんです。作品の『実習中でも誰かを守る』って感じが好きで」',[
+      ['「腕のガードも入れて撮りましょう」',()=>{S.bond.momoa+=2;shootOffer('「ありがとうございます！　それなら決めポーズもやります！」')}],
+      ['「作品の好きなところを聞かせてください」',()=>fanTalk()],
+      ['「撮影をお願いします」',()=>shootOffer('「はい！　よろしくお願いします」')],
+      ['今日は撮影せず離れる',()=>decline()]
+    ],portrait);
+  }
+  function shootOffer(line){
+    story('momoa','ももあ',line+'<br>「ヒーロー実習中って雰囲気で撮ってください！」',[
+      ['撮影を始める',()=>startShoot('momoa')],
+      ['今日は撮影を見送る',()=>decline()]
+    ],portrait);
+  }
+  const oldVisit=visit;
+  visit=function(p){
+    if(p!=='momoa')return oldVisit.apply(this,arguments);
+    ensureConversationStateV663();
+    if(S.shotDone.has(p))return postShootVisit(p);
+    if(S.skippedV663.has(p))return story(p,'ももあ','「また会いましたね！」<br><span class="thought">（今日は撮影しないと伝えた。もう撮影の話を持ち出さない。）</span>',[['会釈して離れる',()=>show('map')]],portrait);
+    if(S.refused.has(p))return story(p,'ももあ','「今日は撮影しないので……」',[['離れる',()=>show('map')]],portrait);
+    if(S.closedV663.has(p))return story(p,'マボ','ももあとの会話は今日は終わっている。',[['マップへ戻る',()=>show('map')]],portrait);
+    if(['要警戒カメコ','ブラックリスト級カメコ'].includes(layerRepName())){
+      refuse(p);return story(p,'ももあ','「すみません。今日は撮影を控えさせてください」',[['「分かりました」と離れる',()=>{S.backedOff++;show('map')}]],portrait);
+    }
+    return entry();
+  };
+
+  const oldChoices=postShootChoices;
+  postShootChoices=function(p,appeal){
+    if(p!=='momoa')return oldChoices.apply(this,arguments);
+    if(photoGrades(p,S.shots[S.selected]).xCount>0)return oldChoices.apply(this,arguments);
+    return [
+      ['「作品の雰囲気が出た一枚を送ります」',()=>{S.bond.momoa++;S.trust++;finishPostShootChoice(p,'「楽しみです！　衣装のこだわりまで撮ってくれて嬉しいです」')}],
+      ['「投稿するかは、写真を見て決めてください」',()=>{S.rep++;finishPostShootChoice(p,'「ありがとうございます。選んでからお返事しますね」')}],
+      ['「次も絶対撮らせてください」と迫る',()=>{S.unease+=2;S.bond.momoa--;finishPostShootChoice(p,'「次のことは、またその時に……」')}],
+      ['「次は僕をヴィラン役として踏んでください」と言う',()=>{S.unease+=3;S.creep++;S.bond.momoa-=2;finishPostShootChoice(p,'「……えっ。そういう撮影はしません」<br><span class="thought">（作品の話から、俺の願望の話になっていた。完全に引かせてしまった。）</span>')}]
+    ];
+  };
+  const oldStory=story;
+  story=function(p,sp,text,choices,img){
+    if(p==='momoa'&&typeof text==='string'&&text.includes('撮影後、どう締める？')&&S.shots?.[S.selected]){
+      const appeal=photoAppeal(p,S.shots[S.selected]);
+      if(appeal>=80)text=(appeal>=90?'「これ、実習中のヒーローが本当に飛び出しそう！　ガードもきれいに写ってます！」':'「ヒーローらしく撮れてますね！　衣装の細部も見えて嬉しいです」')+'<br><span class="thought">（ももあの作品愛が写真にも残った。）</span><br><br><b>撮影後、どう締める？</b>';
+    }
+    return oldStory(p,sp,text,choices,img);
+  };
+  const oldPostVisit=postShootVisit;
+  postShootVisit=function(p){
+    if(p!=='momoa')return oldPostVisit.apply(this,arguments);
+    if(S.momoaRevisitV688)return story(p,'マボ','撮影はもう終わった。作品の話も写真の確認も済んでいる。',[['マップへ戻る',()=>show('map')]],portrait);
+    S.momoaRevisitV688=true;
+    return story(p,'ももあ','「さっきはありがとうございました！　あのポーズ、写真だとどう見えました？」',[
+      ['「衣装のこだわりが伝わる一枚でした」とお礼する',()=>{S.bond.momoa++;story(p,'ももあ','「よかった！　実習のヒーローに見えたなら嬉しいです」',[['マップへ戻る',()=>show('map')]],portrait)}],
+      ['写真は選んで送ります、と伝える',()=>show('map')]
+    ],portrait);
+  };
+
+  const oldIndividual=individualEnding;
+  individualEnding=function(p){
+    if(p!=='momoa')return oldIndividual.apply(this,arguments);
+    const score=Number(S.photoScores.momoa||0),bond=Number(S.bond.momoa||0);
+    if(score<78||bond<2)return oldIndividual('outdoor');
+    setEndPosterMode('good');theme('good');show('end');
+    document.getElementById('ending').className='endScene good';
+    document.getElementById('endTitle').textContent='ももあEND　実習中のヒーロー';
+    document.getElementById('endBody').innerHTML='<div class="endGallery storyGallery"><img src="'+portrait+'"><img src="poses/greenhero_p5.png"></div><div class="endChapter">翌朝 ― ももあからの返信</div><div class="endText">「写真ありがとうございます！　腕のガードも、表情もちゃんと見えて、私が好きな実習中のヒーローそのものです」<br><br>投稿には『放課後ヒーロー実習』への思いと、撮影者マボの名前が添えられていた。</div><div class="endImpact">「次の衣装も、作品の話から始めてくれたら嬉しいです！」</div><div class="endText"><b>作品への思いを聞いて撮った一枚が、次の撮影につながった。</b></div>';
+  };
+
+  const previousFinalize=v2Finalize;
+  v2Finalize=function(){
+    previousFinalize.apply(this,arguments);
+    const card=document.querySelector('#endBody .resultCard');
+    if(card)card.innerHTML=card.innerHTML.replace(/撮影人数：\d+\/5/g,'撮影人数：'+S.shotDone.size+'/6');
+  };
+  const version=document.querySelector('.titleVersion');
+  if(version)version.textContent='Ver. 6.89';
+  updateShotStatus();
+})();
+
 </script>
 </body></html>
