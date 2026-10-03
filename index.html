@@ -500,7 +500,7 @@
 
 <section id="loading" class="screen active"><div class="loadingInner"><div class="loadingText">NOW LOADING...</div><div class="loadingSub">CHUDOME GAME DATA</div></div></section>
 <section id="pretitle" class="screen"><div class="pretitleInner"><button id="preludeStart" type="button">タップして開始</button><div id="preludeText" aria-live="polite"></div></div></section>
-<section id="title" class="screen"><div class="hero" id="titleTap"><img src="poses/embedded_dd1dcf349d9b5ec1.png"><div class="titleBrand">MABOX<small>presents</small></div><div class="titleVersion">Ver. 6.94</div><div class="titleLogo"><small>COSPLAY PHOTOGRAPHER ADVENTURE</small><h1>ちゅどーむに消ゆ</h1><small>― 野良カメコ・マボの一日 ―</small></div><button class="press" id="press">タップしてスタート</button><div class="fictionNote">本作品はフィクションです。登場する人物・団体・イベントおよび出来事は架空のものであり、実在のものとは関係ありません</div><div class="maker"><span class="mMark">M</span>MABOX<br><small>© 2026 MABOX</small></div></div></section>
+<section id="title" class="screen"><div class="hero" id="titleTap"><img src="poses/embedded_dd1dcf349d9b5ec1.png"><div class="titleBrand">MABOX<small>presents</small></div><div class="titleVersion">Ver. 6.96</div><div class="titleLogo"><small>COSPLAY PHOTOGRAPHER ADVENTURE</small><h1>ちゅどーむに消ゆ</h1><small>― 野良カメコ・マボの一日 ―</small></div><button class="press" id="press">タップしてスタート</button><div class="fictionNote">本作品はフィクションです。登場する人物・団体・イベントおよび出来事は架空のものであり、実在のものとは関係ありません</div><div class="maker"><span class="mMark">M</span>MABOX<br><small>© 2026 MABOX</small></div></div></section>
 <section id="intro" class="screen"><div class="top"><b>PROLOGUE</b><span>09:18</span></div><div class="art"><img src="poses/embedded_2fe3d4ea4c6bcb65.jpg"></div><div class="intro"><h2>ちゅどーむ、到着。</h2><div id="introText">札幌のコスプレイベント。<br>野良のコスプレカメラマン、マボは今日も一人で会場へ来た。<br><br><span class="thought">（今日こそ……「また撮ってください」って言われる写真を撮る。できればSNSにも載せてもらう。いや、まず普通に会話を成立させろ俺。）</span><br><br>会場には、レイヤーとカメラマン、それぞれの思惑が渦巻いている。<br>何気ない一言が、数時間後の評判を変えることもある。</div></div><div class="next"><button class="cmd" id="toMap">▶ 会場へ入る</button></div></section>
 <section class="screen" id="map">
   <div class="panel">
@@ -1092,7 +1092,7 @@ const POOR_PHOTO_REACTIONS={
 function finishPostShootChoice(p,line){let P=people[p];story(p,P.name,line+'<br><span class="thought">（写真の出来だけじゃなく、最後の一言も印象に残る。）</span>',[['一礼して離れる',()=>v4ReturnMap()]])}
 function postShootChoices(p,appeal){let P=people[p];return [['「ありがとうございました。また機会があればお願いします」',()=>{S.rep++;S.trust++;S.bond[p]=(S.bond[p]||0)+1;finishPostShootChoice(p,'「はい、こちらこそありがとうございました！」')}],['「かなりいいの撮れました。あとで送りますね」',()=>{if(appeal>=80){S.rep++;S.trust++;finishPostShootChoice(p,'「ありがとうございます。楽しみにしてます！」')}else{S.unease++;finishPostShootChoice(p,'「あ、はい……確認しますね」<br>少しだけ反応が控えめだった。')}}],['「撮影が終わっても、しばらく近くにいていいですか？」',()=>{S.creep++;S.unease+=2;S.bond[p]=Math.max(-3,(S.bond[p]||0)-1);finishPostShootChoice(p,'「……いえ、もう撮影は終わったので」<br>'+P.name+'は明らかに距離を取った。')}]]}
 function photoSelect(){stopPoseChanceTimer();let p=S.currentShoot||'outdoor',P=people[p];markShot(p);v4SetProgressTime();show('select');$('#selectTitle').textContent=P.name+'の写真を選ぶ';$('#selectSub').textContent='6枚から1枚';$('#selectDialog').innerHTML=P.name+'へ渡す一枚を選ぶ。<br><span class="thought">（構図だけでなく、ポーズが定まった瞬間も見て選ぼう。）</span>';$('#sendPhoto').textContent='この写真に決める';let g=$('#selectGrid');g.innerHTML='';S.selected=null;S.shots.forEach((s,i)=>{let b=document.createElement('button');b.className='thumb';b.innerHTML=`<img src="${s.img}"><span>${i+1}<br>${photoTraits(p,s)}</span>`;b.onclick=()=>{$$('.thumb').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');S.selected=i;click()};g.appendChild(b)})}
-$('#sendPhoto').onclick=()=>{if(S.selected===null){alert('写真を1枚選んでください');return}let p=S.currentShoot||'outdoor',shot=S.shots[S.selected],score=shot.score,appeal=photoAppeal(p,shot),P=people[p],grades=photoGrades(p,shot),xCount=grades.xCount;S.photoScores[p]=score;if(p==='outdoor')S.photo=score;if(S.bond&&S.bond[p]!==undefined){S.bond[p]+=appeal>=90?2:appeal>=78?1:appeal<60?-1:0}S.rep+=appeal>=92?1:0;S.trust+=appeal>=85?1:0;S.unease+=appeal<55?1:0;if(xCount>0){let level=Math.min(3,xCount),poor=POOR_PHOTO_REACTIONS[p][level];S.bond[p]=Math.max(-3,(S.bond[p]||0)-1);let body=poor[0]+'<br><span class="thought">（'+poor[1]+'）</span>';if(xCount>=3){story(p,P.name,body,[['何も言わず、その場を離れる',()=>v4ReturnMap()]]);return}story(p,P.name,body+'<br><br><b>撮影後、どう締める？</b>',postShootChoices(p,appeal));return}let reaction='';if(appeal>=90){reaction=p==='outdoor'?'「えっ、これすごく好きです！ 表情も雰囲気もめっちゃいい……！」':p==='indoor'?'「すごい……この雰囲気、かなり好きです！」':p==='rest'?'「え、これ私すごく好きです！ 自然な感じがいいです」':p==='east'?'「これ作品っぽい！ 背景までちゃんと活きてて好きです」':'「えっ、これ好きです！ 投稿にも使いたいです」'}else if(appeal>=80){reaction=p==='outdoor'?'「いいですね！ これ、使わせてもらいたいです」':p==='indoor'?'「いい感じです。雰囲気、好きです」':p==='rest'?'「いいですね！ 自然な感じで嬉しいです」':p==='east'?'「構図いいですね。背景との感じも好きです」':'「いいですね！ これ友達にも見せたいです」'}else if(appeal>=70){reaction='「ありがとうございます。いい感じですね」'}else if(appeal>=55){reaction='「ありがとうございます。確認しておきますね」<br>悪くはなさそうだが、強い反応でもない。'}else{reaction='「あ……ありがとうございます。受け取っておきますね」<br>反応は少し薄かった。'}let taste=photoTasteBonus(p,shot)>=12?'本人の好みにかなり合った気がする。':photoTasteBonus(p,shot)>=5?'雰囲気は合っていそうだ。':'技術的には悪くなくても、好みとは少しズレたかもしれない。';story(p,P.name,reaction+'<br><span class="thought">（'+taste+'）</span><br><br><b>撮影後、どう締める？</b>',postShootChoices(p,appeal))}
+$('#sendPhoto').onclick=()=>{if(S.selected===null){alert('写真を1枚選んでください');return}let p=S.currentShoot||'outdoor',shot=S.shots[S.selected],score=shot.score,appeal=photoAppeal(p,shot),P=people[p],grades=photoGrades(p,shot),xCount=grades.xCount;S.photoScores[p]=score;if(p==='outdoor')S.photo=score;if(S.bond&&S.bond[p]!==undefined){S.bond[p]+=appeal>=90?2:appeal>=78?1:appeal<60?-1:0}S.rep+=appeal>=92?1:0;S.trust+=appeal>=85?1:0;S.unease+=appeal<55?1:0;if(xCount>0){let level=Math.min(3,xCount),poor=POOR_PHOTO_REACTIONS[p][level];S.bond[p]=Math.max(-3,(S.bond[p]||0)-1);let body=poor[0]+'<br><span class="thought">（'+poor[1]+'）</span>';if(xCount>=3){story(p,P.name,body,[['何も言わず、その場を離れる',()=>{if(S.rescueGrantedV694?.has(p))finishPostShootChoice(p,'一礼して、撮影を終えた。');else v4ReturnMap()}]]);return}story(p,P.name,body+'<br><br><b>撮影後、どう締める？</b>',postShootChoices(p,appeal));return}let reaction='';if(appeal>=90){reaction=p==='outdoor'?'「えっ、これすごく好きです！ 表情も雰囲気もめっちゃいい……！」':p==='indoor'?'「すごい……この雰囲気、かなり好きです！」':p==='rest'?'「え、これ私すごく好きです！ 自然な感じがいいです」':p==='east'?'「これ作品っぽい！ 背景までちゃんと活きてて好きです」':'「えっ、これ好きです！ 投稿にも使いたいです」'}else if(appeal>=80){reaction=p==='outdoor'?'「いいですね！ これ、使わせてもらいたいです」':p==='indoor'?'「いい感じです。雰囲気、好きです」':p==='rest'?'「いいですね！ 自然な感じで嬉しいです」':p==='east'?'「構図いいですね。背景との感じも好きです」':'「いいですね！ これ友達にも見せたいです」'}else if(appeal>=70){reaction='「ありがとうございます。いい感じですね」'}else if(appeal>=55){reaction='「ありがとうございます。確認しておきますね」<br>悪くはなさそうだが、強い反応でもない。'}else{reaction='「あ……ありがとうございます。受け取っておきますね」<br>反応は少し薄かった。'}let taste=photoTasteBonus(p,shot)>=12?'本人の好みにかなり合った気がする。':photoTasteBonus(p,shot)>=5?'雰囲気は合っていそうだ。':'技術的には悪くなくても、好みとは少しズレたかもしれない。';story(p,P.name,reaction+'<br><span class="thought">（'+taste+'）</span><br><br><b>撮影後、どう締める？</b>',postShootChoices(p,appeal))}
 const V8IMG={map:'poses/embedded_d1fd251629b3f36e.jpg',bad:'poses/embedded_72c81b2a72e5808e.jpg',badPhone:'poses/embedded_35bcea3cb489f714.jpg',good:'poses/embedded_f0d8992119de1749.jpg',goodClose:'poses/embedded_a41e77553da29fe8.jpg',gallery:'poses/embedded_a41e77553da29fe8.jpg'};
 const COMMON_WARNING_SNS='poses/embedded_24fb47e241790106.png';
 function endingBad(){}
@@ -1976,7 +1976,7 @@ window.addEventListener('load',()=>{
   const otherV645=other;
 
   function nebataShouldStartV646(p){
-    return p==='east'&&false&&!S.nebataSeen&&
+    return p==='east'&&!S.nebataSeen&&
       !(S.shotDone&&S.shotDone.has('east'))&&
       !(S.refused&&S.refused.has('east'));
   }
@@ -2011,7 +2011,7 @@ window.addEventListener('load',()=>{
     theme('talk');
     
 
-    const rank=S.nebataPreRankV646||(typeof layerRepName==='function'?layerRepName():'');
+    const rank=typeof layerRepName==='function'?layerRepName():'';
     if(rank==='要警戒カメコ'||rank==='ブラックリスト級カメコ'){
       const source=S.nebataPreRumorSourceV646||nebataRumorSourceV646();
       const rumorLine=source==='both'
@@ -2319,9 +2319,7 @@ window.addEventListener('load',()=>{
 (function(){
   function finishLowPhotoV649(p,line,thought){
     const P=people[p];
-    story(p,P.name,line+'<br><span class="thought">（'+thought+'）</span>',[
-      ['一礼して離れる',()=>v4ReturnMap()]
-    ]);
+    finishPostShootChoice(p,line+'<br><span class="thought">（'+thought+'）</span>');
   }
 
   /* 「送らない」のにAdobeで現像する、という矛盾をなくす。 */
@@ -2557,7 +2555,7 @@ window.addEventListener('load',()=>{
       if(!Array.isArray(ch)||typeof ch[1]!=='function')return ch;
       const label=String(ch[0]||''),fn=ch[1];
       return [ch[0],()=>{
-        S.ayaClosingToneV651=/近くにいて|見続け|フォルダ|タグ付け|現像で直せ|見せ続け|送らせ/.test(label)?'creepy':/送りません|見直してから/.test(label)?'poor':'normal';
+        S.ayaClosingToneV651=/近くにいて|見続け|フォルダ|タグ付け|撮影者タグ|現像で直せ|見せ続け|送らせ/.test(label)?'creepy':/送りません|見直してから/.test(label)?'poor':'normal';
         return fn();
       }];
     });
@@ -3919,7 +3917,7 @@ function creepyRequestV681(p,kind){
   const restart=document.getElementById('restart');
   if(restart)restart.onclick=()=>{click();showEndPoster()};
   
-  const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.94';
+  const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.96';
 })();
 </script>
 <script>
@@ -4024,6 +4022,7 @@ function creepyRequestV681(p,kind){
     if(['要警戒カメコ','ブラックリスト級カメコ'].includes(layerRepName())){
       refuse(p);return story(p,'ももあ','「すみません。今日は撮影を控えさせてください」',[['「分かりました」と離れる',()=>{S.backedOff++;show('map')}]],portrait);
     }
+    if(S.permissionV663.has(p))return story(p,'ももあ','「撮影の準備は大丈夫です。衣装とヒーローらしいポーズをお願いします」',[['撮影を始める',()=>startShoot(p)],['今日は撮影を見送る',()=>{markSkippedV663(p);show('map')}]],portrait);
     return entry();
   };
 
@@ -4032,7 +4031,7 @@ function creepyRequestV681(p,kind){
     if(p!=='momoa')return oldChoices.apply(this,arguments);
     if(photoGrades(p,S.shots[S.selected]).xCount>0)return oldChoices.apply(this,arguments);
     return [
-      ['「作品の雰囲気が出た一枚を送ります」',()=>{S.bond.momoa++;S.trust++;finishPostShootChoice(p,'「楽しみです！　衣装のこだわりまで撮ってくれて嬉しいです」')}],
+      ['「作品の雰囲気が出た一枚を送ります」',()=>{S.bond.momoa++;S.trust++;finishPostShootChoice(p,appeal>=80?'「楽しみです！　衣装のこだわりまで撮ってくれて嬉しいです」':'「ありがとうございます。写真を確認してから、使うか決めますね」')}],
       ['「投稿するかは、写真を見て決めてください」',()=>{S.rep++;finishPostShootChoice(p,'「ありがとうございます。選んでからお返事しますね」')}],
       ['「次も絶対撮らせてください」と迫る',()=>{S.unease+=2;S.bond.momoa--;finishPostShootChoice(p,'「次のことは、またその時に……」')}],
       ['「次は僕をヴィラン役として踏んでください」と言う',()=>{S.unease+=3;S.creep++;S.bond.momoa-=2;finishPostShootChoice(p,'「……えっ。そういう撮影はしません」<br><span class="thought">（作品の話から、俺の願望の話になっていた。完全に引かせてしまった。）</span>')}]
@@ -4049,6 +4048,8 @@ function creepyRequestV681(p,kind){
   const oldPostVisit=postShootVisit;
   postShootVisit=function(p){
     if(p!=='momoa')return oldPostVisit.apply(this,arguments);
+    if(['要警戒カメコ','ブラックリスト級カメコ'].includes(layerRepName()))return oldPostVisit.apply(this,arguments);
+    if(Number(S.photoScores?.momoa||0)<80||Number(S.photoXCountsV648?.momoa||0)>0)return oldPostVisit.apply(this,arguments);
     if(S.momoaRevisitV688)return story(p,'マボ','撮影はもう終わった。作品の話も写真の確認も済んでいる。',[['マップへ戻る',()=>show('map')]],portrait);
     S.momoaRevisitV688=true;
     return story(p,'ももあ','「さっきはありがとうございました！　あのポーズ、写真だとどう見えました？」',[
@@ -4075,7 +4076,7 @@ function creepyRequestV681(p,kind){
     if(card)card.innerHTML=card.innerHTML.replace(/撮影人数：\d+\/5/g,'撮影人数：'+S.shotDone.size+'/6');
   };
   const version=document.querySelector('.titleVersion');
-  if(version)version.textContent='Ver. 6.94';
+  if(version)version.textContent='Ver. 6.96';
   updateShotStatus();
 })();
 
@@ -4108,7 +4109,7 @@ function creepyRequestV681(p,kind){
    if(endPosterMode==='good'&&v2Result().grade!=='A')endPosterMode='continue';
    return previousPoster.apply(this,arguments);
  };
- const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.94';
+ const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.96';
 })();
 </script>
 
@@ -4181,10 +4182,52 @@ function creepyRequestV681(p,kind){
    ensure();const base=S.rescueBaselineV694[p];
    if(S.rescueGrantedV694.has(p)&&!S.rescueRewardedV694.has(p)&&base&&S.unease<=base.unease&&S.creep<=base.creep&&S.rude<=base.rude){
      S.rescueRewardedV694.add(p);S.trust++;S.bond[p]=(S.bond[p]||0)+1;
+     S.unease=Math.max(0,S.unease-2);
+     S.cautionRecoveryV695={unease:S.unease,creep:S.creep,rude:S.rude,ng:S.refused.size,
+       warnings:(S.warningIncidents||[]).length,pressures:(S.pressureLog||[]).length,
+       explicit:!!S.explicitInappropriateRequestV682,escalated:!!S.explicitInappropriateEscalatedV683};
+     line+='<br><span class="thought">（条件を守って撮影を終えた。少し警戒が和らいだ。評判は「微妙なカメコ」まで戻った。）</span>';
    }
    return previousFinish.apply(this,arguments);
  };
 })();
 
+</script>
+<script>
+/* Ver.6.95: 条件付き撮影を守った後は微妙まで回復。行為の記録は保持。 */
+(function(){
+ const previousRank=layerRepName;
+ layerRepName=function(){
+   const rank=previousRank.apply(this,arguments),r=S.cautionRecoveryV695;
+   if(!r||rank==='ブラックリスト級カメコ')return rank;
+   const worsened=S.unease>r.unease||S.creep>r.creep||S.rude>r.rude||
+     (S.warningIncidents||[]).length>r.warnings||(S.pressureLog||[]).length>r.pressures||
+     (!!S.explicitInappropriateRequestV682&&!r.explicit)||(!!S.explicitInappropriateEscalatedV683&&!r.escalated);
+   if(worsened){S.cautionRecoveryV695=null;return rank}
+   return '微妙なカメコ';
+ };
+})();
+</script>
+<script>
+/* Ver.6.96: 写真の出来と礼儀の回復を分離し、個別エンドと全体評価を接続。 */
+(function(){
+ const send=document.getElementById('sendPhoto'),oldSend=send.onclick;
+ send.onclick=function(){
+   const p=S.currentShoot,base=S.rescueBaselineV694?.[p],before=S.unease;
+   const result=oldSend.apply(this,arguments);
+   if(base&&S.rescueGrantedV694?.has(p)&&!S.rescueRewardedV694?.has(p))base.unease+=Math.max(0,S.unease-before);
+   return result;
+ };
+ const oldFinalize=v2Finalize;
+ v2Finalize=function(){
+   oldFinalize.apply(this,arguments);
+   const body=document.getElementById('endBody');
+   if(endPosterMode==='good'&&v2Result().grade!=='A'&&!S.endBridgeV696&&body){
+     S.endBridgeV696=true;
+     body.insertAdjacentHTML('beforeend','<div class="endText">この出会いは次の撮影につながった。今日全体のカメコ評価には、まだ伸ばせるところがある。最後に今日の結果を振り返り、次の一枚へ。</div>');
+   }
+ };
+ const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.96';
+})();
 </script>
 </body></html>
