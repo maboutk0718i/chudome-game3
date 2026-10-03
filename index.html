@@ -500,7 +500,7 @@
 
 <section id="loading" class="screen active"><div class="loadingInner"><div class="loadingText">NOW LOADING...</div><div class="loadingSub">CHUDOME GAME DATA</div></div></section>
 <section id="pretitle" class="screen"><div class="pretitleInner"><button id="preludeStart" type="button">タップして開始</button><div id="preludeText" aria-live="polite"></div></div></section>
-<section id="title" class="screen"><div class="hero" id="titleTap"><img src="poses/embedded_dd1dcf349d9b5ec1.png"><div class="titleBrand">MABOX<small>presents</small></div><div class="titleVersion">Ver. 7.20</div><div class="titleLogo"><small>COSPLAY PHOTOGRAPHER ADVENTURE</small><h1>ちゅどーむに消ゆ</h1><small>― 野良カメコ・マボの一日 ―</small></div><button class="press" id="press">タップしてスタート</button><div class="fictionNote">本作品はフィクションです。登場する人物・団体・イベントおよび出来事は架空のものであり、実在のものとは関係ありません</div><div class="maker"><span class="mMark">M</span>MABOX<br><small>© 2026 MABOX</small></div></div></section>
+<section id="title" class="screen"><div class="hero" id="titleTap"><img src="poses/embedded_dd1dcf349d9b5ec1.png"><div class="titleBrand">MABOX<small>presents</small></div><div class="titleVersion">Ver. 7.21</div><div class="titleLogo"><small>COSPLAY PHOTOGRAPHER ADVENTURE</small><h1>ちゅどーむに消ゆ</h1><small>― 野良カメコ・マボの一日 ―</small></div><button class="press" id="press">タップしてスタート</button><div class="fictionNote">本作品はフィクションです。登場する人物・団体・イベントおよび出来事は架空のものであり、実在のものとは関係ありません</div><div class="maker"><span class="mMark">M</span>MABOX<br><small>© 2026 MABOX</small></div></div></section>
 <section id="intro" class="screen"><div class="top"><b>PROLOGUE</b><span>09:18</span></div><div class="art"><img src="poses/embedded_2fe3d4ea4c6bcb65.jpg"></div><div class="intro"><h2>ちゅどーむ、到着。</h2><div id="introText">札幌のコスプレイベント。<br>野良のコスプレカメラマン、マボは今日も一人で会場へ来た。<br><br><span class="thought">（今日こそ……「また撮ってください」って言われる写真を撮る。できればSNSにも載せてもらう。いや、まず普通に会話を成立させろ俺。）</span><br><br>会場には、レイヤーとカメラマン、それぞれの思惑が渦巻いている。<br>何気ない一言が、数時間後の評判を変えることもある。</div></div><div class="next"><button class="cmd" id="toMap">▶ 会場へ入る</button></div></section>
 <section class="screen" id="map">
   <div class="panel">
@@ -870,14 +870,21 @@ function refuse(p){if(p){S.refused.add(p);updateShotStatus();v4SetProgressTime()
 function recordPressure(p,action){S.pushAfterNo++;S.pressureLog.push({place:p,action:action})}
 function recordWarningIncident(p,action){S.warningIncidents.push({place:p,action:action});S.creep+=2;S.unease+=2;rude(2)}
 const REIJI_IMG='poses/embedded_c629659a7331aa17.jpg';
+const SCENE_IMAGE_CACHE_V721=new Map();
+function sceneImageV721(src){
+ if(SCENE_IMAGE_CACHE_V721.has(src))return SCENE_IMAGE_CACHE_V721.get(src);
+ const im=new Image();im.decoding='async';SCENE_IMAGE_CACHE_V721.set(src,im);im.src=src;return im;
+}
 function setImageNoFlash(el,src){
  if(!el||!src)return;
- el.style.opacity='0';
- let done=false;
- const reveal=()=>{if(done)return;done=true;requestAnimationFrame(()=>{el.style.opacity='1'})};
- el.onload=reveal;el.onerror=reveal;
- el.src=src;
- if(el.complete)reveal();
+ const token=(el.sceneRequestV721||0)+1;el.sceneRequestV721=token;
+ el.style.opacity='1';
+ const im=sceneImageV721(src);
+ const commit=()=>{if(el.sceneRequestV721!==token)return;el.onload=null;el.onerror=null;el.src=src;el.style.opacity='1';};
+ if(im.complete&&im.naturalWidth){commit();return;}
+ const ready=()=>{if(typeof im.decode==='function')im.decode().then(commit).catch(commit);else commit();};
+ im.addEventListener('load',ready,{once:true});
+ // Keep the current image visible if the replacement fails to load.
 }
 function rivalSpeakerImage(sp){
  if(sp==='田中')return IMG.tanaka;
@@ -1344,6 +1351,7 @@ function startLightweightPreload(){
     IMG.kuroda,IMG.tanaka,IMG.ryoji,IMG.hide,V8IMG.map
   ],true);
   const later=()=>preloadGameImages([IMG.pose1,IMG.pose2,IMG.pose3,IMG.pose4,IMG.pose5,IMG.pose6]);
+  [IMG.kuroda,IMG.tanaka,IMG.ryoji,IMG.hide,REIJI_IMG,'poses/karen_intruder.png','poses/ginko.png',...['outdoor','indoor','rest','east','entrance'].map(p=>V47POSE[p+'5']), 'poses/greenhero_p0.png'].forEach(src=>sceneImageV721(src));
   if('requestIdleCallback' in window)requestIdleCallback(later,{timeout:1800});
   else setTimeout(later,700);
   return firstBatch;
@@ -3960,7 +3968,7 @@ function creepyRequestV681(p,kind){
   const restart=document.getElementById('restart');
   if(restart)restart.onclick=()=>{click();showEndPoster()};
   
-  const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 7.20';
+  const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 7.21';
 })();
 </script>
 <script>
@@ -4118,7 +4126,7 @@ function creepyRequestV681(p,kind){
     if(card)card.innerHTML=card.innerHTML.replace(/撮影人数：\d+\/5/g,'撮影人数：'+S.shotDone.size+'/6');
   };
   const version=document.querySelector('.titleVersion');
-  if(version)version.textContent='Ver. 7.20';
+  if(version)version.textContent='Ver. 7.21';
   updateShotStatus();
 })();
 
@@ -4151,7 +4159,7 @@ function creepyRequestV681(p,kind){
    if(endPosterMode==='good'&&v2Result().grade!=='A')endPosterMode='continue';
    return previousPoster.apply(this,arguments);
  };
- const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 7.20';
+ const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 7.21';
 })();
 </script>
 
@@ -4269,7 +4277,7 @@ function creepyRequestV681(p,kind){
      body.insertAdjacentHTML('beforeend','<div class="endText">この出会いは次の撮影につながった。今日全体のカメコ評価には、まだ伸ばせるところがある。最後に今日の結果を振り返り、次の一枚へ。</div>');
    }
  };
- const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 7.20';
+ const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 7.21';
 })();
 </script>
 <script>
@@ -4389,7 +4397,7 @@ function creepyRequestV681(p,kind){
 </script>
 
 <script>
-/* Ver.7.20 銀子：あやの撮影前に一度だけ登場 */
+/* Ver.7.21 銀子：あやの撮影前に一度だけ登場 */
 (()=>{
  const art='poses/ginko.png';
  const normalVisit=visit,normalTalk=talk,oldOther=other,oldShoot=startShoot;
