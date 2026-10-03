@@ -500,7 +500,7 @@
 
 <section id="loading" class="screen active"><div class="loadingInner"><div class="loadingText">NOW LOADING...</div><div class="loadingSub">CHUDOME GAME DATA</div></div></section>
 <section id="pretitle" class="screen"><div class="pretitleInner"><button id="preludeStart" type="button">タップして開始</button><div id="preludeText" aria-live="polite"></div></div></section>
-<section id="title" class="screen"><div class="hero" id="titleTap"><img src="poses/embedded_dd1dcf349d9b5ec1.png"><div class="titleBrand">MABOX<small>presents</small></div><div class="titleVersion">Ver. 6.92</div><div class="titleLogo"><small>COSPLAY PHOTOGRAPHER ADVENTURE</small><h1>ちゅどーむに消ゆ</h1><small>― 野良カメコ・マボの一日 ―</small></div><button class="press" id="press">タップしてスタート</button><div class="fictionNote">本作品はフィクションです。登場する人物・団体・イベントおよび出来事は架空のものであり、実在のものとは関係ありません</div><div class="maker"><span class="mMark">M</span>MABOX<br><small>© 2026 MABOX</small></div></div></section>
+<section id="title" class="screen"><div class="hero" id="titleTap"><img src="poses/embedded_dd1dcf349d9b5ec1.png"><div class="titleBrand">MABOX<small>presents</small></div><div class="titleVersion">Ver. 6.94</div><div class="titleLogo"><small>COSPLAY PHOTOGRAPHER ADVENTURE</small><h1>ちゅどーむに消ゆ</h1><small>― 野良カメコ・マボの一日 ―</small></div><button class="press" id="press">タップしてスタート</button><div class="fictionNote">本作品はフィクションです。登場する人物・団体・イベントおよび出来事は架空のものであり、実在のものとは関係ありません</div><div class="maker"><span class="mMark">M</span>MABOX<br><small>© 2026 MABOX</small></div></div></section>
 <section id="intro" class="screen"><div class="top"><b>PROLOGUE</b><span>09:18</span></div><div class="art"><img src="poses/embedded_2fe3d4ea4c6bcb65.jpg"></div><div class="intro"><h2>ちゅどーむ、到着。</h2><div id="introText">札幌のコスプレイベント。<br>野良のコスプレカメラマン、マボは今日も一人で会場へ来た。<br><br><span class="thought">（今日こそ……「また撮ってください」って言われる写真を撮る。できればSNSにも載せてもらう。いや、まず普通に会話を成立させろ俺。）</span><br><br>会場には、レイヤーとカメラマン、それぞれの思惑が渦巻いている。<br>何気ない一言が、数時間後の評判を変えることもある。</div></div><div class="next"><button class="cmd" id="toMap">▶ 会場へ入る</button></div></section>
 <section class="screen" id="map">
   <div class="panel">
@@ -1739,7 +1739,7 @@ window.addEventListener('load',()=>{
 <script>
 /* === Ver.6.38 patch: レイヤー評判を段階的に低下 === */
 (function(){
-  const LAYER_PLACES_V638=['outdoor','indoor','rest','east','entrance'];
+  const LAYER_PLACES_V638=['outdoor','indoor','rest','east','entrance','momoa'];
   const NORMAL_LAYER_LABELS_V638=['無名','顔を覚えられ始めた','少し知られている','好印象','評判が良い','信頼されている','人気カメコ'];
 
   function activeNgV638(){
@@ -1781,12 +1781,12 @@ window.addEventListener('load',()=>{
     const caution=
       warnings>=1 ||
       pressures>=2 ||
-      ng>=2 ||
+      ng>=3 ||
       layerRumor>=1 ||
       camRumor>=1 ||
-      creep>=5 ||
-      rude>=5 ||
-      unease>=7;
+      creep>=6 ||
+      rude>=6 ||
+      unease>=9;
     if(caution) return '要警戒カメコ';
 
     const doubtful=
@@ -3919,7 +3919,7 @@ function creepyRequestV681(p,kind){
   const restart=document.getElementById('restart');
   if(restart)restart.onclick=()=>{click();showEndPoster()};
   
-  const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.92';
+  const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.94';
 })();
 </script>
 <script>
@@ -4075,7 +4075,7 @@ function creepyRequestV681(p,kind){
     if(card)card.innerHTML=card.innerHTML.replace(/撮影人数：\d+\/5/g,'撮影人数：'+S.shotDone.size+'/6');
   };
   const version=document.querySelector('.titleVersion');
-  if(version)version.textContent='Ver. 6.92';
+  if(version)version.textContent='Ver. 6.94';
   updateShotStatus();
 })();
 
@@ -4108,7 +4108,7 @@ function creepyRequestV681(p,kind){
    if(endPosterMode==='good'&&v2Result().grade!=='A')endPosterMode='continue';
    return previousPoster.apply(this,arguments);
  };
- const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.92';
+ const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.94';
 })();
 </script>
 
@@ -4124,4 +4124,67 @@ function creepyRequestV681(p,kind){
 .mapNpc[data-place="momoa"] .mapSpot{top:130px!important;font-size:13px!important;padding:4px 7px!important}
 }
 </style>
+<script>
+/* Ver.6.94: 要警戒の条件付き撮影と、ブラックリスト級の明確な拒否 */
+(function(){
+ const previousVisit=visit,previousFinish=finishPostShootChoice;
+ function ensure(){ensureConversationStateV663();if(!S.rescueGrantedV694)S.rescueGrantedV694=new Set();if(!S.rescueRewardedV694)S.rescueRewardedV694=new Set();if(!S.rescueBaselineV694)S.rescueBaselineV694={}}
+ const back=()=>show('map');
+ function declined(p,line){refuse(p);story(p,people[p].name,line,[['「分かりました」と離れる',()=>{S.backedOff++;back()}]],people[p].img)}
+ function accept(p){
+   ensure();S.permissionV663.add(p);S.rescueGrantedV694.add(p);
+   S.rescueBaselineV694[p]={unease:S.unease,creep:S.creep,rude:S.rude};
+   startShoot(p);
+ }
+ function offer(p){
+   const momo=p==='momoa';
+   const lead=momo
+    ?'「……マボさんですよね。ちょっと気になる話は聞いてます。今日は衣装と作品を撮るだけなら、短時間でお願いします」'
+    :'「お話は少し聞いてます。でも、今ちゃんと確認してくれているので……短めの撮影なら大丈夫です。無理なお願いはしないでくださいね」';
+   story(p,people[p].name,lead,[
+     [momo?'「分かりました。ヒーローらしさと衣装を撮ります」':'「ありがとうございます。嫌なことは遠慮なく言ってください」',()=>accept(p)],
+     [momo?'「不安なら、無理にお願いしません」':'「撮影後、仕上がりを確認してもらいます」',()=>{
+       story(p,people[p].name,momo?'「ありがとうございます。それなら、短めの撮影をお願いします」':'「はい。それならお願いします」',[
+         ['条件を守って撮影する',()=>accept(p)],
+         ['今日は撮影を見送る',()=>{markSkippedV663(p);back()}]
+       ],people[p].img);
+     }],
+     [momo?'「僕をヴィラン役として踏むのも、その範囲ですよね？」':'「警戒してる顔も可愛いので、そのまま撮らせてください」',()=>{
+       S.unease+=2;S.creep++;S.bond[p]=Math.max(-5,(S.bond[p]||0)-2);
+       declined(p,momo?'「……いいえ。そういう撮影はしません。撮影はお断りします」':'「……気持ち悪いです。警戒してるって言ってるのに、それを喜ぶんですか？ あなたには撮られたくありません。もう話しかけないでください」');
+     }],
+     ['今日は撮影を見送る',()=>{markSkippedV663(p);back()}]
+   ],people[p].img);
+ }
+ const blackReplies={
+   momoa:'「撮影はお断りします。今日はもう話しかけないでください」',
+   outdoor:'「すみません。安心して撮影をお願いできないので、お断りします」',
+   indoor:'「あなたには撮影をお願いしません。これ以上は話しかけないでください」',
+   rest:'「撮影はお断りします。休憩中なので、離れてください」',
+   east:'「撮影はお断りします。もうお願いしないでください」',
+   entrance:'「撮影はしません。これ以上、声を掛けないでください」'
+ };
+ visit=function(p){
+   if(!people[p])return previousVisit.apply(this,arguments);
+   ensure();
+   if(S.shotDone.has(p)||S.refused.has(p)||S.skippedV663.has(p)||S.closedV663.has(p))return previousVisit.apply(this,arguments);
+   const rank=layerRepName();
+   if(rank==='ブラックリスト級カメコ'){S.met.add(p);return declined(p,blackReplies[p])}
+   if(rank==='要警戒カメコ'&&['momoa','outdoor'].includes(p)){
+     const personalTrouble=[...(S.warningIncidents||[]),...(S.pressureLog||[])].some(x=>x.place===p);
+     if(personalTrouble)return previousVisit.apply(this,arguments);
+     S.met.add(p);return offer(p);
+   }
+   return previousVisit.apply(this,arguments);
+ };
+ finishPostShootChoice=function(p,line){
+   ensure();const base=S.rescueBaselineV694[p];
+   if(S.rescueGrantedV694.has(p)&&!S.rescueRewardedV694.has(p)&&base&&S.unease<=base.unease&&S.creep<=base.creep&&S.rude<=base.rude){
+     S.rescueRewardedV694.add(p);S.trust++;S.bond[p]=(S.bond[p]||0)+1;
+   }
+   return previousFinish.apply(this,arguments);
+ };
+})();
+
+</script>
 </body></html>
