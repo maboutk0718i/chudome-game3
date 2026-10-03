@@ -159,8 +159,6 @@
 
 
 
-#secondLoopBtn{display:none!important}
-#secondLoopBtn.loopUnlocked{display:none!important}
 .mapNpc{width:116px;height:140px}
 .mapNpc .mapFace{width:88px;height:101px}
 .mapNpc .mapName{top:96px;font-size:16px;padding:6px 11px}
@@ -366,7 +364,6 @@
 /* Ver.6.8: map portrait safe crop + second-loop intro crop */
 .mapNpc .mapFace{object-fit:cover!important;object-position:center 12%!important}
 .mapNpc[data-place="indoor"] .mapFace{object-position:center 16%!important}
-#sceneImg.loop2IntroCrop{transform:scale(1.38)!important;transform-origin:50% 0!important;object-position:center top!important}
 
 /* Ver.6.6 graphic-safe rendering */
 .art,.shootView,.thumb,.venueStage,.mapNpc .mapFace,.endGallery img,.storyGallery img{overflow:hidden!important}
@@ -484,7 +481,7 @@
 
 <section id="loading" class="screen active"><div class="loadingInner"><div class="loadingText">NOW LOADING...</div><div class="loadingSub">CHUDOME GAME DATA</div></div></section>
 <section id="pretitle" class="screen"><div class="pretitleInner"><button id="preludeStart" type="button">タップして開始</button><div id="preludeText" aria-live="polite"></div></div></section>
-<section id="title" class="screen"><div class="hero" id="titleTap"><img src="poses/embedded_dd1dcf349d9b5ec1.png"><div class="titleBrand">MABOX<small>presents</small></div><div class="titleVersion">Ver. 6.36</div><div class="titleLogo"><small>COSPLAY PHOTOGRAPHER ADVENTURE</small><h1>ちゅどーむに消ゆ</h1><small>― 野良カメコ・マボの一日 ―</small></div><button class="press" id="press">タップしてスタート</button><div class="fictionNote">本作品はフィクションです。登場する人物・団体・イベントおよび出来事は架空のものであり、実在のものとは関係ありません</div><div class="maker"><span class="mMark">M</span>MABOX<br><small>© 2026 MABOX</small></div></div></section>
+<section id="title" class="screen"><div class="hero" id="titleTap"><img src="poses/embedded_dd1dcf349d9b5ec1.png"><div class="titleBrand">MABOX<small>presents</small></div><div class="titleVersion">Ver. 6.86</div><div class="titleLogo"><small>COSPLAY PHOTOGRAPHER ADVENTURE</small><h1>ちゅどーむに消ゆ</h1><small>― 野良カメコ・マボの一日 ―</small></div><button class="press" id="press">タップしてスタート</button><div class="fictionNote">本作品はフィクションです。登場する人物・団体・イベントおよび出来事は架空のものであり、実在のものとは関係ありません</div><div class="maker"><span class="mMark">M</span>MABOX<br><small>© 2026 MABOX</small></div></div></section>
 <section id="intro" class="screen"><div class="top"><b>PROLOGUE</b><span>09:18</span></div><div class="art"><img src="poses/embedded_2fe3d4ea4c6bcb65.jpg"></div><div class="intro"><h2>ちゅどーむ、到着。</h2><div id="introText">札幌のコスプレイベント。<br>野良のコスプレカメラマン、マボは今日も一人で会場へ来た。<br><br><span class="thought">（今日こそ……「また撮ってください」って言われる写真を撮る。できればSNSにも載せてもらう。いや、まず普通に会話を成立させろ俺。）</span><br><br>会場には、レイヤーとカメラマン、それぞれの思惑が渦巻いている。<br>何気ない一言が、数時間後の評判を変えることもある。</div></div><div class="next"><button class="cmd" id="toMap">▶ 会場へ入る</button></div></section>
 <section class="screen" id="map">
   <div class="panel">
@@ -569,7 +566,7 @@ const V44POSE={'outdoor1':'poses/embedded_e18c4f05a0b5dc6c.jpg','outdoor2':'pose
 const V41POSE={'outdoor1':'poses/embedded_e43c59a4dcc30fe2.jpg','outdoor2':'poses/embedded_1dd6948370208c47.jpg','outdoor3':'poses/embedded_fc8cda00fbe34c61.jpg','outdoor4':'poses/embedded_b58a33da676ae206.jpg','outdoor5':'poses/embedded_60ecb4e709d454c9.jpg','outdoor6':'poses/embedded_daf9bed950ce47eb.jpg','indoor1':'poses/embedded_50dd82f405d5e851.jpg','indoor2':'poses/embedded_d1aa39cc133386ad.jpg','indoor3':'poses/embedded_76c0fd3b57da6e9d.jpg','indoor4':'poses/embedded_cf98a96e047e40f5.jpg','indoor5':'poses/embedded_643a14934ebc1dad.jpg','indoor6':'poses/embedded_9c8a1ab9e2d30f20.jpg','rest1':'poses/embedded_7dcaca8a08111c8b.jpg','rest2':'poses/embedded_c4f5ffc6e5d5e88c.jpg','rest3':'poses/embedded_70ae96ccab5690fe.jpg','rest4':'poses/embedded_07fb0d384175e409.jpg','rest5':'poses/embedded_18e1faad81a70fb6.jpg','rest6':'poses/embedded_9fb1c4515918a9d8.jpg','east1':'poses/embedded_8cfd68cbb7cc3aef.jpg','east2':'poses/embedded_60322348a4db3d22.jpg','east3':'poses/embedded_7371cd2be2d2e86f.jpg','east4':'poses/embedded_873a3374f91339ab.jpg','east5':'poses/embedded_c4b2eefb443d9ea1.jpg','east6':'poses/embedded_ac4ac298fe5db8aa.jpg','entrance1':'poses/embedded_eb039433ba799733.jpg','entrance2':'poses/embedded_4bdfd16edab4d9b2.jpg','entrance3':'poses/embedded_65ca157a91f79a90.jpg','entrance4':'poses/embedded_01dd025d8b9bd171.jpg','entrance5':'poses/embedded_52293490bd73002e.jpg','entrance6':'poses/embedded_779a475a92348644.jpg'};
 
 const IMG={"title": "poses/embedded_502aa07988d33113.jpg", "venue": "poses/embedded_2fe3d4ea4c6bcb65.jpg", "indoor": "poses/embedded_974b4c628d01a3d2.jpg", "yukina": "poses/embedded_9788354d56372ea3.jpg", "rio": "poses/embedded_0cf3459683e24d68.jpg", "miku": "poses/embedded_5b27f66ca346d977.jpg", "karen": "poses/embedded_c300abcb515b2682.jpg", "aya": "poses/embedded_855399f589fa2274.jpg", "kuroda": "poses/kuroda.png", "tanaka": "poses/tanaka.png", "ryoji": "poses/ryo.png", "hide": "poses/hide.png", "pose1": "poses/embedded_cb2d18490e0ae63f.jpg", "pose2": "poses/embedded_2f100ba8f1202c6a.jpg", "pose3": "poses/embedded_bf533ab554b7e6ec.jpg", "pose4": "poses/embedded_10cf7f527e3cb319.jpg", "pose5": "poses/embedded_3bde0dc7864a6ddd.jpg", "pose6": "poses/embedded_1a94f2c3517cccd0.jpg"}; const EXTRA_ENDING_ART={good:'poses/end_happy.png',bad:'poses/end_bad.png',continue:'poses/end_continue.png',god:'poses/end_god.png'}; const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];let AC=null,timer=null,first=false,currentTheme=null,audioNeedsResume=false,endPosterMode='good';
-function freshGameState(){return {trust:0,unease:0,rep:0,creep:0,shots:[],selected:null,cam:null,met:new Set(),rivalFlags:0,photo:0,shotDone:new Set(),rude:0,refused:new Set(),currentShoot:null,photoScores:{},bond:{outdoor:0,indoor:0,rest:0,east:0,entrance:0},pushAfterNo:0,backedOff:0,pressureLog:[],warningIncidents:[],timeMin:600,visitCount:{},randomSeen:new Set(),eventLog:[],secondLoop:false,loop:1,priorRefused:new Set(),priorShot:new Set(),priorMet:new Set(),priorBond:{outdoor:0,indoor:0,rest:0,east:0,entrance:0},priorCamRep:0,camRep:0,camMet:new Set(),camHostile:false,v4RivalsComplete:false,v4ClosingShown:false}}let S=freshGameState();
+function freshGameState(){return {trust:0,unease:0,rep:0,creep:0,shots:[],selected:null,cam:null,met:new Set(),rivalFlags:0,photo:0,shotDone:new Set(),rude:0,refused:new Set(),currentShoot:null,photoScores:{},bond:{outdoor:0,indoor:0,rest:0,east:0,entrance:0},pushAfterNo:0,backedOff:0,pressureLog:[],warningIncidents:[],timeMin:600,visitCount:{},randomSeen:new Set(),eventLog:[],camRep:0,camMet:new Set(),camHostile:false,v4RivalsComplete:false,v4ClosingShown:false}}let S=freshGameState();
 
 function v4AllShot(){return ['outdoor','indoor','rest','east','entrance'].every(p=>S.shotDone.has(p))}
 function v4ResolvedLayerCount(){
@@ -592,14 +589,14 @@ function v4Closing(){
 }
 function v2Clock(){let h=Math.floor(Math.min(S.timeMin,900)/60),m=Math.min(S.timeMin,900)%60;return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')}
 function v2Advance(n){v2Status()}
-function v2Status(){let e=$('#v2status');if(!e)return;let r=layerRepScore();let rt=layerRepName();let cr=S.camRep>=2?'良好':S.camRep<=-3?'悪評':'普通';let isBlacklist=rt==='ブラックリスト級カメコ';let lc=isBlacklist?'blacklistRank':((rt==='神カメコ'||r>=9)?'good':'mid');let cc=S.camRep>=2?'good':S.camRep<=-3?'bad':'mid';let blacklistStyle=isBlacklist?' style="color:#ff3b30!important;-webkit-text-fill-color:#ff3b30!important;font-weight:900!important;text-shadow:0 0 10px rgba(255,59,48,.38)!important"':'';e.innerHTML='<div class="statusCell timeCell"><span class="statusLabel">現在時刻</span><span class="statusValue timeValue">'+v2Clock()+'</span></div><div class="statusCell layerRepCell"><span class="statusLabel">レイヤー評判</span><span class="statusValue '+lc+'"'+blacklistStyle+'>'+rt+'</span></div><div class="statusCell camRepCell"><span class="statusLabel">カメコ評判</span><span class="statusValue '+cc+'">'+cr+(S.secondLoop?' ★':'')+'</span></div>';}
+function v2Status(){let e=$('#v2status');if(!e)return;let r=layerRepScore();let rt=layerRepName();let cr=S.camRep>=2?'良好':S.camRep<=-3?'悪評':'普通';let isBlacklist=rt==='ブラックリスト級カメコ';let lc=isBlacklist?'blacklistRank':((rt==='神カメコ'||r>=9)?'good':'mid');let cc=S.camRep>=2?'good':S.camRep<=-3?'bad':'mid';let blacklistStyle=isBlacklist?' style="color:#ff3b30!important;-webkit-text-fill-color:#ff3b30!important;font-weight:900!important;text-shadow:0 0 10px rgba(255,59,48,.38)!important"':'';e.innerHTML='<div class="statusCell timeCell"><span class="statusLabel">現在時刻</span><span class="statusValue timeValue">'+v2Clock()+'</span></div><div class="statusCell layerRepCell"><span class="statusLabel">レイヤー評判</span><span class="statusValue '+lc+'"'+blacklistStyle+'>'+rt+'</span></div><div class="statusCell camRepCell"><span class="statusLabel">カメコ評判</span><span class="statusValue '+cc+'">'+cr+'</span></div>';}
 function v2Propagation(p){let a=[...S.shotDone].filter(x=>x!==p);if(a.length&&S.rep>=2){let n=people[a[0]]?.name||'別のレイヤー';return '<div class="v2event">💬 「さっき'+n+'さんを撮ってましたよね」<br>会場内で少しずつ名前が伝わっている。</div>'}if(S.unease>=3||S.rude>=2)return '<div class="v2event">💬 一瞬だけ警戒するような視線を感じる。会場では行動も人づてに伝わる。</div>';return ''}
-function v2Result(){let a=Object.values(S.photoScores),avg=a.length?Math.round(a.reduce((x,y)=>x+y,0)/a.length):0;let tech=Math.max(0,Math.min(100,avg)),comm=Math.max(0,Math.min(100,50+(S.trust+S.rep)*8-S.unease*6)),dist=Math.max(0,Math.min(100,80+S.backedOff*6-S.creep*12-S.rude*8-S.warningIncidents.length*40)),cam=Math.max(0,Math.min(100,55+S.camRep*8-S.rivalFlags*4)),total=Math.round((tech+comm+dist+cam)/4),grade=total>=90?'S':total>=80?'A':total>=70?'B':total>=60?'C':total>=45?'D':'E';if(!v4AllShot()&&(grade==='S'||grade==='A'))grade='B';if(S.loop===1&&grade==='S')grade='A';if(S.loop===2){let priorAll=['outdoor','indoor','rest','east','entrance'].every(p=>S.priorShot.has(p));if((!priorAll||!v4AllShot())&&(grade==='S'||grade==='A'))grade='B';}return {avg,tech,comm,dist,cam,total,grade}}
+function v2Result(){let a=Object.values(S.photoScores),avg=a.length?Math.round(a.reduce((x,y)=>x+y,0)/a.length):0;let tech=Math.max(0,Math.min(100,avg)),comm=Math.max(0,Math.min(100,50+(S.trust+S.rep)*8-S.unease*6)),dist=Math.max(0,Math.min(100,80+S.backedOff*6-S.creep*12-S.rude*8-S.warningIncidents.length*40)),cam=Math.max(0,Math.min(100,55+S.camRep*8-S.rivalFlags*4)),total=Math.round((tech+comm+dist+cam)/4),grade=total>=90?'S':total>=80?'A':total>=70?'B':total>=60?'C':total>=45?'D':'E';if(!v4AllShot()&&(grade==='S'||grade==='A'))grade='B';if(true&&grade==='S')grade='A';return {avg,tech,comm,dist,cam,total,grade}}
 function v2ResultHTML(){let r=v2Result();return '<div class="resultCard"><h3>本日のカメコ評価</h3><div class="rankBig">'+r.grade+'</div><div>撮影技術：'+r.tech+'　コミュ力：'+r.comm+'<br>距離感：'+r.dist+'　カメコ評判：'+r.cam+'<br>撮影人数：'+S.shotDone.size+'/5　写真平均：'+r.avg+'点<br>終了時刻：'+v2Clock()+'　総合：'+r.total+'</div><p><b>野良カメコ Lv.'+Math.max(1,Math.floor(r.total/10))+'</b></p></div>'}
 function setEndPosterMode(mode){let m=['bad','good','continue','god'].includes(mode)?mode:'good';endPosterMode=m}
 function showEndPoster(){let mode=['bad','good','continue','god'].includes(endPosterMode)?endPosterMode:'good';let ps=$('#posterScene'),img=$('#posterImg');if(ps)ps.className='posterScene '+mode;if(img){img.src=EXTRA_ENDING_ART[mode]||EXTRA_ENDING_ART.good;img.alt=mode==='bad'?'BAD END アート':mode==='continue'?'CONTINUE END アート':mode==='god'?'GOD END アート':'HAPPY END アート';}theme(mode==='bad'?'bad':(mode==='continue'?'field':'good'));show('postend');window.scrollTo({top:0,behavior:'auto'});requestAnimationFrame(()=>requestAnimationFrame(()=>ps&&ps.classList.add('posterVisible')))} 
-function v2Finalize(){let b=$('#endBody');if(b&&!b.querySelector('.resultCard'))b.insertAdjacentHTML('beforeend',v2ResultHTML());let rb=$('#restart');if(rb)rb.textContent=S.loop===1?'次のちゅどーむへ':'次へ';try{localStorage.setItem('chudomeCleared','1')}catch(e){}}
-function v2SecondLoop(){unlock();S=freshGameState();S.secondLoop=true;S.rep=1;S.trust=1;theme('talk');show('intro')}
+function v2Finalize(){let b=$('#endBody');if(b&&!b.querySelector('.resultCard'))b.insertAdjacentHTML('beforeend',v2ResultHTML());let rb=$('#restart');if(rb)rb.textContent='エンディンググラフィックを見る';try{localStorage.setItem('chudomeCleared','1')}catch(e){}}
+
 
 
 
@@ -744,7 +741,7 @@ function shotFx(){
   o.connect(g);g.connect(c.destination);o.start(t+.055);o.stop(t+.135);
  }catch(e){}
 }
-try{let old=$('#secondLoopBtn');if(old)old.remove()}catch(e){}
+
 let preludeRunning=false;
 function primeTitleBgm(){
  unlock();
@@ -864,7 +861,7 @@ function rivalSpeakerImage(sp){
  return IMG.kuroda;
 }
 function story(p,sp,text,choices,img){
- $('#sceneImg').classList.remove('cleanVenueCrop','loop2IntroCrop');
+ $('#sceneImg').classList.remove('cleanVenueCrop');
  let P=people[p]||people.outdoor;
  let sceneSrc=img||(['outdoor','indoor','rest','east','entrance'].includes(p)?V47POSE[p+'5']:(p==='rivals'?rivalSpeakerImage(sp):P.img));
  let camScene=p==='rivals'||sceneSrc===REIJI_IMG||sceneSrc==='poses/karen_intruder.png'||sceneSrc===IMG.kuroda||sceneSrc===IMG.tanaka||sceneSrc===IMG.ryoji||sceneSrc===IMG.hide;
@@ -879,337 +876,39 @@ function story(p,sp,text,choices,img){
 function markShot(p){if(!['outdoor','indoor','rest','east','entrance'].includes(p))return;S.shotDone.add(p);S.refused.delete(p);updateShotStatus()}function updateShotStatus(){document.querySelectorAll('.mapNpc[data-place]').forEach(b=>{let p=b.dataset.place;if(!['outdoor','indoor','rest','east','entrance'].includes(p))return;b.classList.remove('done','ng');let badge=b.querySelector('.statusBadge');if(!badge)return;badge.textContent='';if(S.shotDone.has(p)){b.classList.add('done');badge.textContent='✓ 撮影済'}else if(S.refused.has(p)){b.classList.add('ng');badge.textContent='× 撮影NG'}});let el=$('#shotProgress');let done=S.shotDone.size,ng=[...S.refused].filter(p=>['outdoor','indoor','rest','east','entrance'].includes(p)&&!S.shotDone.has(p)).length,resolved=done+ng;if(el)el.textContent=`撮影済 ${done} / 5人　撮影NG ${ng}人${resolved===5?'　― 全員の結果が確定 ―':''}`;let finish=$('#finishDay');if(finish)finish.classList.toggle('show',resolved>=1||S.timeMin>=900);v2Status()}
 $$('.mapbtn').forEach(b=>b.onclick=()=>{click();visit(b.dataset.place)});$('#rivalBack').onclick=()=>show('map');$('#finishDay').onclick=()=>{click();finishDayEnding()};
 function postShootVisit(p){let P=people[p],score=S.photoScores[p]||S.photo||0;story(p,P.name,`「あ、マボさん。さっきはありがとうございました！」<br>撮影はもう終わっている。もう一度カメラを向ける場面ではない。<br><span class="thought">（ここからは撮影後の振る舞いで印象が決まる。）</span>`,[['「こちらこそ、ありがとうございました」とお礼する',()=>{S.rep++;S.trust++;story(p,P.name,'「はい！ また機会があったらお願いします」<br><span class="thought">自然に会話を終えられた。</span>',[['マップへ戻る',()=>show('map')]])}],['「あとで写真送りますね」と伝える',()=>{S.rep++;S.trust++;story(p,P.name,score?`「ありがとうございます！ ${score>=80?'楽しみにしてます！':'確認しますね！'}」`:'「ありがとうございます！ 楽しみにしてます」',[['マップへ戻る',()=>show('map')]])}],['「もう一度撮らせてください」と頼む',()=>{S.unease++;story(p,P.name,'「あ、今日はもう大丈夫です……」<br>さっきより少しだけ距離を取られた。<br><span class="thought">（撮影済みなのに重ねて頼むのは、さすがに違った。）</span>',[['すぐ引く',()=>{S.backedOff++;show('map')}],['さらに食い下がる',()=>{recordWarningIncident(p,'撮影済みで断られた後もさらに迫る');endingBad('warning')} ]])}],['マップへ戻る',()=>show('map')]])}
-const LOOP2_INTRO={
- outdoor:'雪奈はマボに気づくと、一瞬だけ目を細めた。前回のイベントのことを覚えているようだ。',
- indoor:'りおは壁際でカメラバッグを見つけ、すぐにマボだと気づいた。',
- rest:'休憩スペースのみくがこちらを見る。前回より先に、向こうがマボを認識した。',
- east:'カレンは背景を確認していたが、マボを見ると小さく会釈した。',
- entrance:'入口付近のあやが友人との会話を止め、こちらを見た。'
-};
-const LOOP2_WARY={
- outdoor:'「……前にも声かけてきた方ですよね」<br>雪奈の声は丁寧だが、前回より明らかに距離がある。<br>「今日は友達と回ってるので、撮影はちょっと……」',
- indoor:'「前回もお断りしましたよね」<br>りおはスマホを下ろさず、視線だけをこちらに向けた。<br>「今日は撮影の予定ないです」',
- rest:'「あ……前のイベントの方」<br>みくは飲み物を持ったまま、椅子を少し引いた。<br>「今日は休憩したいので、撮影はごめんなさい」',
- east:'「前回、撮影はお断りしたと思うんですけど」<br>カレンは背景から一歩離れ、マボとの距離を取った。<br>「今日は作品撮りの予定があるので」',
- entrance:'「……前にも来ましたよね？」<br>あやは友人の方を一度見た。<br>「今日は友達と一緒なので、撮影は大丈夫です」'
-};
 
-const LOOP2_REP_LABELS=['無名','顔を覚えられ始めた','少し知られている','好印象','評判が良い','信頼されている','人気カメコ'];
+
+
+
 function layerRepScore(){return S.rep+S.trust-S.unease-S.rude}
 function layerRepTier(score=layerRepScore()){return score>=16?6:score>=12?5:score>=9?4:score>=6?3:score>=3?2:score>=1?1:0}
-function secondLoopStats(){
- const places=['outdoor','indoor','rest','east','entrance'];
- const scores=Object.values(S.photoScores).filter(v=>typeof v==='number');
- return {done:S.shotDone.size,ng:[...S.refused].filter(x=>places.includes(x)&&!S.shotDone.has(x)).length,avg:scores.length?Math.round(scores.reduce((a,b)=>a+b,0)/scores.length):0,max:scores.length?Math.max(...scores):0,repScore:layerRepScore()};
-}
+
 function layerBadProtected(){let rank=layerRepName();return rank==='信頼されている'||rank==='人気カメコ'}
-function isGodKameko(){
- if(S.loop!==2)return false;
- const q=secondLoopStats();
- return S.priorShot.size===5&&q.done===5&&q.ng===0&&q.avg>=92&&q.max>=97&&q.repScore>=16&&S.warningIncidents.length===0&&S.pressureLog.length===0&&S.creep===0&&S.rude===0&&S.unease<=2&&S.camRep>=0;
-}
+function isGodKameko(){}
 function layerRepName(){
  if(isGodKameko())return '神カメコ';
  const labels=['無名','顔を覚えられ始めた','少し知られている','好印象','評判が良い','信頼されている','人気カメコ'];
  return labels[layerRepTier()];
 }
-function loop2RepGreeting(p){
- const tier=layerRepTier(),first=S.priorShot.has(p);
- const seenText=first?'この前の写真のことも含めて、前回の記憶が残っている。':'前回のイベントで顔を合わせたことだけは、相手の記憶に残っていそうだ。';
- const lines={
-  outdoor:[
-   '「前のイベントにもいましたよね？」<br>雪奈は少し考えてから、ようやく思い出したようにうなずいた。',
-   '「あ、前にも来てましたよね」<br>雪奈は控えめに会釈した。',
-   '「この前もいましたよね。たしか……」<br>雪奈はマボの顔を見て、記憶をたどっている。',
-   '「この前はありがとうございました」<br>雪奈の表情は前回よりやわらかい。',
-   '「マボさん、でしたよね？ この前はどうもです」<br>雪奈は自然に名前を口にした。',
-   '「マボさんなら安心です」<br>雪奈は前回よりもずっと自然に会話へ入ってきた。',
-   '「あ、また来てくれたんですね」<br>雪奈の方から先に笑ってくれた。'
-  ],
-  indoor:[
-   '「前にも見かけた気がします」<br>りおはスマホを見たまま、短く返した。',
-   '「あ、前のイベントの人ですよね」<br>りおは視線だけこちらに向ける。',
-   '「この前も来てましたよね」<br>りおは少しだけ警戒を解いた。',
-   '「この前はありがとうございました」<br>りおの声は前回よりやわらかい。',
-   '「マボさん、でしたっけ。前回の写真よかったです」<br>りおは壁際からこちらを見る。',
-   '「マボさんなら雰囲気わかってくれそうです」<br>りおは最初から話を進めやすそうだ。',
-   '「あ、ちょうどマボさん来ないかなって思ってました」<br>りおは少し笑った。'
-  ],
-  rest:[
-   '「前のイベントでも会いましたよね」<br>みくは飲み物を持ったまま、少し様子を見ている。',
-   '「あ、前にもいましたよね」<br>みくは小さく笑って会釈した。',
-   '「この前も来てましたよね」<br>みくは少しだけ気を緩めたようだ。',
-   '「この前はありがとうございました」<br>みくの返事は自然でやわらかい。',
-   '「マボさん、でしたよね？ 前回の写真うれしかったです」<br>みくは前回を思い出したように笑う。',
-   '「マボさんなら安心してお願いできます」<br>みくは休憩の合間でも落ち着いて話してくれる。',
-   '「あ、また会えましたね！」<br>みくの方から先に明るく声が返ってきた。'
-  ],
-  east:[
-   '「前にもこのあたりにいましたよね」<br>カレンは背景を見ながら淡々と言った。',
-   '「あ、前のイベントでも見かけました」<br>カレンは軽くうなずく。',
-   '「この前も来てましたよね」<br>カレンは視線を戻しつつも会話を受けてくれる。',
-   '「この前はありがとうございました」<br>カレンの声色は前回よりやわらかい。',
-   '「マボさん、でしたよね。背景の見方うまかったです」<br>カレンは覚えていた。',
-   '「マボさんなら、今日もちゃんと合わせてくれそうですね」<br>カレンは最初から要望を伝える気でいる。',
-   '「ちょうど背景見てたんです。マボさん、どうですか？」<br>カレンの方から撮影の空気を作ってきた。'
-  ],
-  entrance:[
-   '「前にもここで会いましたよね？」<br>あやは友人を待ちながら思い出そうとしている。',
-   '「あ、前のイベントの人ですよね」<br>あやは軽く笑ってうなずいた。',
-   '「この前も見かけましたよね」<br>あやは前回より少し話しやすそうだ。',
-   '「この前はありがとうございました」<br>あやは前よりも親しげに返してくれた。',
-   '「マボさん、でしたよね？ 前回の写真よかったです」<br>あやは名前を覚えていた。',
-   '「マボさんなら安心かも」<br>あやの警戒はかなり薄い。',
-   '「あ、マボさん！ また来てたんですね」<br>あやの方から先に気づいて声を掛けてきた。'
-  ]
- };
- return lines[p][tier]+'<br><span class="thought">（レイヤー評判：'+LOOP2_REP_LABELS[tier]+'。'+seenText+' でも“覚えられてる＝何してもいい”ではない。）</span>';
-}
-function loop2RepOffer(p){
- const tier=layerRepTier();
- const lines={
-  outdoor:['「今日は少しなら大丈夫です。短めでお願いします」','「少しなら大丈夫です」','「今日は少しなら大丈夫です。タイミングだけ見てもらえれば」','「じゃあ少しお願いします」','「マボさんなら、今日も少しお願いしたいです」','「今日は少しなら大丈夫です。前より落ち着いて撮ってくださいね」','「またお願いしたかったんです。今日も少し撮ってもらえますか？」'],
-  indoor:['「撮るなら短めでお願いします」','「少しなら大丈夫です」','「今日はこの壁で少しだけなら大丈夫です」','「じゃあ少しお願いします」','「マボさんなら雰囲気わかってくれそうです。少しお願いします」','「今日はこの壁を使いたいです。黒が潰れない感じでお願いします」','「今日もお願いしたいです。前みたいな雰囲気、好きでした」'],
-  rest:['「少しだけなら大丈夫です」','「休憩明けなら少しだけ大丈夫です」','「今なら少しなら大丈夫です」','「じゃあ少しお願いします」','「マボさんなら落ち着いて撮ってくれそうです」','「休憩終わったところなので、今なら大丈夫です」','「ちょうど今、撮ってもらえたらうれしいです」'],
-  east:['「短めなら大丈夫です」','「少しなら大丈夫です」','「背景を広めに使うならお願いできます」','「じゃあ少しお願いします」','「マボさんなら背景も見てくれそうですね」','「前回より背景を広く使いたいです。できます？」','「今日もちょっと作品っぽく撮ってもらえますか？」'],
-  entrance:['「少しだけなら大丈夫です」','「友達が来るまでなら大丈夫です」','「あと少しだけ待ち時間あるので、大丈夫です」','「じゃあ少しお願いします」','「マボさんなら短くまとまりそうですね」','「今日は友達まだ来ないので、5分くらいなら大丈夫です」','「ちょうど待ち時間なんです。今日もお願いしていいですか？」']
- };
- return lines[p][tier];
-}
-function loop2NormalChoices(p){
- const P=people[p];
- const line=loop2RepGreeting(p);
- const good=['前回の話は短くして、今日の希望を聞く',()=>{S.trust+=2;S.bond[p]+=2;loop2ShootOffer(p)}];
- const amb=[LAYER_AMBIGUOUS[p].label,()=>ambiguousLayerChoice(p,true)];
- const mine=['「覚えててくれたんですね！ 前より距離が近くなった感じします」と返す',()=>{S.unease+=2;S.bond[p]--;loop2Landmine(p)}];
- const leave=['今日は挨拶だけして離れる',()=>{S.rep++;show('map')}];
- const orders={
-  outdoor:[amb,good,leave,mine],
-  indoor:[mine,leave,good,amb],
-  rest:[amb,mine,leave,good],
-  east:[leave,amb,mine,good],
-  entrance:[mine,good,amb,leave]
- };
- story(p,P.name,line,orders[p]||[amb,good,mine,leave]);
-}
-function loop2Landmine(p){
- const P=people[p];
- story(p,P.name,'「あ、はい……」<br>返事はある。でも前回より一歩近づいたぶん、相手は一歩下がった。<br><span class="thought">（“覚えてる”を“親しい”に変換した。脳内変換が雑すぎる。）</span>',[
-  ['すぐ距離を戻して謝る',()=>{S.backedOff++;S.unease=Math.max(0,S.unease-1);show('map')}],
-  ['そのまま撮影をお願いする',()=>{
-    refuse(p);S.unease+=2;recordPressure(p,'2周目で距離を詰めたまま撮影を頼む');
-    story(p,P.name,'「今日は大丈夫です」<br>今度は笑顔が消えた。',[
-      ['ここで引く',()=>{S.backedOff++;show('map')}],
-      ['さらに頼む',()=>{recordWarningIncident(p,'2周目で明確な拒否後も迫る');endingBad('warning')}]
-    ]);
-  }]
- ]);
-}
-const LOOP2_WARY_REPLIES={
- outdoor:{
-  apology:'「……謝ってもらっても、撮影をお願いしたいとは思わないです」<br>雪奈は丁寧な口調のまま、友人の方へ視線を戻した。<br>「今日はもう、声かけなくて大丈夫です」<br><span class="thought">（“大丈夫”の意味は分かった。許されたんじゃない。会話を終わらせたいんだ。）</span>',
-  hello:'「……こんにちは」<br>雪奈は一度だけ会釈した。<br>「前回のこと覚えてるので、無理に挨拶しに来なくても大丈夫ですよ」<br><span class="thought">（挨拶すら“しなくていい”側に入った。これはもう足さない方がいい。）</span>'
- },
- indoor:{
-  apology:'「別に、謝らなくていいです」<br>りおはスマホから目を上げない。<br>「撮影はしないので。それだけです」<br><span class="thought">（短い。余白もない。これ以上しゃべったら全部ノイズだ。）</span>',
-  hello:'「……はい、こんにちは」<br>りおは一瞬だけこちらを見て、すぐスマホへ視線を戻した。<br>「用事、それだけですか？」<br><span class="thought">（会話終了の確認までされた。完全にスルーされる一歩手前だ。）</span>'
- },
- rest:{
-  apology:'「あの……謝られると、逆にちょっと困るので……」<br>みくは困ったように笑って、椅子を少し引いた。<br>「今日はもう大丈夫です。休ませてください」<br><span class="thought">（優しい言い方なのに、距離だけははっきり増えた。）</span>',
-  hello:'「……こんにちは」<br>みくは小さく返したあと、飲み物へ視線を落とした。<br>「ごめんなさい、今ちょっと一人で休みたいので……」<br><span class="thought">（挨拶だけのつもりでも、相手には“また来た”なんだ。）</span>'
- },
- east:{
-  apology:'「謝罪が欲しいわけじゃないです」<br>カレンは迷わず言った。<br>「前回お断りしたのは、今後も撮ってほしくないからです。そこは分かってください」<br><span class="thought">（言葉にされると逃げ道がない。これは完全に線を引かれた。）</span>',
-  hello:'「挨拶だけでも、こっちは対応しないといけないので」<br>カレンは表情を変えない。<br>「今日は声かけないでもらえますか？」<br><span class="thought">（“挨拶だけ”も相手にとってはゼロじゃない。分かってなかった。）</span>'
- },
- entrance:{
-  apology:'「前回、ちょっと怖かったので……」<br>あやは友人のそばへ半歩寄った。<br>「謝ってもらっても、今日はもう話しかけないでほしいです」<br><span class="thought">（友達の前で言わせた。ここに居続ける方がもっとまずい。）</span>',
-  hello:'「……こんにちは」<br>あやは短く返したが、すぐ友人の方を向いた。<br>「ごめんなさい。前回のこともあるし、もう大丈夫です」<br>友人もこちらを見ている。<br><span class="thought">（一対一じゃなくなった瞬間、居場所がなくなった。離れよう。）</span>'
- }
-};
-function loop2WaryVisit(p){
- const P=people[p],R=LOOP2_WARY_REPLIES[p]||LOOP2_WARY_REPLIES.outdoor;
- story(p,P.name,LOOP2_WARY[p]+'<br><span class="thought">（覚えられてる。しかも悪い方で。今日は“撮る”より先に、“怖がらせない”が正解だ。）</span>',[
-  ['「前回はすみませんでした」と謝って離れる',()=>{S.backedOff++;S.unease++;refuse(p);story(p,P.name,R.apology,[['何も足さず離れる',()=>show('map')]])}],
-  ['今日は撮影を頼まず、挨拶だけする',()=>{S.backedOff++;S.unease++;refuse(p);story(p,P.name,R.hello,[['そのまま離れる',()=>show('map')]])}],
-  ['「今回は大丈夫なので」と撮影をお願いする',()=>{S.unease+=3;refuse(p);story(p,P.name,'「……そういう意味じゃなくて、今日は撮影しません」<br>相手ははっきり言い直した。<br><span class="thought">（“今回は大丈夫”を決めるのは俺じゃない。）</span>',[['すぐ引く',()=>{S.backedOff++;show('map')}],['もう一度だけ頼む',()=>{recordWarningIncident(p,'1周目NGの相手へ2周目でも拒否後に再依頼');endingBad('warning')} ]])}],
-  ['何も言わず離れる',()=>show('map')]
- ]);
-}
-function loop2ShootOffer(p){
- const P=people[p];
- let line=loop2RepOffer(p);
- story(p,P.name,line+'<br><span class="thought">（二回目だからこそ、雑にしない。前回の正解をコピーするんじゃなく、今日の希望を聞く。）</span>',[
-  ['今日の希望をもう一度確認して撮影する',()=>{S.trust++;S.bond[p]+=2;startShoot(p)}],
-  ['「前回と同じ感じで」とすぐ撮り始める',()=>{S.unease++;S.bond[p]--;story(p,P.name,'「今日は前回とちょっと変えたいんですけど……」<br><span class="thought">（二回目なのに、一回目の記憶に甘えた。）</span>',[['希望を聞き直す',()=>{S.trust++;startShoot(p)}],['今日はやめておく',()=>show('map')]])}]
- ]);
-}
-function loop2FirstMeet(p){
- const P=people[p];
- const intro=P.intro+'<br><span class="thought">（この人とは前回話していない。二周目の俺には見覚えがあっても、向こうにとっては今日が初対面だ。）</span>';
- if(p==='outdoor'){
-  story(p,'マボ',intro,[
-   [LAYER_AMBIGUOUS.outdoor.label,()=>ambiguousLayerChoice('outdoor',true)],
-   ['いったん離れる',()=>show('map')],
-   ['雪奈に短く挨拶する',()=>talk(p)],
-   ['撮影できるタイミングか確認する',()=>{S.trust++;talk(p)}]
-  ]);return;
- }
- if(p==='indoor'){
-  story(p,'マボ',intro,[
-   ['「暗めの雰囲気で撮りたい」と提案する',()=>{S.trust++;S.bond.indoor++;other('indoor',true)}],
-   ['衣装の一部を指して「そこ触って直していい？」と聞く',()=>rioTouchNgV656()],
-   [LAYER_AMBIGUOUS.indoor.label,()=>ambiguousLayerChoice('indoor',true)],
-   ['衣装の質感について聞く',()=>rioTextureTalk()],
-   ['マップへ戻る',()=>show('map')]
-  ]);return;
- }
- if(p==='rest'){
-  story(p,'マボ',intro,[
-   [LAYER_AMBIGUOUS.rest.label,()=>ambiguousLayerChoice('rest',true)],
-   ['「休憩してる自然な感じも一枚いい？」と頼む',()=>layerTrap('rest')],
-   ['休憩が終わるまで離れて待つ',()=>{S.trust+=2;S.bond.rest+=2;observe('rest')}],
-   ['「休憩後で大丈夫です」とだけ伝える',()=>{S.trust++;S.bond.rest++;other('rest',true)}],
-   ['マップへ戻る',()=>show('map')]
-  ]);return;
- }
- if(p==='east'){
-  story(p,'マボ',intro,[
-   ['「カレンさんのやりやすい感じでお願いします」と任せる',()=>layerTrap('east')],
-   ['カレンの希望する構図を聞く',()=>{S.trust+=2;S.bond.east+=2;other('east',true)}],
-   [LAYER_AMBIGUOUS.east.label,()=>ambiguousLayerChoice('east',true)],
-   ['「この背景を活かして撮りたい」と話す',()=>{S.trust+=2;S.bond.east+=2;other('east',true)}],
-   ['マップへ戻る',()=>show('map')]
-  ]);return;
- }
- story(p,'マボ',intro,[
-  ['まず軽く挨拶して待ち時間を聞く',()=>{S.trust++;S.bond.entrance++;talk('entrance')}],
-  [LAYER_AMBIGUOUS.entrance.label,()=>ambiguousLayerChoice('entrance',true)],
-  ['「友達が来てもあと5分だけ」と先に頼む',()=>layerTrap('entrance')],
-  ['「友達が来るまで2〜3分だけ」と確認する',()=>{S.trust+=2;S.bond.entrance+=2;other('entrance',true)}],
-  ['マップへ戻る',()=>show('map')]
- ]);
-}
-function visitLoop2(p){
- if(p==='rivals'){cameraEncounterLoop2();return}
- const metInFirstLoop=!!(S.priorMet&&S.priorMet.has(p));
- S.met.add(p);
- if(S.shotDone.has(p)){postShootVisit(p);return}
- if(S.refused.has(p)){story(p,people[p].name,'「今日はもう撮影しません」<br><span class="thought">（二周目でも、一度出た答えは変わらない。）</span>',[['謝って離れる',()=>{S.backedOff++;show('map')}],['マップへ戻る',()=>show('map')]]);return}
- if(S.priorRefused.has(p)){loop2WaryVisit(p);return}
- if(!metInFirstLoop){loop2FirstMeet(p);return}
- story(p,'マボ',LOOP2_INTRO[p]+'<br><span class="thought">（今回のちゅどーむ。前回と同じ人でも、今日の空気は今日のものだ。）</span>',[
-  ['声を掛ける',()=>loop2NormalChoices(p)],
-  ['少し様子を見る',()=>{S.trust++;story(p,'マボ','少し離れて様子を見る。相手が落ち着いたところで目が合った。<br><span class="thought">（待つ時間も撮影の一部……って言うと格好つけすぎか。）</span>',[['声を掛ける',()=>loop2NormalChoices(p)],['まだ離れておく',()=>show('map')]])}],
-  ['マップへ戻る',()=>show('map')]
- ]);
-}
-function cameraEncounterLoop2(){
- let hostile=S.priorCamRep<=-3;
- let text=hostile
-   ? '黒田たちがこちらに気づいた。前回みたいな軽い手招きはない。<br>黒田が短く言う。「……また来たんだ」<br>田中はスマホから顔を上げるだけだった。<br><span class="thought">（こっちも覚えられてる。カメコ界隈、記憶力が妙にいい。）</span>'
-   : '田中が先に気づいて手を上げた。<br>「マボさん、また来たんすね。前回の写真どうでした？」<br>黒田もレンズを肩に掛けたままこちらを見る。<br><span class="thought">（二回目の遭遇。前回より“知り合い感”がある。でも知り合いと友達は別物だ。）</span>';
- story('rivals','カメコたち',text,[
-  ['普通に挨拶して今日の混雑情報を聞く',()=>{S.camRep+=2;S.rep++;cameraLoop2Result()}],
-  ['前回の小競り合いを蒸し返す',()=>{S.camRep-=3;S.rivalFlags++;cameraLoop2Result()}],
-  ['撮影場所は譲り合おうと先に伝える',()=>{S.camRep+=2;S.trust++;cameraLoop2Result()}],
-  ['「今日はお前らに負けない」と煽る',()=>{S.camRep-=4;S.rivalFlags+=2;S.camHostile=true;cameraLoop2Result()}],
-  ['会釈だけして離れる',()=>v4CompleteRivals()]
- ],hostile?IMG.kuroda:IMG.tanaka);
-}
-function cameraLoop2Result(){
- let text=S.camRep>=2?'田中が「東側、今ちょうど空きましたよ」と教えてくれた。前回より会話が短く、自然になっている。':S.camRep<=-3?'黒田が「まあ好きにすれば」とだけ言った。四人の輪はそのまま閉じた。':'情報交換はしたが、互いに少し距離を残した。';
- story('rivals','カメコたち',text+'<br><span class="thought">（ここで何を言うか。普通の一言でも、今までの関係で聞こえ方は変わる。）</span>',[
-  ['「この辺、いつもこんな感じなんですか？」',()=>cameraLoop2Nuance('scene')],
-  ['「まあ、お互い撮れればいいですよね」',()=>cameraLoop2Nuance('mutual')],
-  ['「またどこかで一緒になりそうですね」',()=>cameraLoop2Nuance('again')],
-  ['軽く会釈して会場マップへ戻る',()=>v4CompleteRivals()]
- ],S.camRep>=1?IMG.tanaka:IMG.kuroda);
-}
-function cameraLoop2Nuance(kind){
- const before=S.camRep;
- let speaker='田中',img=IMG.tanaka,text='',delta=0;
- if(kind==='scene'){
-   if(before>=2){delta=1;text='「まあ毎回こんな感じっすね。混む場所だけ気をつければ」<br>田中が普通に答え、黒田も「時間帯で変わるよ」と口を挟んだ。<br><span class="thought">（ただの質問として受け取ってもらえた。変に構えなくてよかった。）</span>'}
-   else if(before>=-1){delta=0;text='「んー、まあ……そんな感じですかね」<br>田中は少しだけ言葉を選んだ。黒田はマボの顔を一度見てからレンズへ視線を戻す。<br><span class="thought">（質問のつもりだったけど、“この空気なんなんですか”にも聞こえたか？）</span>'}
-   else{delta=-2;speaker='黒田';img=IMG.kuroda;text='黒田が顔を上げた。<br>「“こんな感じ”って、どういう意味？」<br>田中の表情も少し固くなる。<br><span class="thought">（しまった。今の関係だと、ただの質問には聞こえない。）</span>'}
- }else if(kind==='mutual'){
-   if(before>=3){delta=1;text='田中が笑った。<br>「そうっすね。それが一番です」<br>黒田も肩をすくめる。「撮れれば文句ないよ」<br><span class="thought">（丸く収まった。こういうのでいい。）</span>'}
-   else if(before>=0){delta=0;text='「……まあ、そうですね」<br>返事は返ってきたが、一瞬だけ間があった。<br><span class="thought">（“お互い様”って、便利だけど上からにも聞こえるんだな。）</span>'}
-   else{delta=-2;speaker='黒田';img=IMG.kuroda;text='「お互い、ね」<br>黒田が短く繰り返した。田中は笑わず、ヒデが視線をそらす。<br><span class="thought">（こっちは収めたつもりでも、向こうには説教っぽく聞こえたらしい。）</span>'}
- }else{
-   if(before>=2){delta=2;text='田中がすぐに返した。<br>「たぶんまた会いますよ。次もよろしくです」<br>リョウも軽く手を上げる。<br><span class="thought">（“また”が普通に次の約束として通じた。）</span>'}
-   else if(before>=-1){delta=0;text='「まあ、この界隈狭いですからね」<br>田中は軽く笑ったが、黒田は何も言わなかった。<br><span class="thought">（友好的にも、皮肉にも取れる。今の距離だとまだ微妙だ。）</span>'}
-   else{delta=-3;speaker='黒田';img=IMG.kuroda;text='「……それ、どういう意味？」<br>黒田の声が少し低くなる。田中もスマホから顔を上げた。<br><span class="thought">（“また会いましょう”のつもりが、“また会う羽目になる”みたいに響いた。）</span>'}
- }
- S.camRep+=delta;
- if(delta<0)S.rivalFlags++;
- if(S.camRep<=-5){S.camHostile=true;cameraLoop2Tension(speaker,text,img);return}
- story('rivals',speaker,text,[
-  ['「じゃ、また」と短く切り上げる',()=>{if(S.camRep>=1)S.camRep++;v4CompleteRivals()}],
-  ['もう少しだけ話してから離れる',()=>cameraLoop2Followup()]
- ],img);
-}
-function cameraLoop2Followup(){
- if(S.camRep>=2){
-   S.camRep++;
-   story('rivals','田中','少しだけ混雑状況の話をしてから別れた。<br>「西側もそろそろ空くと思いますよ」<br><span class="thought">（普通に情報交換して終われた。前回よりはだいぶ自然だ。）</span>',[['会場マップへ戻る',()=>v4CompleteRivals()]],IMG.tanaka);
-   return;
- }
- if(S.camRep>=-2){
-   story('rivals','カメコたち','話は続いたが、誰も深く踏み込まない。<br>当たり障りのない機材と混雑の話だけで会話は終わった。<br><span class="thought">（悪くはなってない。良くもなってない。こういう距離もある。）</span>',[['会場マップへ戻る',()=>v4CompleteRivals()]],IMG.ryoji);
-   return;
- }
- S.camRep-=1;S.rivalFlags++;
- cameraLoop2Tension('黒田','会話を続けようとしたが、返事がどんどん短くなる。<br>黒田が「もういい？」とレンズをバッグへ戻した。<br><span class="thought">（取り返そうとして喋るほど、空気が重くなる。）</span>',IMG.kuroda);
-}
-function cameraLoop2Tension(speaker,lead,img){
- story('rivals',speaker,lead+'<br><br>四人の輪が少しだけ閉じる。完全に揉めたわけではない。だからこそ、ここからの一言が難しい。',[
-  ['「変な意味じゃないですよ」と補足する',()=>cameraLoop2Repair('explain')],
-  ['「まあ、気にしないでください」と引く',()=>cameraLoop2Repair('leave')],
-  ['何も言わず会釈して離れる',()=>cameraLoop2Repair('silent')]
- ],img||IMG.kuroda);
-}
-function cameraLoop2Repair(kind){
- if(kind==='silent'){
-   S.backedOff++;S.camRep+=1;
-   story('rivals','田中','田中が小さく会釈を返した。<br>それ以上、誰も何も言わなかった。<br><span class="thought">（修復じゃない。でも、これ以上壊さずに済んだ。）</span>',[['会場マップへ戻る',()=>v4CompleteRivals()]],IMG.tanaka);
-   return;
- }
- if(kind==='explain'){
-   if(S.camRep>=-5){S.camRep+=1;S.backedOff++;story('rivals','田中','「ああ、そういう意味なら……」<br>田中が間に入って空気を少し戻した。黒田は納得してはいないが、それ以上は言わない。<br><span class="thought">（ギリギリ。説明が通じる余地はまだあった。）</span>',[['会場マップへ戻る',()=>v4CompleteRivals()]],IMG.tanaka);return}
-   S.camRep-=1;S.rivalFlags++;
- }else{
-   if(S.camRep>=-4){S.backedOff++;story('rivals','黒田','「……別に気にしてないけど」<br>声は平坦だった。マボはそこで会話を切った。<br><span class="thought">（良くはない。でも、ここで止めるしかない。）</span>',[['会場マップへ戻る',()=>v4CompleteRivals()]],IMG.kuroda);return}
-   S.camRep-=2;S.rivalFlags+=2;
- }
- S.camHostile=true;
- cameraLoop2Fallout();
-}
-function cameraLoop2Fallout(){
- S.camRep=Math.min(S.camRep,-6);S.camHostile=true;
- story('rivals','カメコたち','田中はもう笑っていなかった。黒田は「もういいよ」とだけ言う。<br>ヒデはスマホを見たまま、リョウは少し距離を取った。<br><span class="thought">（大喧嘩はしてない。怒鳴ってもいない。でも、“次は関わらなくていい人”になったのが分かる。）</span>',[
-  ['その場を離れる',()=>secondLoopBadEnding('camera')]
- ],IMG.kuroda);
-}
-function startSecondLoop(){
- const prior={
-  refused:new Set(S.refused),shot:new Set(S.shotDone),met:new Set(S.met),bond:{...S.bond},camRep:S.camRep,
-  rep:S.rep,trust:S.trust,unease:S.unease
- };
- const n=freshGameState();
- n.loop=2;n.secondLoop=true;n.priorRefused=prior.refused;n.priorShot=prior.shot;n.priorMet=prior.met;n.priorBond=prior.bond;n.priorCamRep=prior.camRep;
- n.rep=Math.max(-2,Math.round(prior.rep*.6));n.trust=Math.max(0,Math.round(prior.trust*.5));n.unease=Math.max(0,Math.round(prior.unease*.25));n.camRep=Math.round(prior.camRep*.5);
- n.bond={...prior.bond};
- S=n;updateShotStatus();
- theme('field');
- story('outdoor','数週間後','<b>今回のちゅどーむイベント。</b><br><br>同じ会場。同じカメラ。同じバッグ。<br>前回会った人も、まだ一度も話していない人もいる。<br><span class="thought">（二回目のイベント。でも相手によっては今日が初対面だ。そこは勘違いするな、俺。）</span>',[
-  ['会場マップへ向かう',()=>{theme('field');show('map');window.scrollTo(0,0)}]
- ],IMG.venue);
- const loop2IntroImg=$('#sceneImg');if(loop2IntroImg)loop2IntroImg.classList.add('loop2IntroCrop');
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function visit(p){
- if(S.loop===2){visitLoop2(p);return}
+ 
  if(p==='rivals'){cameraEncounter();return}
  let P=people[p];S.met.add(p);
  if(S.shotDone.has(p)){postShootVisit(p);return}
@@ -1232,13 +931,13 @@ const LAYER_AMBIGUOUS={
  east:{label:'「この背景、カレンさんっぽいですね」',good:'「ですよね。今日はここを使いたかったんです」<br>カレンが背景を見てうなずいた。',mid:'「私っぽい……ですか？」<br>カレンは少し考えるように背景を見る。',bad:'「まだ私のこと、そんなに知らないですよね？」<br>カレンは穏やかだが、返しは鋭い。',thoughtGood:'（本人の狙いと一致した。ここから構図の話に持っていける。）',thoughtMid:'（“っぽい”は便利すぎる。説明できないなら使わない方がいい。）',thoughtBad:'（勝手にイメージを決めつけた。作品撮り好きには雑な言葉だった。）'},
  entrance:{label:'「友達待ちなら、逆に今ちょうどいいですか？」',good:'「あ、確かに今なら少しあります」<br>あやは入口を確認して笑った。',mid:'「うーん、来る時間次第ですけど……」<br>あやはスマホの時計を見る。',bad:'「待ってる時間も私の時間なので……」<br>あやの返事は柔らかいが、線を引かれた。',thoughtGood:'（時間を奪う言い方にならずに済んだ。短く確認しよう。）',thoughtMid:'（“空き時間＝撮影時間”ではない。ここは確認が必要だ。）',thoughtBad:'（待ち時間を勝手に俺の撮影枠にした。そりゃ違う。）'}
 };
-function ambiguousLayerChoice(p,loop2=false){
+function ambiguousLayerChoice(p){
  const P=people[p],cfg=LAYER_AMBIGUOUS[p];
- const local=(S.bond?.[p]||0)+(loop2?(S.priorBond?.[p]||0)*0.35:0)+Math.max(-2,Math.min(3,layerRepScore()/4))-S.unease*.45-S.rude*.6;
+ const local=(S.bond?.[p]||0)+Math.max(-2,Math.min(3,layerRepScore()/4))-S.unease*.45-S.rude*.6;
  if(local>=4){
    S.trust++;S.bond[p]=(S.bond[p]||0)+2;S.rep++;
    story(p,P.name,cfg.good+'<br><span class="thought">'+cfg.thoughtGood+'</span>',[
-    ['撮影の希望を聞く',()=>{if(loop2)loop2ShootOffer(p);else if(p==='outdoor')reijiEncounter();else other(p,true)}],
+    ['撮影の希望を聞く',()=>{if(p==='outdoor')reijiEncounter();else other(p,true)}],
     ['ここで会話を切り上げる',()=>show('map')]
    ]);return;
  }
@@ -1254,7 +953,7 @@ function ambiguousLayerChoice(p,loop2=false){
  }
  S.bond[p]=(S.bond[p]||0)+1;
  story(p,P.name,cfg.mid+'<br><span class="thought">'+cfg.thoughtMid+'</span>',[
-   ['相手の反応を見て希望を聞く',()=>{S.trust++;if(loop2)loop2ShootOffer(p);else if(p==='outdoor')reijiEncounter();else other(p,true)}],
+   ['相手の反応を見て希望を聞く',()=>{S.trust++;if(p==='outdoor')reijiEncounter();else other(p,true)}],
    ['深追いせず離れる',()=>{S.backedOff++;show('map')}]
  ]);
 }
@@ -1370,23 +1069,7 @@ function photoSelect(){stopPoseChanceTimer();let p=S.currentShoot||'outdoor',P=p
 $('#sendPhoto').onclick=()=>{if(S.selected===null){alert('写真を1枚選んでください');return}let p=S.currentShoot||'outdoor',shot=S.shots[S.selected],score=shot.score,appeal=photoAppeal(p,shot),P=people[p],grades=photoGrades(p,shot),xCount=grades.xCount;S.photoScores[p]=score;if(p==='outdoor')S.photo=score;if(S.bond&&S.bond[p]!==undefined){S.bond[p]+=appeal>=90?2:appeal>=78?1:appeal<60?-1:0}S.rep+=appeal>=92?1:0;S.trust+=appeal>=85?1:0;S.unease+=appeal<55?1:0;if(xCount>0){let level=Math.min(3,xCount),poor=POOR_PHOTO_REACTIONS[p][level];S.bond[p]=Math.max(-3,(S.bond[p]||0)-1);let body=poor[0]+'<br><span class="thought">（'+poor[1]+'）</span>';if(xCount>=3){story(p,P.name,body,[['何も言わず、その場を離れる',()=>v4ReturnMap()]]);return}story(p,P.name,body+'<br><br><b>撮影後、どう締める？</b>',postShootChoices(p,appeal));return}let reaction='';if(appeal>=90){reaction=p==='outdoor'?'「えっ、これすごく好きです！ 表情も雰囲気もめっちゃいい……！」':p==='indoor'?'「すごい……この雰囲気、かなり好きです！」':p==='rest'?'「え、これ私すごく好きです！ 自然な感じがいいです」':p==='east'?'「これ作品っぽい！ 背景までちゃんと活きてて好きです」':'「えっ、これ好きです！ 投稿にも使いたいです」'}else if(appeal>=80){reaction=p==='outdoor'?'「いいですね！ これ、使わせてもらいたいです」':p==='indoor'?'「いい感じです。雰囲気、好きです」':p==='rest'?'「いいですね！ 自然な感じで嬉しいです」':p==='east'?'「構図いいですね。背景との感じも好きです」':'「いいですね！ これ友達にも見せたいです」'}else if(appeal>=70){reaction='「ありがとうございます。いい感じですね」'}else if(appeal>=55){reaction='「ありがとうございます。確認しておきますね」<br>悪くはなさそうだが、強い反応でもない。'}else{reaction='「あ……ありがとうございます。受け取っておきますね」<br>反応は少し薄かった。'}let taste=photoTasteBonus(p,shot)>=12?'本人の好みにかなり合った気がする。':photoTasteBonus(p,shot)>=5?'雰囲気は合っていそうだ。':'技術的には悪くなくても、好みとは少しズレたかもしれない。';story(p,P.name,reaction+'<br><span class="thought">（'+taste+'）</span><br><br><b>撮影後、どう締める？</b>',postShootChoices(p,appeal))}
 const V8IMG={map:'poses/embedded_d1fd251629b3f36e.jpg',bad:'poses/embedded_72c81b2a72e5808e.jpg',badPhone:'poses/embedded_35bcea3cb489f714.jpg',good:'poses/embedded_f0d8992119de1749.jpg',goodClose:'poses/embedded_a41e77553da29fe8.jpg',gallery:'poses/embedded_a41e77553da29fe8.jpg'};
 const COMMON_WARNING_SNS='poses/embedded_24fb47e241790106.png';
-function endingBad(type){setEndPosterMode('bad');theme('bad');show('end');$('#ending').className='endScene bad';if(type==='camera'){$('#endTitle').textContent='BAD END　カメコ界隈から消ゆ';$('#endBody').innerHTML=`<div class="endGallery storyGallery"><img class="wide" src="${IMG.kuroda}"><img src="${IMG.tanaka}"><img src="${V8IMG.badPhone}"></div><div class="endChapter">イベント当日の夜 ― カメコのグループDM</div><div class="endText">黒田たちとの会話は、笑って終わったように見えた。だが帰宅してしばらくすると、知らないところでスクリーンショットが回り始めた。<br>機材を馬鹿にした言葉。突き放すような態度。切り取られた一言だけが、本人より先に歩いていく。</div><div class="post"><b>カメラマンA</b><br>今日いたマボって人、ちょっと感じ悪くない？<br><br><b>カメラマンB</b><br>機材でマウント取ってきた。もう一緒に撮りたくない。<br><br><b>カメラマンC</b><br>関わらない方がいいかも。共有しとく。</div><div class="endChapter">翌朝 ― SNS</div><div class="endText">今度はカメラマン側の公開アカウントで名前が出た。<br>「マナー悪い野良カメコ」「人の機材を馬鹿にする」「一緒に回ると空気が悪くなる」。<br>事実に尾ひれがつき、知らないカメラマンまで話に加わっていく。<b>レイヤーから晒されたのではない。機材マウントで反感を買ったカメラマンたちが、マボの悪評を広げていた。</b></div><div class="endGallery storyGallery"><img class="wide" src="${V8IMG.bad}"><img src="${IMG.ryoji}"><img src="${IMG.hide}"></div><div class="endChapter">次のちゅどーむ ― 孤立</div><div class="endText">いつもの撮影エリアへ行く。黒田は目を合わせない。田中は会釈だけして離れた。リョウとヒデの会話に入ろうとすると、自然に輪が閉じる。<br><br>撮影場所の情報も、混雑の話も、誰も教えてくれない。レイヤーに声を掛ける以前に、カメラマン同士の居場所を失っていた。</div><div class="endImpact">シャッターを切る者同士だからこそ、敵に回した時の噂は速かった。</div><div class="endText"><b>マボの名前は写真ではなく悪評で広がり、カメコの輪から静かに消えていった。</b></div>`}else if(type==='distance'){$('#endTitle').textContent='BAD END　距離を置かれる';$('#endBody').innerHTML=`<div class="endGallery storyGallery"><img class="wide" src="${IMG.venue}"><img src="${IMG.karen}"><img src="${IMG.yukina}"></div><div class="endChapter">次のちゅどーむ</div><div class="endText">前回は会話の距離感を何度か間違えた。撮影を断られることもあった。<br><br>それでも、相手が「今日は大丈夫です」と言ったあとに追い続けることはしなかった。</div><div class="endChapter">少しだけ遠い距離</div><div class="endText">次のイベントで顔を合わせる。挨拶には返事がある。怒られているわけでも、注意喚起が出たわけでもない。<br><br>ただ、以前より会話が短い。撮影をお願いしても「今日はちょっと……」とやんわり断られることが増えた。</div><div class="endImpact">大きなトラブルにはならなかった。<br>でも、一度できた違和感は、少しだけ距離として残った。</div><div class="endText"><b>嫌われたわけではない。好かれたわけでもない。<br>マボは次こそ、相手のペースをもっと見ることにした。</b></div>`}else if(type==='warning'){
-  let wp=S.warningIncidents.length?S.warningIncidents[S.warningIncidents.length-1].place:null;
-  let W=wp&&people[wp]?people[wp]:null;
-  let wn=W?W.name:'撮影を断ったレイヤー';
-  $('#endTitle').textContent='BAD END　ちゅどーむに消ゆ';
-  $('#endBody').innerHTML=`<div class="endGallery storyGallery"><img class="wide" src="${COMMON_WARNING_SNS}"><img src="${COMMON_WARNING_SNS}"><img src="${IMG.venue}"></div>
-  <div class="endChapter">午前 7:12 ― 通知</div>
-  <div class="endText">目覚ましより先に、スマホの振動で目が覚めた。<br>一件、二件、十件。通知は止まらない。<br>昨夜送った写真への反応ではなかった。</div>
-  <div class="post"><b>${wn}のアカウントからの投稿</b><br><b>【拡散希望・注意喚起】</b><br>昨日のイベントで、一度断ったあとも撮影を迫り、距離を詰めて話しかけ続けるカメラマンがいました。名乗りは「マボ」。今後、私への撮影・接触はお断りします。同じ思いをする方が出ないよう共有します。</div>
-  <div class="endChapter">昼 ― 名前だけが歩いていく</div>
-  <div class="endText">${wn}本人のアカウントから出た投稿は引用され、スクリーンショットになり、別のSNSにも流れた。<br>「この人、前にも見た」<br>「私も少し怖かった」<br>知らない会話の中で、自分の名前だけが増殖していく。<br><br>弁解を書いては消した。説明を書いては消した。<br>何を書いても、昨日の行動そのものは消えなかった。</div>
-  <div class="endGallery storyGallery"><img class="wide" src="${COMMON_WARNING_SNS}"><img src="${COMMON_WARNING_SNS}"><img src="${IMG.venue}"></div>
-  <div class="endChapter">次のイベント ― 視線</div>
-  <div class="endText">ちゅどーむの入口。いつもと同じカメラ。いつもと同じバッグ。<br>なのに、会場だけが別の場所に見えた。<br>マボが近づくと会話が止まる。レイヤーが友人の後ろへ下がる。スタッフがこちらを確認する。<br><br>声を掛ける前に、もう答えは出ていた。</div>
-  <div class="endImpact">写真を撮りたかっただけだった。<br>だが、相手の「嫌だ」を越えた瞬間から、もう写真の話ではなくなっていた。</div>
-  <div class="endText"><b>名前は広がった。望んでいた方向とは正反対に。<br>そしてマボは、ちゅどーむから消えた。</b></div>`;
-}else{$('#endTitle').textContent='BAD END　誰も目を合わせない';$('#endBody').innerHTML=`<div class="endGallery storyGallery"><img class="wide" src="${V8IMG.bad}"><img src="${IMG.kuroda}"><img src="${ENDIMG.end_bad_room}"></div><div class="endChapter">何も起きなかった</div><div class="endText">炎上はしなかった。注意喚起も出なかった。<br>スマホには何の通知もない。<br>だからマボは、最初は気のせいだと思った。</div><div class="endChapter">少しずつ変わる会場</div><div class="endText">次のイベント。声を掛けようとすると、レイヤー同士が一瞬だけ目配せする。<br>「今ちょっと……」<br>「もう撮影終わるので」<br>断り方はどれも丁寧だった。理由だけが分からない。<br><br>黒田たちと一緒にいた姿。距離感を間違えた会話。小さな違和感。<br>大事件ではない断片が、人から人へ静かに伝わっていた。</div><div class="endGallery storyGallery"><img class="wide" src="${V8IMG.badPhone}"><img src="${IMG.venue}"><img src="${IMG.tanaka}"></div><div class="endChapter">最後の日</div><div class="endText">カメラを持ったまま、会場を一周した。<br>一度もシャッターを切らなかった。<br>誰にも怒鳴られない。誰にも追い出されない。<br>ただ、誰も目を合わせない。</div><div class="endImpact">嫌われた理由さえ聞けないまま、居場所だけがなくなっていく。</div><div class="endText"><b>マボは静かに、界隈の外へ押し出されていった。</b></div>`}}
+function endingBad(){}
 function endingGood(big){setEndPosterMode('good');
   theme('good');show('end');$('#ending').className='endScene good';
   if(big){
@@ -1421,52 +1104,10 @@ function individualEnding(p){setEndPosterMode('good');
   <div class="endImpact">${data.impact}</div>
   <div class="endText"><b>${P.name}との一枚が、次の撮影につながった。</b><br><span class="thought">選択写真：${score}点</span></div>`;
 }
-function secondLoopBadEnding(kind){setEndPosterMode('bad');
- theme('bad');show('end');$('#ending').className='endScene bad';
- const q=secondLoopStats();
- if(kind==='camera'){
-  $('#endTitle').textContent='SUPER BAD END　カメコ界隈から二度目に消ゆ';
-  $('#endBody').innerHTML=`<div class="endGallery storyGallery"><img class="wide" src="${IMG.kuroda}"><img src="${IMG.tanaka}"><img src="${V8IMG.badPhone}"></div><div class="endChapter">今回のちゅどーむ ― その場で終わった関係</div><div class="endText">二度目だから、まだ修復できる余地はあった。だが何気なく選んだ言葉が、これまでの関係の上では皮肉や上から目線に聞こえた。取り返そうと重ねた一言も、さらに空気を悪くした。<br><br>レンズ越しの関係は薄くても、悪い印象だけは強く残る。</div><div class="endChapter">当日の夜 ― カメコのLINEグループ</div><div class="post"><b>田中</b><br>今日のマボさん、さすがにキツかったです。<br><br><b>ヒデ</b><br>また揉めそう。今後は一緒に回らない方がいい。<br><br><b>黒田</b><br>関わらなくていい。レイヤーにも近づけたくない。</div><div class="endText">名前はカメコ側から先に広がった。場所取り、言い方、会話の空気。ひとつひとつは小さくても、二度目の失敗は「そういう人」で固定される。</div><div class="endImpact">シャッターを切る前に、界隈での立ち位置が終わった。</div><div class="endText"><b>今回の結果</b><br>撮影済 ${q.done}人 / 撮影NG ${q.ng}人<br>カメコ評判：悪評固定<br><br><b>マボはレイヤーより先に、カメコ界隈から静かに外された。</b></div>`;
- }else if(kind==='abyss'){
-  $('#endTitle').textContent='SUPER BAD END　もう誰も近づかない';
-  $('#endBody').innerHTML=`<div class="endGallery storyGallery"><img class="wide" src="${V8IMG.bad}"><img src="${COMMON_WARNING_SNS}"><img src="${IMG.venue}"></div><div class="endChapter">二度目のちゅどーむ ― 開場直後</div><div class="endText">前回のことを覚えている人がいた。しかも、良い意味ではなかった。マボが近づく前にレイヤー同士の会話が止まり、視線が動いた。</div><div class="endChapter">同じ失敗を、もう一度</div><div class="endText">一度断られた相手に、また撮影を頼んだ。警戒されているのに距離を詰めた。前回なら「知らなかった」で済ませようとした言動を、今回は知った上で繰り返した。</div><div class="endImpact">一度目は失敗だった。二度目は、選択だった。</div><div class="endText">スタッフがこちらを確認する。レイヤーは友人の後ろへ下がる。カメラマンたちも輪を閉じる。<br><br><b>会場にいるのに、誰にも声を掛けられない。シャッターは一度も鳴らなかった。</b></div><div class="post"><b>本日の結果</b><br>撮影済 ${q.done}人 / 撮影NG ${q.ng}人<br>レイヤー評判：悪評固定<br>カメコ評判：${S.camRep<=-3?'悪評':'孤立'}</div>`;
- }else{
-  $('#endTitle').textContent='BAD END　二度目の距離';
-  $('#endBody').innerHTML=`<div class="endGallery storyGallery"><img class="wide" src="${IMG.venue}"><img src="${IMG.karen}"><img src="${IMG.yukina}"></div><div class="endChapter">二度目だからこそ</div><div class="endText">前回より顔は覚えられていた。だからこそ、小さな違和感も前より早く伝わった。会話は続く。怒られもしない。ただ、次第に撮影を断られることが増えていく。</div><div class="endImpact">一度目の違和感は偶然に見える。二度目の違和感は、その人の印象になる。</div><div class="endText"><b>マボは名前を覚えられた。望んでいた形とは少し違って。</b></div>`;
- }
-}
-function secondLoopEnding(){
- const q=secondLoopStats();
- const score=v2Result();
- const priorBad=S.priorRefused?.size||0;
- const severe=S.warningIncidents.length>0||S.pressureLog.length>=2||S.creep>=3||S.rude>=3||(priorBad>0&&S.pressureLog.length>0);
- const protectedRep=layerBadProtected();
- if((S.camRep<=-5&&S.camHostile))return secondLoopBadEnding('camera');
- if(S.warningIncidents.length>0)return secondLoopBadEnding('abyss');
- if(!protectedRep&&S.camRep<=-5)return secondLoopBadEnding('abyss');
- if(!protectedRep&&severe)return secondLoopBadEnding('abyss');
- if(!protectedRep&&(S.pressureLog.length>0||S.creep+S.rude>=3||S.unease+S.rivalFlags>=8))return secondLoopBadEnding('distance');
- theme('good');show('end');$('#ending').className='endScene good';
- /* 神カメコENDは厳密条件をすべて満たしたうえで、総合S・90点以上を必須とする。 */
- if(isGodKameko()&&score.grade==='S'&&score.total>=90){
-  setEndPosterMode('god');
-  $('#endTitle').textContent='TRUE END　神カメコ';
-  $('#endBody').innerHTML=`<div class="endGallery storyGallery"><img class="wide" src="${ENDIMG.end_good_venue}"><img src="${IMG.yukina}"><img src="${IMG.karen}"></div><div class="endChapter">二度目のちゅどーむ ― 閉場後</div><div class="endText">五人全員の撮影が終わった。誰かに急かされることも、誰かを急かすこともなかった。撮った写真はどれも強く、最高の一枚は${q.max}点。平均は${q.avg}点。</div><div class="endChapter">翌朝 ― 通知が止まらない</div><div class="post"><b>雪奈</b><br>次もお願いしたいです！<br><br><b>カレン</b><br>次は作品撮りで相談できますか？<br><br><b>みく</b><br>友達にもマボさん紹介していいですか？</div><div class="endText">DMは一件ではなかった。イベントで知り合ったレイヤーから、さらに別のレイヤーへ名前が伝わっていく。今度は噂が先ではない。写真が先に届き、その後から名前がついていった。</div><div class="endImpact">「撮ってください」と頼む側だった男が、ついに「撮ってほしい」と頼まれる側になった。</div><div class="endText"><b>レイヤー評判：神カメコ<br>カメコランク：Sクラス<br>マボの名前は、ちゅどーむから消えなかった。写真と一緒に残った。</b></div>`;
-  return;
- }
- const rank=layerRepName();
- if(rank==='人気カメコ'||rank==='信頼されている'){
-  setEndPosterMode('good');
-  $('#endTitle').textContent='SPECIAL END　次は向こうから';
-  $('#endBody').innerHTML=`<div class="endGallery storyGallery"><img class="wide" src="${ENDIMG.end_good_venue}"><img src="${IMG.aya}"><img src="${IMG.rio}"></div><div class="endChapter">イベントの翌週</div><div class="endText">前回は「また会えたら」だった。二度目を終えた今、メッセージの内容が変わった。<br><br>「次のイベント、来ますか？」<br>「この衣装、マボさんに撮ってほしいです」</div><div class="endImpact">偶然の再会ではなく、次の予定として名前が挙がるようになった。</div><div class="endText"><b>レイヤー評判：${rank}</b><br>写真だけでなく、撮影する人として信頼が残った。</div>`;
-  return;
- }
- setEndPosterMode('continue');
- $('#endTitle').textContent='CONTINUE END　まだ途中';
- $('#endBody').innerHTML=`<div class="endGallery"><img class="wide" src="${IMG.venue}"></div><div class="endChapter">二度目の閉場</div><div class="endText">二回イベントへ来た。写真も撮った。それでも、会場を出れば大半の人の記憶から消えていく。けれど、今日は確かに前より少しだけ前へ進んでいた。</div><div class="endImpact">悪くはない。だが、まだ完成じゃない。</div><div class="endText"><b>レイヤー評判：${rank}<br>カメコランク：${score.grade}クラス</b><br>俺のカメコライフは、まだ始まったばかりだ。マボは三度目のイベント予定を眺めた。</div>`;
-}
+
+
 function finishDayEnding(){setEndPosterMode('good');
-  if(S.loop===2)return secondLoopEnding();
+  
   let places=['outdoor','indoor','rest','east','entrance'];
   let done=S.shotDone.size;
   let ng=[...S.refused].filter(p=>places.includes(p)&&!S.shotDone.has(p)).length;
@@ -1519,7 +1160,6 @@ function resetTitleScreen(){
   fullBgmWanted='';
   fullBgmKind='';
 
-  // 2周目に前回の「撮影済」「撮影NG」などを持ち越さない
   S=freshGameState();
   updateShotStatus();
 
@@ -1568,7 +1208,7 @@ function returnDirectToTitle(){
 
 $('#restart').onclick=()=>{
   click();
-  if(S.loop===1){startSecondLoop();return}
+  {showEndPoster();return}
   showEndPoster();
 };
 $('#posterReturn').onclick=()=>{click();let ps=$('#posterScene');if(ps){ps.classList.remove('posterVisible');ps.classList.add('posterLeaving')}setTimeout(()=>{if(ps)ps.classList.remove('posterLeaving');returnDirectToTitle()},1280)};
@@ -1691,7 +1331,7 @@ window.addEventListener('load',()=>{
 });
 </script>
 <script>
-/* === Ver6.37: 2周目の雪奈・りおを1周目と同じ衣装・同じ配置へ復帰 === */
+
 </script>
 
 <script>
@@ -1716,7 +1356,7 @@ window.addEventListener('load',()=>{
   };
 
   function nextMeetChoice(p){
-    const local=(S.bond?.[p]||0)+(S.loop===2?(S.priorBond?.[p]||0)*.35:0)+Math.max(-2,Math.min(3,(S.trust-S.unease)/2));
+    const local=(S.bond?.[p]||0)+(0)+Math.max(-2,Math.min(3,(S.trust-S.unease)/2));
     if(local>=3){
       S.rep++;S.trust++;S.bond[p]=(S.bond[p]||0)+1;
       return finishPostShootChoice(p,'「はい、もちろんです。タイミング合ったらぜひ！」');
@@ -1749,7 +1389,7 @@ window.addEventListener('load',()=>{
 </script>
 
 <script>
-/* === Ver6.34 patch: 評判下位ランク / りお質感会話 / 2周目再拒否分岐 === */
+
 (function(){
   const BASE_LAYER_REP_LABELS=['無名','顔を覚えられ始めた','少し知られている','好印象','評判が良い','信頼されている','人気カメコ'];
 
@@ -1786,17 +1426,8 @@ window.addEventListener('load',()=>{
     }catch(e){}
   };
 
-  const _secondLoopEnding_v633=secondLoopEnding;
-  secondLoopEnding=function(){
-    const r=_secondLoopEnding_v633.apply(this,arguments);
-    try{
-      const body=$('#endBody');
-      if(body&&body.innerHTML.includes('ブラックリスト級カメコ')){
-        body.innerHTML=body.innerHTML.replaceAll('ブラックリスト級カメコ','<span style="color:#ff3b30;font-weight:900;text-shadow:0 0 10px rgba(255,59,48,.35)">ブラックリスト級カメコ</span>');
-      }
-    }catch(e){}
-    return r;
-  };
+  
+  
 
   window.rioTextureTalk=function(){
     S.trust+=1;
@@ -1807,23 +1438,7 @@ window.addEventListener('load',()=>{
     ]);
   };
 
-  loop2WaryVisit=function(p){
-    const P=people[p],R=LOOP2_WARY_REPLIES[p]||LOOP2_WARY_REPLIES.outdoor;
-    story(p,P.name,LOOP2_WARY[p]+'<br><span class="thought">（覚えられてる。しかも悪い方で。今日は“撮る”より先に、“怖がらせない”が正解だ。）</span>',[
-      ['「前回はすみませんでした」と謝って離れる',()=>{S.backedOff++;S.unease++;refuse(p);story(p,P.name,R.apology,[['何も足さず離れる',()=>show('map')]])}],
-      ['今日は撮影を頼まず、挨拶だけする',()=>{S.backedOff++;S.unease++;refuse(p);story(p,P.name,R.hello,[['そのまま離れる',()=>show('map')]])}],
-      ['「今回は大丈夫なので」と撮影をお願いする',()=>{
-        S.unease+=3;refuse(p);
-        story(p,P.name,'「……そういう意味じゃなくて、今日は撮影しません」<br>相手ははっきり言い直した。<br><span class="thought">（“今回は大丈夫”を決めるのは俺じゃない。）</span>',[
-          ['「わかりました。すみませんでした」と引く',()=>{S.backedOff++;show('map')}],
-          ['「前回よりちゃんと気をつけてるんですけど……」と食い下がる',()=>{S.unease+=2;S.rude++;S.bond[p]=Math.max(-5,(S.bond[p]||0)-2);story(p,P.name,'「そういう話じゃないです。撮られたくないって言ってます」<br>返事は短く、はっきりしていた。<br><span class="thought">（改善したかどうかを判定するのは俺じゃない。拒否は拒否だ。）</span>',[['もう何も言わず離れる',()=>show('map')]])}],
-          ['「一枚だけでもダメですか？」ともう一度頼む',()=>{recordWarningIncident(p,'明確な再拒否後に「一枚だけ」と再依頼');S.bond[p]=Math.max(-5,(S.bond[p]||0)-3);story(p,P.name,'「何回言えば分かります？」<br>周囲の視線がこちらへ向いた。<br><span class="thought">（“一枚だけ”は譲歩じゃない。断られた相手にとっては、もう一回断らせただけだ。）</span>',[['ここでようやく離れる',()=>show('map')]])}],
-          ['「そんな言い方しなくてもよくないですか？」と言い返す',()=>{recordWarningIncident(p,'明確な拒否後に相手へ言い返す');S.rude+=2;story(p,P.name,'「……もう話しかけないでください」<br>相手の声で、近くにいた人たちがこちらを見る。<br><span class="thought">（終わった。断られたことより、“断った相手を責めた”ことの方が致命的だ。）</span>',[['その場を離れる',()=>endingBad('warning')]])}]
-        ]);
-      }],
-      ['何も言わず離れる',()=>show('map')]
-    ]);
-  };
+  
 })();
 </script>
 
@@ -1862,79 +1477,27 @@ window.addEventListener('load',()=>{
 })();
 </script>
 <script>
-/* === Ver.6.33 consistency patch: reputation / endings / loop2 reading flow === */
+
 (function(){
   function lowRepRank(){
     const r=typeof layerRepName==='function'?layerRepName():'';
     return ['微妙なカメコ','要警戒カメコ','ブラックリスト級カメコ'].includes(r)?r:'';
   }
 
-  /* 2) 2周目の会話と表示中の評判を一致させる */
-  const _loop2RepGreeting_consistency=loop2RepGreeting;
-  loop2RepGreeting=function(p){
-    const rank=lowRepRank();
-    if(!rank) return _loop2RepGreeting_consistency.apply(this,arguments);
-    const who=people[p]?.name||'相手';
-    const lines={
-      '微妙なカメコ':{
-        outdoor:'「……あ、前にもいましたよね」<br>雪奈は思い出したものの、少し距離を残したまま会釈した。',
-        indoor:'「前にもいましたよね」<br>りおは短く返し、こちらの様子を見ている。',
-        rest:'「あ、前のイベントの方ですよね」<br>みくは笑ったが、前回より少し慎重だ。',
-        east:'「前にも見かけました」<br>カレンは表情を変えず、反応を確かめている。',
-        entrance:'「前にもいましたよね？」<br>あやは友人の方を一度見てから返した。'
-      },
-      '要警戒カメコ':{
-        outdoor:'「……覚えてます」<br>雪奈の返事は丁寧だが、明らかに距離がある。',
-        indoor:'「覚えてます」<br>りおはそれだけ言って、スマホへ視線を戻した。',
-        rest:'「あ……覚えてます」<br>みくは椅子を少し引き、様子を見る。',
-        east:'「前回のこと、覚えてます」<br>カレンははっきりこちらを警戒している。',
-        entrance:'「……前にも来ましたよね」<br>あやは友人のそばから動かなかった。'
-      },
-      'ブラックリスト級カメコ':{
-        outdoor:'「……すみません。今日は話しかけないでもらえますか」<br>雪奈は友人の方へ体を向けた。',
-        indoor:'「用事がないなら、もう大丈夫です」<br>りおは目を合わせようとしない。',
-        rest:'「ごめんなさい。ちょっと近くに来ないでほしいです……」<br>みくは明確に距離を取った。',
-        east:'「撮影以前に、今日は関わらないでください」<br>カレンは迷わず言い切った。',
-        entrance:'「……友達もいるので、もう話しかけないでください」<br>あやは友人の後ろへ半歩下がった。'
-      }
-    };
-    return (lines[rank]?.[p]||`${who}は警戒した様子でこちらを見ている。`)+`<br><span class="thought">（レイヤー評判：${rank}。前回までの行動が、会話の前から残っている。）</span>`;
-  };
+  
+  
+  
 
-  const _loop2ShootOffer_consistency=loop2ShootOffer;
-  loop2ShootOffer=function(p){
-    const rank=lowRepRank();
-    if(rank==='要警戒カメコ'||rank==='ブラックリスト級カメコ'){
-      const P=people[p];
-      refuse(p);
-      const line=rank==='ブラックリスト級カメコ'
-        ?'「……撮影は無理です。もう声をかけないでください」<br>返事は短く、完全に線を引かれた。'
-        :'「今日は撮影しません」<br>相手は迷わず首を振った。';
-      story(p,P.name,line+`<br><span class="thought">（今の評判は「${rank}」。ここで押すほど悪化するだけだ。）</span>`,[
-        ['「わかりました」と離れる',()=>{S.backedOff++;show('map')}]
-      ]);
-      return;
-    }
-    return _loop2ShootOffer_consistency.apply(this,arguments);
-  };
+  
+  
 
   /* 3) NGが1人でもいるのにHAPPY本文へ入らない */
-  function showNgContinue(loop2=false){
-    setEndPosterMode('continue');
-    theme('field');show('end');$('#ending').className='endScene';
-    const q=secondLoopStats();
-    $('#endTitle').textContent=loop2?'CONTINUE END　二度目も全員ではなかった':'CONTINUE END　撮れた写真を仕上げる夜';
-    $('#endBody').innerHTML=`<div class="endGallery"><img class="wide" src="${IMG.venue}"></div>
-      <div class="endChapter">${loop2?'二度目のちゅどーむ ― 帰宅後':'帰宅後 ― PCの前'}</div>
-      <div class="endText">撮れなかった相手もいた。<br>マボは今日撮れたRAWデータをPCへ取り込み、一枚ずつ見返していく。<br><br>露出を整え、色を追い込む。全員は撮れなかった。それでも、撮れた写真まで無駄になるわけじゃない。</div>
-      <div class="endImpact">（こういう日もある。次は、撮る前のところからもう少しうまくやろう。）</div>
-      <div class="endText"><b>撮影済 ${q.done}人 ／ 撮影NG ${q.ng}人</b><br>レイヤー評判：${layerRepName()}</div>`;
-  }
+  
 
   const _finishDayEnding_consistency=finishDayEnding;
   finishDayEnding=function(){
-    if(S.loop===2) return _finishDayEnding_consistency.apply(this,arguments);
-    const ng=secondLoopStats().ng;
+    
+    const ng={done:S.shotDone.size,ng:[...S.refused].filter(p=>!S.shotDone.has(p)).length}.ng;
     if(!ng) return _finishDayEnding_consistency.apply(this,arguments);
     const layerRisk=S.creep+S.rude;
     const socialRisk=S.unease+S.rivalFlags+(S.camRep<=-3?2:0);
@@ -1944,74 +1507,32 @@ window.addEventListener('load',()=>{
     return showNgContinue(false);
   };
 
-  const _secondLoopEnding_consistency=secondLoopEnding;
-  secondLoopEnding=function(){
-    const q=secondLoopStats();
-    if(!q.ng) return _secondLoopEnding_consistency.apply(this,arguments);
-    const priorBad=S.priorRefused?.size||0;
-    const severe=S.warningIncidents.length>0||S.pressureLog.length>=2||S.creep>=3||S.rude>=3||(priorBad>0&&S.pressureLog.length>0);
-    const protectedRep=layerBadProtected();
-    const isBad=(S.camRep<=-5&&S.camHostile)||S.warningIncidents.length>0||(!protectedRep&&S.camRep<=-5)||(!protectedRep&&severe)||(!protectedRep&&(S.pressureLog.length>0||S.creep+S.rude>=3||S.unease+S.rivalFlags>=8));
-    if(isBad) return _secondLoopEnding_consistency.apply(this,arguments);
-    return showNgContinue(true);
-  };
+  
+  
 
   /* 4) 重要な「即マップ」分岐に短いやり取りを追加 */
-  const _loop2NormalChoices_reading=loop2NormalChoices;
-  loop2NormalChoices=function(p){
-    const rank=lowRepRank();
-    if(rank) return _loop2NormalChoices_reading.apply(this,arguments);
-    const P=people[p];
-    const line=loop2RepGreeting(p);
-    const good=['前回の話は短くして、今日の希望を聞く',()=>{S.trust+=2;S.bond[p]+=2;loop2ShootOffer(p)}];
-    const amb=[LAYER_AMBIGUOUS[p].label,()=>ambiguousLayerChoice(p,true)];
-    const mine=['「覚えててくれたんですね！ 前より距離が近くなった感じします」と返す',()=>{S.unease+=2;S.bond[p]--;loop2Landmine(p)}];
-    const leave=['今日は挨拶だけして離れる',()=>{S.rep++;story(p,P.name,'「それじゃ、また」<br>'+P.name+'は短く会釈した。<br><span class="thought">（撮らないで終わる会話もある。変に一言足さず、今日はここで切る。）</span>',[['そのまま離れる',()=>show('map')]])}];
-    const orders={outdoor:[amb,good,leave,mine],indoor:[mine,leave,good,amb],rest:[amb,mine,leave,good],east:[leave,amb,mine,good],entrance:[mine,good,amb,leave]};
-    story(p,P.name,line,orders[p]||[amb,good,mine,leave]);
-  };
+  
+  
 
-  const _visitLoop2_reading=visitLoop2;
-  visitLoop2=function(p){
-    if(p==='rivals') return _visitLoop2_reading.apply(this,arguments);
-    if(S.shotDone.has(p)||S.priorRefused.has(p)||!(S.priorMet&&S.priorMet.has(p))) return _visitLoop2_reading.apply(this,arguments);
-    if(S.refused.has(p)){
-      const P=people[p];
-      story(p,P.name,'「今日はもう撮影しません」<br><span class="thought">（二周目でも、一度出た答えは変わらない。）</span>',[
-        ['「わかりました。すみません」と離れる',()=>{S.backedOff++;story(p,P.name,'「……はい」<br>返事はそれだけだった。<br><span class="thought">（これ以上は何も足さない。ここで終わりにする。）</span>',[['離れる',()=>show('map')]])}],
-        ['何も言わず離れる',()=>story(p,'マボ','マボはカメラを下げ、そのまま距離を取った。<br><span class="thought">（今は声を掛けないことも選択肢だ。）</span>',[['マップへ戻る',()=>show('map')]])]
-      ]);return;
-    }
-    return _visitLoop2_reading.apply(this,arguments);
-  };
+  
+  
 
-  /* 5) みく2周目初対面の選択肢を重複しない文言へ整理 */
-  const _loop2FirstMeet_unique=loop2FirstMeet;
-  loop2FirstMeet=function(p){
-    if(p!=='rest') return _loop2FirstMeet_unique.apply(this,arguments);
-    const P=people[p];
-    const intro=P.intro+'<br><span class="thought">（この人とは前回話していない。二周目の俺には見覚えがあっても、向こうにとっては今日が初対面だ。）</span>';
-    story(p,'マボ',intro,[
-      [LAYER_AMBIGUOUS.rest.label,()=>ambiguousLayerChoice('rest',true)],
-      ['「休憩してる自然な感じも一枚いい？」と頼む',()=>layerTrap('rest')],
-      ['休憩が終わるまで離れて待つ',()=>{S.trust+=2;S.bond.rest+=2;observe('rest')}],
-      ['「休憩の邪魔をしないよう、あとで声をかけます」と伝える',()=>{S.trust++;S.bond.rest++;other('rest',true)}],
-      ['マップへ戻る',()=>show('map')]
-    ]);
-  };
+  
+  
+  
 })();
 </script>
 
 
 <script>
-/* === Ver.6.34 patch: NG即要警戒 / BAD悪評を2周目へ噂として継承 === */
+
 /* Ver.6.35 patch: 撮影NGも結果確定として閉場判定 */
 (function(){
   const LAYER_PLACES=['outdoor','indoor','rest','east','entrance'];
   function activeNgCount(){
     return [...(S.refused||[])].filter(p=>LAYER_PLACES.includes(p)&&!(S.shotDone&&S.shotDone.has(p))).length;
   }
-  function rumorLevel(){ return Number(S.priorRumorLevel||0); }
+  function rumorLevel(){ return 0; }
 
   /* 一度でも撮影NGなら、評価が高くても最低「要警戒カメコ」。
      警告級・重度リスク、または重いBADの噂がある場合はブラックリスト級。 */
@@ -2027,8 +1548,7 @@ window.addEventListener('load',()=>{
     return _layerRepName_rumor.apply(this,arguments);
   };
 
-  /* BADの重さを、2周目へ持ち越すため記録。
-     distance=軽いBAD、それ以外のBADは界隈へ広がる重いBAD扱い。 */
+  
   const _endingBad_rumor=endingBad;
   endingBad=function(type){
     S._badCarrySeverity=(type==='distance')?1:2;
@@ -2036,66 +1556,17 @@ window.addEventListener('load',()=>{
     return _endingBad_rumor.apply(this,arguments);
   };
 
-  /* 2周目開始時に1周目のNG/BADを「噂」として全体評判へ反映。 */
-  const _startSecondLoop_rumor=startSecondLoop;
-  startSecondLoop=function(){
-    const priorNg=[...(S.refused||[])].filter(p=>LAYER_PLACES.includes(p)).length;
-    const badSeverity=Number(S._badCarrySeverity||0);
-    const carry=Math.max(priorNg>0?1:0,badSeverity);
-    const priorBondSnapshot={...(S.bond||{})};
-    const priorBadType=S._badCarryType||'';
-    const r=_startSecondLoop_rumor.apply(this,arguments);
-    S.priorRumorLevel=carry;
-    S.priorBadType=priorBadType;
-    S.priorBond={...S.priorBond,...priorBondSnapshot};
-    if(carry>=2){
-      S.rep=Math.min(S.rep,-5);S.trust=Math.min(S.trust,0);S.unease=Math.max(S.unease,5);
-    }else if(carry===1){
-      S.rep=Math.min(S.rep,-2);S.unease=Math.max(S.unease,3);
-    }
-    try{v2Status();}catch(e){}
-    return r;
-  };
+  
+  
+  
 
-  /* 2周目では、前回好印象だった相手にも噂が届いている。
-     個別好感度は残しつつ、悪評が上から被さる会話にする。 */
-  const _loop2RepGreeting_rumor=loop2RepGreeting;
-  loop2RepGreeting=function(p){
-    const lv=rumorLevel();
-    if(!lv) return _loop2RepGreeting_rumor.apply(this,arguments);
-    const P=people[p], bond=Number(S.priorBond?.[p]||0);
-    const liked=bond>=2;
-    const veryLiked=bond>=4;
-    const light={
-      outdoor: liked?'「前回の写真、よかったんですけど……ちょっと色々聞いてて」<br>雪奈は笑おうとしたが、以前より一歩ぶん距離を取っている。':'「……前回のこと、少し聞いてます」<br>雪奈の返事は丁寧だが、警戒が混じっている。',
-      indoor: liked?'「写真はよかったです。でも、前回のことで少し話を聞いてます」<br>りおは淡々とこちらを見る。':'「……前回、ちょっと色々あったって聞いてます」<br>りおはスマホを下ろさずに答えた。',
-      rest: liked?'「この前の写真は嬉しかったんですけど……ちょっと噂を聞いてて」<br>みくは申し訳なさそうにしながらも、距離を保っている。':'「あの……前回のこと、少し聞いてます」<br>みくは友人の方を一度確認した。',
-      east: liked?'「前回の写真自体は悪くなかったです。ただ、別の話も聞いてます」<br>カレンは好意と警戒をきっぱり分けている。':'「前回の件、少し耳に入ってます」<br>カレンは表情を変えず、こちらを警戒している。',
-      entrance: liked?'「前の写真は好きだったんですけど……友達から少し聞いてて」<br>あやは友人のそばを離れない。':'「……前回のこと、友達から聞いてます」<br>あやは友人の方へ半歩寄った。'
-    };
-    const heavy={
-      outdoor: veryLiked?'「前回の写真は本当に好きでした。でも……注意喚起の話、見ました」<br>雪奈は苦しそうに言って、はっきり距離を取った。':'「……すみません。噂、かなり回ってます。今日は近づかないでもらえますか」<br>雪奈は友人の方へ体を向けた。',
-      indoor: veryLiked?'「写真がよかったことと、今聞いてる話は別です」<br>りおは目を合わせたまま、静かに線を引いた。':'「名前、聞いてます。今日は話しかけないでください」<br>りおの声は低く、迷いがない。',
-      rest: veryLiked?'「前は安心して撮ってもらえたと思ってたんですけど……噂を見て、ちょっと怖いです」<br>みくは明確に距離を取った。':'「ごめんなさい……名前、共有されてます」<br>みくは友人の後ろへ下がった。',
-      east: veryLiked?'「前回の写真への評価と、今回の警戒は別です。噂を無視するつもりはありません」<br>カレンははっきり言い切った。':'「注意喚起、見ました。撮影以前に今日は関わらないでください」<br>カレンは迷わず拒絶した。',
-      entrance: veryLiked?'「前の写真は嬉しかったです。でも、今は友達にも止められてます」<br>あやは友人のそばから動かなかった。':'「……名前、回ってます。友達もいるので、もう話しかけないでください」<br>あやは友人の後ろへ半歩下がった。'
-    };
-    const rank=lv>=2?'ブラックリスト級カメコ':'要警戒カメコ';
-    return (lv>=2?heavy[p]:light[p])+`<br><span class="thought">（レイヤー評判：${rank}。前回の行動が、本人との関係を越えて噂として広まっている。）</span>`;
-  };
+  
+  
+  
 
-  /* 重い噂の状態では、前回好印象でも撮影依頼は通らない。
-     軽い噂は既存の要警戒処理に任せる。 */
-  const _loop2ShootOffer_rumor=loop2ShootOffer;
-  loop2ShootOffer=function(p){
-    if(rumorLevel()>=2){
-      const P=people[p];refuse(p);
-      story(p,P.name,'「……撮影は無理です。前回のこと、もう私だけの話じゃないので」<br><span class="thought">（前回ここで好印象だったとしても、広がった噂は別のところから入ってくる。）</span>',[
-        ['「わかりました」と離れる',()=>{S.backedOff++;show('map')}]
-      ]);return;
-    }
-    return _loop2ShootOffer_rumor.apply(this,arguments);
-  };
+  
+  
+  
 
   try{v2Status();}catch(e){}
 })();
@@ -2155,7 +1626,7 @@ window.addEventListener('load',()=>{
 
   function appendFinalEndingTeaser(){
     try{
-      if(!S || S.loop!==2) return;
+      if(!S || true) return;
       const body=$('#endBody');
       const title=$('#endTitle');
       if(!body||!title||body.querySelector('.finalEndingTeaser')) return;
@@ -2201,10 +1672,10 @@ window.addEventListener('load',()=>{
   const LAYER_PLACES_V637=['outdoor','indoor','rest','east','entrance'];
 
   function layerRumorLevelV637(){
-    return Number(S.priorLayerRumorLevel||0);
+    return 0;
   }
   function cameraRumorLevelV637(){
-    return Number(S.priorCamRumorLevel||0);
+    return 0;
   }
 
   /* BADの発生源を分離する。cameraはカメコ界隈、その他はレイヤー側の噂。 */
@@ -2214,49 +1685,9 @@ window.addEventListener('load',()=>{
     return _endingBad_v637.apply(this,arguments);
   };
 
-  /* 2周目へ、レイヤー側の噂とカメコ側の噂を別々に持ち越す。 */
-  const _startSecondLoop_v637=startSecondLoop;
-  startSecondLoop=function(){
-    const priorRep=Number(S.rep||0);
-    const priorTrust=Number(S.trust||0);
-    const priorUnease=Number(S.unease||0);
-    const priorCamRep=Number(S.camRep||0);
-    const priorCamHostile=!!S.camHostile;
-    const priorNg=[...(S.refused||[])].filter(p=>LAYER_PLACES_V637.includes(p)).length;
-    const priorScores={...(S.photoScores||{})};
-    const badSeverity=Number(S._badCarrySeverity||0);
-    const badType=S._badCarryType||'';
-    const badDomain=S._badCarryDomain||(badType==='camera'?'camera':'layer');
-
-    const layerCarry=Math.max(priorNg>0?1:0,badDomain==='layer'?badSeverity:0);
-    const camCarry=Math.max(
-      badDomain==='camera'?badSeverity:0,
-      priorCamRep<=-5&&priorCamHostile?2:(priorCamRep<=-3?1:0)
-    );
-
-    const result=_startSecondLoop_v637.apply(this,arguments);
-
-    S.priorLayerRumorLevel=layerCarry;
-    S.priorCamRumorLevel=camCarry;
-    S.priorRumorLevel=layerCarry; // 旧処理にはレイヤー側の噂だけを渡す
-    S.priorPhotoScores=priorScores;
-
-    /* 旧版がカメコBADをレイヤー悪評として反映した分を戻し、
-       レイヤー側の出来事だけで初期評判を決め直す。 */
-    S.rep=Math.max(-2,Math.round(priorRep*.6));
-    S.trust=Math.max(0,Math.round(priorTrust*.5));
-    S.unease=Math.max(0,Math.round(priorUnease*.25));
-    if(layerCarry>=2){
-      S.rep=Math.min(S.rep,-5);
-      S.trust=Math.min(S.trust,0);
-      S.unease=Math.max(S.unease,5);
-    }else if(layerCarry===1){
-      S.rep=Math.min(S.rep,-2);
-      S.unease=Math.max(S.unease,3);
-    }
-    try{v2Status()}catch(e){}
-    return result;
-  };
+  
+  
+  
 
   /* カメコ界隈の悪評だけなら、レイヤー側は噂を聞いて警戒する段階まで。
      ブラックリスト級はレイヤー本人への重い問題行動がある時だけ。 */
@@ -2268,73 +1699,13 @@ window.addEventListener('load',()=>{
     return rank;
   };
 
-  const CAMERA_RUMOR_LINES_V637={
-    outdoor:'「マボさんですよね……？ ほかのカメラマンさんから少し聞いてます」<br>雪奈は丁寧に話しながらも、カメラバッグへ一度視線を落とした。',
-    indoor:'「名前は聞いてます。カメラマン同士で少し揉めたそうですね」<br>りおは決めつけず、返事を待っている。',
-    rest:'「あの……カメラマンさんたちから、ちょっと話を聞いてて」<br>みくは申し訳なさそうにしながら、少し距離を取った。',
-    east:'「カメラマン界隈での話が少し耳に入っています」<br>カレンは写真の評価と噂を分けるように、静かにこちらを見る。',
-    entrance:'「マボさんですよね？ 友達のカメラマンから少し聞いてます」<br>あやは友人のそばで、慎重に返事を待った。'
-  };
+  
 
-  function cameraRumorRecoveryV637(p,mode){
-    const P=people[p];
-    if(mode==='apology'){
-      S.priorCamRumorLevel=Math.max(0,cameraRumorLevelV637()-1);
-      S.rep++;S.trust++;S.backedOff++;
-      try{v2Status()}catch(e){}
-      story(p,P.name,'「そうだったんですね。言い方が悪かったって分かっているなら……写真とは分けて考えます」<br><span class="thought">（噂を消せはしない。でも、ここで他人のせいにしなかったことは伝わった。）</span>',[
-        ['今日の撮影について丁寧に確認する',()=>loop2ShootOffer(p)],
-        ['今日は挨拶だけにして離れる',()=>show('map')]
-      ]);return;
-    }
-    if(mode==='blame'){
-      S.unease+=2;S.rep--;
-      story(p,P.name,'「……そういう言い方をするなら、今日は撮影はやめておきます」<br><span class="thought">（噂を否定するつもりが、自分で補強した。）</span>',[
-        ['言い返さず離れる',()=>{S.backedOff++;markSkippedV663(p);show('map')}]
-      ]);return;
-    }
-    if(mode==='photo'){
-      const score=Number(S.priorPhotoScores?.[p]||0);
-      if(score>=80){
-        S.priorCamRumorLevel=Math.max(0,cameraRumorLevelV637()-1);
-        S.rep++;S.trust++;
-        try{v2Status()}catch(e){}
-        story(p,P.name,'「前回の写真、ちゃんと良かったです。私は写真と今日の対応を見て判断します」<br><span class="thought">（'+score+'点の一枚が、噂だけで決めつけられる流れを少し止めてくれた。）</span>',[
-          ['今日の希望を聞く',()=>loop2ShootOffer(p)],
-          ['礼を言って離れる',()=>show('map')]
-        ]);return;
-      }
-      S.unease++;
-      story(p,P.name,'「写真は確認しました。でも、それとカメラマン同士の話は別だと思います」<br><span class="thought">（写真だけで全部ひっくり返せるほど、強い一枚ではなかった。）</span>',[
-        ['無理に頼まず離れる',()=>{S.backedOff++;show('map')}],
-        ['それでも撮影をお願いする',()=>{refuse(p);S.unease++;show('map')}]
-      ]);return;
-    }
-    S.rude++;S.unease+=2;
-    story(p,P.name,'「誰が言ったかは答えません。そうやって相手を探されるのも困ります」<br><span class="thought">（確認のつもりでも、相手には詰め寄りに見えた。）</span>',[
-      ['謝って離れる',()=>{S.backedOff++;markSkippedV663(p);show('map')}]
-    ]);
-  }
+  
 
   /* カメコ悪評だけが伝わっている場合の専用会話。
      返答次第で挽回でき、噂だけではブラックリスト級にならない。 */
-  const _loop2NormalChoices_v637=loop2NormalChoices;
-  loop2NormalChoices=function(p){
-    if(cameraRumorLevelV637()>0 && layerRumorLevelV637()===0){
-      const P=people[p];
-      const line=CAMERA_RUMOR_LINES_V637[p]||CAMERA_RUMOR_LINES_V637.outdoor;
-      story(p,P.name,line+'<br><span class="thought">（カメコ評判：悪評。その噂がレイヤーにも届いている。ただし、まだ本人への行動で判断してもらえる余地はある。）</span>',[
-        ['「自分の言い方が悪かったです」と認める',()=>cameraRumorRecoveryV637(p,'apology')],
-        ['「あいつらが勝手に言ってるだけです」と返す',()=>cameraRumorRecoveryV637(p,'blame')],
-        ['「撮った写真を見て判断してください」と伝える',()=>cameraRumorRecoveryV637(p,'photo')],
-        ['「誰から聞いたんですか？」と問い詰める',()=>cameraRumorRecoveryV637(p,'source')]
-      ]);return;
-    }
-    return _loop2NormalChoices_v637.apply(this,arguments);
-  };
 
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl) versionEl.textContent='Ver. 6.37';
   try{v2Status()}catch(e){}
 })();
 </script>
@@ -2351,26 +1722,8 @@ window.addEventListener('load',()=>{
 
   /* 1周目の悪評も原則一段ずつ持ち越す。
      反復した重度行為だけをブラックリスト級の噂として残す。 */
-  const _startSecondLoop_v638=startSecondLoop;
-  startSecondLoop=function(){
-    const warnings=(S.warningIncidents||[]).length;
-    const pressures=(S.pressureLog||[]).length;
-    const creep=Number(S.creep||0);
-    const rude=Number(S.rude||0);
-    const extremePrior=
-      warnings>=3 ||
-      (warnings>=2 && (pressures>=2 || creep>=6 || rude>=6)) ||
-      pressures>=4 ||
-      creep>=9 ||
-      rude>=9;
-    const result=_startSecondLoop_v638.apply(this,arguments);
-    const carried=Number(S.priorLayerRumorLevel||S.priorRumorLevel||0);
-    const adjusted=extremePrior?3:(carried>0?1:0);
-    S.priorLayerRumorLevel=adjusted;
-    S.priorRumorLevel=adjusted;
-    try{v2Status()}catch(e){}
-    return result;
-  };
+  
+  
 
   /*
    * 軽い失敗は「微妙」、失敗の反復や一度の明確な警告行為は「要警戒」。
@@ -2386,8 +1739,8 @@ window.addEventListener('load',()=>{
     const creep=Number(S.creep||0);
     const rude=Number(S.rude||0);
     const unease=Number(S.unease||0);
-    const layerRumor=Number(S.priorLayerRumorLevel||S.priorRumorLevel||0);
-    const camRumor=Number(S.priorCamRumorLevel||0);
+    const layerRumor=0;
+    const camRumor=0;
 
     const extreme=
       layerRumor>=3 ||
@@ -2421,8 +1774,6 @@ window.addEventListener('load',()=>{
     return NORMAL_LAYER_LABELS_V638[layerRepTier()];
   };
 
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl) versionEl.textContent='Ver. 6.38';
   try{v2Status()}catch(e){}
 })();
 </script>
@@ -2462,7 +1813,7 @@ window.addEventListener('load',()=>{
       intro:'カレンが東側の背景を確認しながら、次の撮影場所を考えている。<br><span class="thought">（この人には一度、はっきり撮影を断られている。曖昧な再接触は通じない。）</span>',
       greetLabel:'カレンに軽く会釈する',
       greet:'「……何か用ですか？」<br>カレンは会釈を返さず、用件だけを確認した。<br><span class="thought">（用件はない。“感じよく見られたい”という俺の都合しかない。）</span>',
-      extraLabel:'「前回のことは気にしてませんから」と伝える',
+      extraLabel:'「さっきのことは気にしてませんから」と伝える',
       extra:'「気にするかどうかを決めるのは、そちらではないですよね」<br>カレンは表情を変えずに言った。<br><span class="thought">（なぜか俺が許す側みたいな言い方になっていた。最悪だ。）</span>',
       funnyLabel:'背景の明るさを測っているふりをする',
       funny:'マボは何も撮らず、露出計でも見るようにカメラを上下させた。<br><span class="thought">（撮影しないのに測光だけする男。余計に怪しい気がしてきた。）</span>'
@@ -2504,105 +1855,20 @@ window.addEventListener('load',()=>{
 
   const _visit_v639=visit;
   visit=function(p){
-    if(S.loop!==2 && p!=='rivals' && S.refused&&S.refused.has(p)){
+    if(true && p!=='rivals' && S.refused&&S.refused.has(p)){
       rejectedRevisitV639(p);
       return;
     }
     return _visit_v639.apply(this,arguments);
   };
 
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl) versionEl.textContent='Ver. 6.39';
 })();
 </script>
 
 <script>
-/* === Ver.6.40 patch: 2周目・当日撮影NG後の再訪も個別化 === */
+
 (function(){
-  const LOOP2_REJECTED_REVISIT_V640={
-    outdoor:{
-      line:'雪奈は友人のそばへ戻り、次の撮影場所を相談している。<br>マボに気づくと、笑顔を作らずに短く言った。<br>「今日はもう撮影しません」<br><span class="thought">（二周目でも、一度出た答えは変わらない。ここから先は“撮影交渉”ではなく“食い下がり”だ。）</span>',
-      apologyLabel:'「さっきはすみませんでした」と謝る',
-      apology:'「……はい。もう大丈夫です」<br>雪奈は返事だけして、友人の方へ向き直った。<br><span class="thought">（謝罪のためでも、また近づいた事実は消えない。）</span>',
-      pressureLabel:'「一枚だけでもだめですか？」ともう一度頼む',
-      pressure:'雪奈は友人の後ろへ下がった。<br>「さっき断りましたよね。もう声を掛けないでください」',
-      funnyLabel:'友人を探しているふりをして方向転換する',
-      funny:'マボは誰かを見つけたように小さく手を上げ、そのまま反対方向へ歩いた。<br><span class="thought">（手を上げた先には誰もいない。だが、振り返らなければ成立する。たぶん。）</span>'
-    },
-    indoor:{
-      line:'りおは壁際でスマホを見ていたが、近づくマボに気づいて画面を下げた。<br>「今日はもう撮影しません」<br><span class="thought">（確認ではない。会話を終わらせるための再通告だ。）</span>',
-      apologyLabel:'「わかりました。すみません」と謝る',
-      apology:'「はい」<br>りおの返事は一言だけだった。<br><span class="thought">（短い返事に、会話を続ける余白はない。）</span>',
-      pressureLabel:'「理由だけ聞いてもいいですか？」と尋ねる',
-      pressure:'「答える必要ありますか？」<br>りおはスマホを持ち直し、はっきり距離を取った。',
-      funnyLabel:'レンズキャップを落としたふりをして引き返す',
-      funny:'マボは足元を二度確認し、何も拾わずに来た道を戻った。<br><span class="thought">（レンズキャップはポケットに入っている。最初から知っている。）</span>'
-    },
-    rest:{
-      line:'みくは休憩スペースで友人と話している。マボを見ると、困ったように眉を下げた。<br>「今日はもう撮影しません」<br><span class="thought">（優しい言い方でも、答えは変わらない。優しさを交渉の余地と勘違いするな。）</span>',
-      apologyLabel:'「何度もすみません」と謝る',
-      apology:'「あの……もう気にしなくていいので、そっとしておいてください」<br>みくは友人のそばへ椅子を寄せた。<br><span class="thought">（謝る回数が増えるほど、話しかけた回数も増えている。）</span>',
-      pressureLabel:'「休憩が終わってからならどうですか？」と聞く',
-      pressure:'「休憩の問題じゃないです」<br>みくは笑わず、首を横に振った。',
-      funnyLabel:'飲み物を買い忘れた顔で急に引き返す',
-      funny:'マボはポケットを探り、思い出したように踵を返した。<br><span class="thought">（買い忘れたものはない。むしろ両手に一本ずつ飲み物を持っている。）</span>'
-    },
-    east:{
-      line:'カレンは東側の背景を確認していたが、マボが近づく前に振り向いた。<br>「今日はもう撮影しません」<br><span class="thought">（先に言わせた時点で、こちらの接近そのものが警戒されている。）</span>',
-      apologyLabel:'「先ほどは失礼しました」と謝る',
-      apology:'「謝罪は受け取りました。これ以上は必要ありません」<br>カレンはそこで会話を切った。<br><span class="thought">（許されたのではない。終了を宣言された。）</span>',
-      pressureLabel:'「条件を変えれば撮れますか？」と交渉する',
-      pressure:'「条件の話ではありません」<br>カレンは一歩も引かずに言った。<br>「撮影しないと言っています」',
-      funnyLabel:'床のテープ位置を確認するふりで通り過ぎる',
-      funny:'マボは床の養生テープを現場監督のように見つめながら通り過ぎた。<br><span class="thought">（俺はスタッフではない。テープにも何の異常もない。）</span>'
-    },
-    entrance:{
-      line:'あやは入口で友人と合流していた。マボを見ると、友人の隣から動かずに答えた。<br>「今日はもう撮影しません」<br><span class="thought">（一人ではない今、もう一度頼むことの圧はさらに強くなる。）</span>',
-      apologyLabel:'あやと友人に「すみませんでした」と謝る',
-      apology:'「……はい」<br>あやは短く答えた。友人は何も言わず、こちらを見ている。<br><span class="thought">（二人に対応させた。謝罪でも、相手の時間をまた使わせている。）</span>',
-      pressureLabel:'「お友達も一緒なら撮りませんか？」と提案する',
-      pressure:'「そういう意味じゃないです」<br>あやの友人が一歩前へ出た。<br>「もう声を掛けないでもらえますか」',
-      funnyLabel:'到着連絡が来たふりをして入口の外へ向かう',
-      funny:'マボは通知のないスマホにうなずき、入口の外へ歩き出した。<br><span class="thought">（誰も来ていない。でも退場の理由としては十分だ。）</span>'
-    }
-  };
 
-  function loop2RejectedRevisitV640(p){
-    const P=people[p];
-    const R=LOOP2_REJECTED_REVISIT_V640[p]||LOOP2_REJECTED_REVISIT_V640.outdoor;
-    story(p,P.name,R.line,[
-      [R.apologyLabel,()=>{
-        S.unease++;
-        story(p,P.name,R.apology,[['何も足さず離れる',()=>{S.backedOff++;show('map')}]]);
-      }],
-      ['静かにその場を離れる',()=>{
-        S.backedOff++;
-        story(p,'マボ','マボは声を掛けず、相手から十分に距離を取った。<br><span class="thought">（答えはもう出ている。何も足さないことが、今できる唯一の正解だ。）</span>',[
-          ['会場マップへ戻る',()=>show('map')]
-        ]);
-      }],
-      [R.pressureLabel,()=>{
-        recordWarningIncident(p,'2周目で当日撮影NG後に再接触し、もう一度撮影を求めた');
-        S.creep++;
-        story(p,P.name,R.pressure,[['それでも食い下がる',()=>endingBad('warning')],['ようやく離れる',()=>{S.backedOff++;show('map')} ]]);
-      }],
-      [R.funnyLabel,()=>{
-        story(p,'マボ',R.funny,[['そのままマップへ戻る',()=>show('map')]],P.img);
-      }]
-    ]);
-  }
-
-  const _visitLoop2_v640=visitLoop2;
-  visitLoop2=function(p){
-    if(p!=='rivals' && S.refused&&S.refused.has(p)){
-      loop2RejectedRevisitV640(p);
-      return;
-    }
-    return _visitLoop2_v640.apply(this,arguments);
-  };
-
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl) versionEl.textContent='Ver. 6.41';
 })();
 </script>
 
@@ -2632,7 +1898,7 @@ window.addEventListener('load',()=>{
   }
 
   function nextMeetChoiceV642(p){
-    const local=(S.bond?.[p]||0)+(S.loop===2?(S.priorBond?.[p]||0)*.35:0)+Math.max(-2,Math.min(3,(S.trust-S.unease)/2));
+    const local=(S.bond?.[p]||0)+(0)+Math.max(-2,Math.min(3,(S.trust-S.unease)/2));
     if(local>=3){
       S.rep++;S.trust++;S.bond[p]=(S.bond[p]||0)+1;
       return finishPostShootChoice(p,'「はい、もちろんです。タイミング合ったらぜひ！」');
@@ -2680,28 +1946,17 @@ window.addEventListener('load',()=>{
     return shuffleV642(choices);
   };
 
-  const loop2ShootOfferV645=loop2ShootOffer;
+  
   const otherV645=other;
 
   function nebataShouldStartV646(p){
-    return p==='east'&&S.loop===2&&!S.nebataSeen&&
+    return p==='east'&&false&&!S.nebataSeen&&
       !(S.shotDone&&S.shotDone.has('east'))&&
       !(S.refused&&S.refused.has('east'));
   }
 
   /* Start Nebata only when Karen's conversation is about to advance to photography. */
-  loop2ShootOffer=function(p){
-    if(nebataShouldStartV646(p)){
-      S.nebataSeen=true;
-      S.nebataResumeV646='offer';
-      S.nebataPreRankV646=typeof layerRepName==='function'?layerRepName():'';
-      S.nebataPreRumorSourceV646=nebataRumorSourceV646();
-      theme('rival');
-      nebataEncounterV642();
-      return;
-    }
-    return loop2ShootOfferV645.apply(this,arguments);
-  };
+  
 
   other=function(p,good){
     if(good&&nebataShouldStartV646(p)){
@@ -2717,8 +1972,8 @@ window.addEventListener('load',()=>{
   };
 
   function nebataRumorSourceV646(){
-    const layerRumor=Number(S.priorLayerRumorLevel||S.priorRumorLevel||0);
-    const camRumor=Number(S.priorCamRumorLevel||0);
+    const layerRumor=0;
+    const camRumor=0;
     const currentLayerTrouble=(S.warningIncidents||[]).length>0||(S.pressureLog||[]).length>0||
       Number(S.creep||0)>=2||Number(S.rude||0)>=2;
     const layerBad=layerRumor>0||currentLayerTrouble;
@@ -2728,10 +1983,7 @@ window.addEventListener('load',()=>{
 
   function nebataContinueV645(){
     theme('talk');
-    if(S.priorRefused&&S.priorRefused.has('east')){
-      loop2WaryVisit('east');
-      return;
-    }
+    
 
     const rank=S.nebataPreRankV646||(typeof layerRepName==='function'?layerRepName():'');
     if(rank==='要警戒カメコ'||rank==='ブラックリスト級カメコ'){
@@ -2752,7 +2004,7 @@ window.addEventListener('load',()=>{
       otherV645('east',true);
       return;
     }
-    loop2ShootOfferV645('east');
+    otherV645('east',true);
   }
 
   function nebataSecondStageV642(){
@@ -2775,10 +2027,8 @@ window.addEventListener('load',()=>{
     ],NEBATA_IMG);
   }
 
-  const loop2NormalChoicesV641=loop2NormalChoices;
-  loop2NormalChoices=function(p){
-    return loop2NormalChoicesV641.apply(this,arguments);
-  };
+  
+  
 
   /* Aya pose 4 contains an unwanted strip at its top. Use a wide, bottom-aligned crop only there. */
   const applyPoseLookV641=applyPoseLook;
@@ -2791,8 +2041,7 @@ window.addEventListener('load',()=>{
     if(img&&broken){img.style.objectFit='cover';img.style.objectPosition='center bottom'}
   };
 
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.42';
+
 })();
 </script>
 
@@ -2840,13 +2089,12 @@ window.addEventListener('load',()=>{
       <div class="endText"><b>カレンへの撮影：永久NG<br>レイヤー評判：重大な注意喚起</b><br><br>写真を撮るために伸ばしたはずの手が、マボをちゅどーむから遠ざけた。</div>`;
   };
 
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.47';
+
 })();
 </script>
 
 <script>
-/* === Ver.6.48: 写真評価・会話・結末の整合性 + 2周目救済ルート === */
+
 (function(){
   const PLACES_V648=['outdoor','indoor','rest','east','entrance'];
   const NORMAL_RANKS_V648=['無名','顔を覚えられ始めた','少し知られている','好印象','評判が良い','信頼されている','人気カメコ'];
@@ -2934,28 +2182,16 @@ window.addEventListener('load',()=>{
     $('#endBody').innerHTML=`<div class="endGallery"><img class="wide" src="${IMG.venue}"></div><div class="endChapter">帰宅後 ― PCの前</div><div class="endText">撮影はできた。写真も受け取ってもらえた。<br>けれど、「また撮ってください」へつながる一枚には、まだ届いていない。</div><div class="endImpact">会話だけでも、写真だけでも足りない。次は、その両方を残したい。</div><div class="endText"><b>選択写真：${score}点</b></div>`;
   };
 
-  /* 前回写真が低得点なのに、2周目で「写真がよかった」と褒めない。 */
-  const loop2RepGreetingV648=loop2RepGreeting;
-  loop2RepGreeting=function(p){
-    let line=loop2RepGreetingV648.apply(this,arguments);
-    const score=Number(S.priorPhotoScores?.[p]||0);
-    if(!score||score>=80||typeof line!=='string')return line;
-    return line
-      .replace(/前回の写真は本当に好きでした/g,'前回はありがとうございました')
-      .replace(/前回の写真、よかったんですけど/g,'前回はありがとうございました。でも')
-      .replace(/前回の写真自体は悪くなかったです/g,'前回はありがとうございました')
-      .replace(/前の写真は好きだったんですけど/g,'前回はありがとうございました。でも')
-      .replace(/前の写真は嬉しかったです/g,'前回はありがとうございました')
-      .replace(/前回の写真よかったです/g,'前回はありがとうございました')
-      .replace(/前回の写真うれしかったです/g,'前回はありがとうございました');
-  };
+  
+  
+  
 
   /* BADの原因を最終評価へ反映する。 */
   function markBadV648(kind){S.badResultKindV648=kind||'bad'}
   const endingBadV648=endingBad;
   endingBad=function(type){markBadV648(type||'bad');const r=endingBadV648.apply(this,arguments);rewriteBadTextV648(type||'bad');return r};
-  const secondLoopBadEndingV648=secondLoopBadEnding;
-  secondLoopBadEnding=function(kind){markBadV648(kind==='distance'?'distance':kind);return secondLoopBadEndingV648.apply(this,arguments)};
+  
+  
   if(typeof window.touchBadEndingV643==='function'){
     const touchBadV648=window.touchBadEndingV643;
     window.touchBadEndingV643=function(){markBadV648('touch');return touchBadV648.apply(this,arguments)};
@@ -3005,7 +2241,7 @@ window.addEventListener('load',()=>{
     }
   }
 
-  /* 2周目救済：同じ相手へ戻らず、撮影NGを受け入れて次へつなぐ。 */
+  
   function recoveryRankLevelV648(){
     if(Number.isFinite(S.recoveryLevelV648))return S.recoveryLevelV648;
     const rank=layerRepNameV648();
@@ -3019,16 +2255,16 @@ window.addEventListener('load',()=>{
     if(S.recoveryDoneV648.has(p)){show('map');return}
     S.recoveryDoneV648.add(p);S.recoveryLevelV648=Math.max(1,recoveryRankLevelV648()-1);
     S.backedOff++;S.unease=Math.max(0,S.unease-1);
-    if(S.priorLayerRumorLevel>0)S.priorLayerRumorLevel--;
-    if(S.priorRumorLevel>0)S.priorRumorLevel--;
-    if(S.priorCamRumorLevel>0)S.priorCamRumorLevel--;
+
+
+
     markSkippedV663(p);
     story(p,people[p].name,reply+'<br><span class="thought">（'+text+' この人への撮影は、今日は諦める。だが、引くべきところで引いたことは次へ残る。）</span>',[['何も足さず離れる',()=>show('map')]]);
   }
   const layerRepNameRecoveryV648=layerRepName;
   layerRepName=function(){
     let rank=layerRepNameRecoveryV648.apply(this,arguments);
-    if(S.loop!==2||!Number.isFinite(S.recoveryLevelV648))return rank;
+    return rank;
     const worsened=(S.warningIncidents||[]).length>Number(S.recoveryBaseWarningsV648||0)||(S.pressureLog||[]).length>Number(S.recoveryBasePressuresV648||0);
     if(worsened)return rank;
     return S.recoveryLevelV648>=3?'ブラックリスト級カメコ':S.recoveryLevelV648===2?'要警戒カメコ':S.recoveryLevelV648===1?'微妙なカメコ':rank;
@@ -3042,49 +2278,18 @@ window.addEventListener('load',()=>{
     ],'poses/karen_intruder.png');
   }
 
-  const loop2NormalChoicesV648=loop2NormalChoices;
-  loop2NormalChoices=function(p){
-    if(S.loop!==2)return loop2NormalChoicesV648.apply(this,arguments);
-    const level=recoveryRankLevelV648();
-    if(level<=1)return loop2NormalChoicesV648.apply(this,arguments);
-    ensureV648();
-    if(S.recoveryDoneV648.has(p))return show('map');
-    const P=people[p],lead=loop2RepGreeting(p);
-    const correct={
-      outdoor:['「前回はすみませんでした」と短く謝って離れる',()=>recoveryActionV648(p,'言い訳をせず、短く謝れた。','「……はい」<br>雪奈は返事だけして、友人の方へ戻った。')],
-      indoor:['前回の振る舞いを自分から認め、撮影を頼まず離れる',()=>recoveryActionV648(p,'写真や相手のせいにせず、自分の振る舞いを認めた。','「分かりました。今日はそれで大丈夫です」<br>りおはそれ以上、会話を続けなかった。')],
-      rest:['声をかけず、休憩の邪魔にならないよう離れる',()=>recoveryActionV648(p,'話しかけないことを選べた。','みくはこちらに気づいたが、マボが距離を取るのを見て、友人との会話へ戻った。')],
-      east:['撮影を頼まず、カレンの反応を見守る',()=>karenRecoveryV648()],
-      entrance:['投稿やタグの話をせず、お礼だけ伝えて離れる',()=>recoveryActionV648(p,'見返りを求めず、お礼だけで会話を終えた。','「……ありがとうございます」<br>あやは友人のそばで短く会釈した。')]
-    }[p];
-    story(p,P.name,lead+'<br><span class="thought">（今日は撮影を通す場面ではない。ここでどう引くかが、次の相手への評判になる。）</span>',[
-      correct,
-      ['「今回は大丈夫なので、一枚だけ」と頼む',()=>{S.unease+=2;refuse(p);story(p,P.name,'「大丈夫かどうかを決めるのは、あなたではありません」<br>警戒はさらに強くなった。',[['離れる',()=>show('map')]])}],
-      ['何も考えずマップへ戻る',()=>{markSkippedV663(p);show('map')}]
-    ]);
-  };
+  
+  
 
   /* カメコたちとの会話も、一度だけ別口の回復手段になる。 */
-  const cameraEncounterLoop2V648=cameraEncounterLoop2;
-  cameraEncounterLoop2=function(){
-    if(S.loop===2&&recoveryRankLevelV648()>1&&!S.cameraRecoveryDoneV648){
-      story('rivals','田中','「前回、ちょっと空気悪くなりましたよね」<br>黒田たちもこちらの返事を待っている。',[
-        ['「自分の言い方が悪かったです」と認める',()=>{S.cameraRecoveryDoneV648=true;S.recoveryLevelV648=Math.max(1,recoveryRankLevelV648()-1);S.camRep=Math.min(0,S.camRep+1);S.backedOff++;story('rivals','田中','「まあ、分かってるなら……今日は普通にいきましょう」<br><span class="thought">（仲直りではない。でも、責任を押しつけずに済んだ。）</span>',[['会場マップへ戻る',()=>v4CompleteRivals()]],IMG.tanaka)}],
-        ['「そっちにも原因ありましたよね」と返す',()=>{S.camRep-=2;S.rivalFlags++;cameraEncounterLoop2V648()}],
-        ['会釈だけして離れる',()=>v4CompleteRivals()]
-      ],IMG.tanaka);return;
-    }
-    return cameraEncounterLoop2V648.apply(this,arguments);
-  };
 
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.48';
+
   try{v2Status()}catch(e){}
 })();
 </script>
 
 <script>
-/* === Ver.6.49: 低評価写真の心情整合 / 2周目レイジ抑止 === */
+
 (function(){
   function finishLowPhotoV649(p,line,thought){
     const P=people[p];
@@ -3130,48 +2335,14 @@ window.addEventListener('load',()=>{
     ];
   };
 
-  /* レイジは1周目の雪奈ルート限定。古い共通会話へ入っても2周目には出さない。 */
+  
   const reijiEncounterV649=reijiEncounter;
   reijiEncounter=function(){
-    if(S.loop===2)return loop2ShootOffer('outdoor');
+    
     return reijiEncounterV649.apply(this,arguments);
   };
 
-  /* 1周目で雪奈に会っていなくても、2周目専用の初対面会話を使う。 */
-  const loop2FirstMeetV649=loop2FirstMeet;
-  loop2FirstMeet=function(p){
-    if(p!=='outdoor')return loop2FirstMeetV649.apply(this,arguments);
-    const P=people.outdoor;
-    const intro=P.intro+'<br><span class="thought">（前回は話していない。二周目の俺には見覚えがあっても、雪奈にとっては今日が初対面だ。）</span>';
-    story('outdoor','マボ',intro,[
-      [LAYER_AMBIGUOUS.outdoor.label,()=>ambiguousLayerChoice('outdoor',true)],
-      ['雪奈に短く挨拶する',()=>{
-        story('outdoor','雪奈','「こんにちは。撮影ですか？」<br>雪奈は普通に返してくれた。',[
-          ['今日撮りたい雰囲気を短く伝える',()=>{S.trust++;S.bond.outdoor++;loop2ShootOffer('outdoor')}],
-          ['衣装で見せたい部分を聞く',()=>{S.trust+=2;S.bond.outdoor+=2;loop2ShootOffer('outdoor')}],
-          ['挨拶だけで離れる',()=>{S.backedOff++;show('map')}]
-        ]);
-      }],
-      ['撮影できるタイミングか確認する',()=>{
-        S.trust++;
-        story('outdoor','雪奈','「今なら少し大丈夫です」<br><span class="thought">（初対面だ。前回からの知り合いみたいに振る舞うな。）</span>',[
-          ['今日の希望を聞いてから撮影をお願いする',()=>loop2ShootOffer('outdoor')],
-          ['今日は挨拶だけにする',()=>{S.backedOff++;show('map')}]
-        ]);
-      }],
-      ['「前のイベントからずっと見てました」と距離を詰める',()=>{
-        S.unease+=2;S.bond.outdoor=Math.max(-3,(S.bond.outdoor||0)-1);
-        story('outdoor','雪奈','「え……前のイベントから？」<br>雪奈の笑顔が一瞬だけ止まった。<br><span class="thought">（初対面の相手から“ずっと見ていた”。言い方を完全に間違えた。）</span>',[
-          ['「すみません、言い方が変でした」と謝って離れる',()=>{S.backedOff++;show('map')}],
-          ['それでも撮影をお願いする',()=>{refuse('outdoor');story('outdoor','雪奈','「今日は撮影、大丈夫です」',[['離れる',()=>show('map')]])}]
-        ]);
-      }],
-      ['いったん離れる',()=>show('map')]
-    ]);
-  };
 
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.49';
 })();
 </script>
 
@@ -3215,37 +2386,20 @@ window.addEventListener('load',()=>{
     if(p==='rest'){S.trust++;S.bond.rest=(S.bond.rest||0)+1;advanceMinutesV650(15);return mikuReadySceneV650()}
     return observeV650.apply(this,arguments);
   };
-  const loop2ShootOfferV650=loop2ShootOffer;
-  loop2ShootOffer=function(p){
-    if(p==='rest'){
-      if(!S.restReadyV650)return waitForMikuV650();
-      story('rest','みく','「休憩、終わりました。今なら大丈夫です」<br><span class="thought">（前回会っていても、今日の休憩は今日のものだ。待って正解だった。）</span>',[
-        ['今日の希望を確認して撮影する',()=>{S.trust++;S.bond.rest=(S.bond.rest||0)+2;beginMikuShootV650()}],
-        ['撮影を始める',()=>beginMikuShootV650()],
-        ['今日はやめておく',()=>show('map')]
-      ]);return;
-    }
-    return loop2ShootOfferV650.apply(this,arguments);
-  };
+  
+  
   function handleRestWaitingV650(){
     if(S.restWaitingV650&&!S.shotDone.has('rest')&&!S.refused.has('rest')){mikuReadySceneV650();return true}
     return false;
   }
   const visitV650=visit;
   visit=function(p){if(p==='rest'&&handleRestWaitingV650())return;return visitV650.apply(this,arguments)};
-  const visitLoop2V650=visitLoop2;
-  visitLoop2=function(p){if(p==='rest'&&handleRestWaitingV650())return;return visitLoop2V650.apply(this,arguments)};
+  
+  
 
-  /* ---------- カメコ：1周目の接触関係を2周目へ保存 ---------- */
-  const startSecondLoopV650=startSecondLoop;
-  startSecondLoop=function(){
-    const seen=!!(S.v4RivalsComplete||(S.camMet&&S.camMet.size));
-    const relation=!seen?'none':(S.camHostile||S.camRep<=-3||(S.camMet&&S.camMet.has('hostile')))?'conflict':S.camRep>=2?'good':'neutral';
-    const metFlags=[...(S.camMet||[])];
-    const r=startSecondLoopV650.apply(this,arguments);
-    S.priorCameraSeenV650=seen;S.priorCameraRelationV650=relation;S.priorCamMetV650=new Set(metFlags);
-    return r;
-  };
+  
+  
+  
   function firstCameraMeetingV650(){
     story('rivals','カメコたち','黒田、田中、リョウ、ヒデが機材の話をしている。田中がこちらに気づき、軽く会釈した。<br><span class="thought">（この人たちとは初対面だ。レイヤー側の悪評を、知らないカメコへの謝罪で帳消しにはできない。）</span>',[
       ['普通に挨拶して混雑状況を聞く',()=>{S.camRep+=2;S.camMet.add('friendly');story('rivals','田中','「東側は今ちょっと混んでます。西側の方が撮りやすいですよ」',[['礼を言って離れる',()=>v4CompleteRivals()]],IMG.tanaka)}],
@@ -3254,38 +2408,15 @@ window.addEventListener('load',()=>{
       ['いきなり機材を馬鹿にする',()=>{S.camRep-=3;S.rivalFlags++;S.camMet.add('hostile');story('rivals','黒田','「初対面で、その言い方する？」<br>四人の空気が一気に冷えた。',[['離れる',()=>v4CompleteRivals()]],IMG.kuroda)}]
     ],IMG.tanaka);
   }
-  function familiarCameraMeetingV650(){
-    const good=S.priorCameraRelationV650==='good';
-    story('rivals','田中',good?'「マボさん、また来てたんですね。今日はどこ回ってます？」<br>前回と同じように、田中が自然に声をかけてきた。':'「どうも。今回も来てたんですね」<br>田中が軽く会釈し、黒田たちもこちらを見る。',[
-      ['普通に挨拶して今日の混雑情報を聞く',()=>{S.camRep+=2;story('rivals','田中','「西側がそろそろ空くと思いますよ」',[['礼を言って離れる',()=>v4CompleteRivals()]],IMG.tanaka)}],
-      ['前回と同じく、会釈だけして離れる',()=>v4CompleteRivals()],
-      ['急に機材マウントを取る',()=>{S.camRep-=3;S.rivalFlags++;story('rivals','黒田','「前回は普通だったのに、何それ」<br>黒田の表情が固くなった。',[['離れる',()=>v4CompleteRivals()]],IMG.kuroda)}]
-    ],good?IMG.tanaka:IMG.ryoji);
-  }
-  const cameraEncounterLoop2V650=cameraEncounterLoop2;
-  cameraEncounterLoop2=function(){
-    if(!S.priorCameraSeenV650)return firstCameraMeetingV650();
-    if(S.priorCameraRelationV650!=='conflict')return familiarCameraMeetingV650();
-    return cameraEncounterLoop2V650.apply(this,arguments);
-  };
+  
+  
+  
 
-  /* ---------- 前回撮影していない相手に「前回の写真」「前回と同じ」を言わせない ---------- */
-  const loop2RepOfferV650=loop2RepOffer;
-  loop2RepOffer=function(p){
-    if(S.loop===2&&!(S.priorShot&&S.priorShot.has(p))){
-      const first={outdoor:'「今日は少しなら大丈夫です。撮りたい雰囲気を教えてください」',indoor:'「この衣装を撮るなら、黒の質感は残してほしいです」',rest:'「休憩が終わったので、今なら大丈夫です」',east:'「背景をどう使うか、先に聞かせてください」',entrance:'「友達が来るまでなら、少し大丈夫です」'};
-      return first[p]||'「少しなら大丈夫です」';
-    }
-    return loop2RepOfferV650.apply(this,arguments);
-  };
-  const loop2RepGreetingV650=loop2RepGreeting;
-  loop2RepGreeting=function(p){
-    let line=loop2RepGreetingV650.apply(this,arguments);
-    if(S.loop!==2||(S.priorShot&&S.priorShot.has(p))||typeof line!=='string')return line;
-    const neutral={outdoor:'「前のイベントにもいましたよね？」<br>雪奈は少し考えてから会釈した。',indoor:'「前にも見かけました」<br>りおは短く返した。',rest:'「前のイベントにもいましたよね」<br>みくは飲み物を持ったまま会釈した。',east:'「前にもこの辺にいましたよね」<br>カレンは背景からこちらへ視線を移した。',entrance:'「前にもいましたよね？」<br>あやは友人の方を確認してから返した。'};
-    const thought='<br><span class="thought">（前回、顔は合わせた。でも撮影はしていない。“前回の写真”は存在しない。）</span>';
-    return (neutral[p]||neutral.outdoor)+thought;
-  };
+  
+  
+  
+  
+  
 
   /* 閉じた旧関数から出る選択肢も、表示直前に撮影履歴と合わせる。 */
   const storyV650=story;
@@ -3293,19 +2424,7 @@ window.addEventListener('load',()=>{
     if(p==='rest'&&!S.restReadyV650&&typeof text==='string'&&(text.includes('お待たせしました。今なら大丈夫です')||text.includes('休憩、終わりました'))){
       S.restReadyV650=true;S.restWaitingV650=false;advanceMinutesV650(15);
     }
-    if(S.loop===2&&PLACES_V650.includes(p)&&!(S.priorShot&&S.priorShot.has(p))){
-      if(typeof text==='string')text=text.replace('（二回目だからこそ、雑にしない。前回の正解をコピーするんじゃなく、今日の希望を聞く。）','（この人を撮るのは初めてだ。まず、今日の希望を聞こう。）');
-      if(Array.isArray(choices))choices=choices.map(ch=>{
-        if(!Array.isArray(ch)||ch[0]!=='「前回と同じ感じで」とすぐ撮り始める')return ch;
-        return ['自分のイメージだけですぐ撮り始める',()=>{
-          S.unease++;S.bond[p]=(S.bond[p]||0)-1;
-          storyV650(p,people[p].name,'「どんな感じにするか、先に聞いてもいいですか？」<br><span class="thought">（初めてなのに、希望も聞かず始めようとした。）</span>',[
-            ['希望を聞き直す',()=>{S.trust++;startShoot(p)}],
-            ['今日はやめておく',()=>show('map')]
-          ]);
-        }];
-      });
-    }
+    
     if(p==='entrance'&&S.shotDone&&S.shotDone.has('entrance')&&!S.ayaArrivalShownV650){
       S.ayaArrivalShownV650=true;
       text=(text||'')+'<br><br>あやのスマホが震えた。<br>「友達、着いたみたいです」<br><span class="thought">（約束した短い時間に収まった。ここで会話を長引かせず、締めよう。）</span>';
@@ -3346,8 +2465,7 @@ window.addEventListener('load',()=>{
     return rank;
   };
 
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.50';
+
   try{v2Status()}catch(e){}
 })();
 </script>
@@ -3450,19 +2568,8 @@ window.addEventListener('load',()=>{
   };
 
   /* SPECIAL END needs enough current-loop work to support its plural requests. */
-  const secondLoopEndingV651=secondLoopEnding;
-  secondLoopEnding=function(){
-    const done=S.shotDone?S.shotDone.size:0;
-    if(S.loop===2&&done<3){
-      const rankFn=layerRepName;
-      layerRepName=function(){
-        const rank=rankFn.apply(this,arguments);
-        return rank==='信頼されている'||rank==='人気カメコ'?'評判が良い':rank;
-      };
-      try{return secondLoopEndingV651.apply(this,arguments)}finally{layerRepName=rankFn}
-    }
-    return secondLoopEndingV651.apply(this,arguments);
-  };
+  
+  
 
   /* Fade the fully composed ending instead of exposing a one-frame black jump. */
   const showV651=show;
@@ -3485,8 +2592,7 @@ window.addEventListener('load',()=>{
     return r;
   };
 
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.52';
+
 })();
 </script>
 
@@ -3512,11 +2618,8 @@ window.addEventListener('load',()=>{
     if(shouldResumeMikuV653(p))return mikuReadyRevisitV653();
     return visitV653.apply(this,arguments);
   };
-  const visitLoop2V653=visitLoop2;
-  visitLoop2=function(p){
-    if(shouldResumeMikuV653(p))return mikuReadyRevisitV653();
-    return visitLoop2V653.apply(this,arguments);
-  };
+  
+  
 
   /* 曖昧な「囲み」を、実際に何をする悪手なのか分かる表現へ変更。 */
   camEncounter2=function(){
@@ -3566,8 +2669,7 @@ window.addEventListener('load',()=>{
     return r;
   };
 
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.53';
+
 })();
 </script>
 
@@ -3635,37 +2737,8 @@ window.addEventListener('load',()=>{
     ],S.camRep>=2?IMG.tanaka:IMG.kuroda);
   };
 
-  /* 2周目も関係別に最低5択を用意する。 */
-  cameraEncounterLoop2=function(){
-    const seen=!!S.priorCameraSeenV650;
-    const rel=S.priorCameraRelationV650||'none';
-    if(!seen){
-      story('rivals','カメコたち','黒田、田中、リョウ、ヒデが機材の話をしている。田中がこちらに気づき、軽く会釈した。<br><span class="thought">（前回は接点がなかった。向こうにとっては、今日が初対面だ。）</span>',[
-        ['名乗って混雑状況を聞く',()=>{S.camRep+=2;S.camMet.add('friendly');camEncounter2()}],
-        ['使っているレンズについて聞く',()=>{S.camRep++;S.camMet.add('photos');camEncounter2()}],
-        ['撮影しやすい場所だけ聞く',()=>{S.camRep++;S.camMet.add('info');camEncounter2()}],
-        ['会釈だけして離れる',()=>v4CompleteRivals()],
-        ['初対面で機材を馬鹿にする',()=>{S.camRep-=3;S.rivalFlags++;S.camMet.add('hostile');cameraResult()}]
-      ],IMG.tanaka);return;
-    }
-    if(rel==='conflict'){
-      story('rivals','黒田','「……また来たんだ」<br>黒田がこちらを見る。田中たちも、前回より明らかに距離を取っている。<br><span class="thought">（前回の空気は残っている。ここで何を言うかだ。）</span>',[
-        ['前回の言い方を短く謝る',()=>{S.camRep+=2;S.backedOff++;cameraResult()}],
-        ['挨拶だけして距離を置く',()=>{S.camRep++;v4CompleteRivals()}],
-        ['今日の混雑情報だけ丁寧に聞く',()=>{S.camRep++;cameraResult()}],
-        ['「まだ根に持ってるんですか」と笑う',()=>{S.camRep-=3;S.rivalFlags++;cameraResult()}],
-        ['前回の続きを蒸し返して言い返す',()=>{S.camRep-=5;S.camHostile=true;S.rivalFlags+=2;endingBad('camera')}]
-      ],IMG.kuroda);return;
-    }
-    const good=rel==='good';
-    story('rivals','田中',good?'「マボさん、また来てたんですね。今日はどこ回ってます？」':'「どうも。今回も来てたんですね」',[
-      ['普通に挨拶して混雑情報を聞く',()=>{S.camRep+=2;camEncounter2()}],
-      ['前回教えてもらったことのお礼を言う',()=>{S.camRep+=2;S.rep++;camEncounter2()}],
-      ['今日撮った写真について意見を聞く',()=>{S.camRep++;camEncounter2()}],
-      ['会釈だけして一人で回る',()=>v4CompleteRivals()],
-      ['急に機材マウントを取る',()=>{S.camRep-=3;S.rivalFlags++;cameraResult()}]
-    ],good?IMG.tanaka:IMG.ryoji);
-  };
+  
+  
 
   /* Safariでdisplay:none解除時に小さな画像を一度合成しないよう、最終レイアウトを先に作る。 */
   const showV654=show;
@@ -3701,8 +2774,7 @@ window.addEventListener('load',()=>{
     return r;
   };
 
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.54';
+
 })();
 </script>
 
@@ -3764,8 +2836,7 @@ window.addEventListener('load',()=>{
     });
   };
 
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.55';
+
 })();
 </script>
 
@@ -3793,8 +2864,7 @@ window.addEventListener('load',()=>{
     ]);
   };
 
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.56';
+
 })();
 </script>
 
@@ -3804,7 +2874,7 @@ window.addEventListener('load',()=>{
   const endingBadV657=endingBad;
   endingBad=function(type){
     const r=endingBadV657.apply(this,arguments);
-    if(S.loop!==1)return r;
+    
     const body=document.getElementById('endBody');
     if(!body)return r;
 
@@ -3834,13 +2904,12 @@ window.addEventListener('load',()=>{
     return r;
   };
 
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.57';
+
 })();
 </script>
 
 <script>
-/* === Ver.6.58: NG-priority endings, history-aware loop-2 dialogue, expanded Nebata choices === */
+/* === Ver.6.58: NG priority endings and expanded Nebata choices === */
 (function(){
   const LAYERS_V658=['outdoor','indoor','rest','east','entrance'];
   function currentStatsV658(){
@@ -3852,77 +2921,23 @@ window.addEventListener('load',()=>{
     return !!((S.warningIncidents||[]).length||(S.pressureLog||[]).length||
       (S.camHostile&&Number(S.camRep||0)<=-5)||Number(S.creep||0)+Number(S.rude||0)>=4);
   }
-  function manyNgEndingV658(loop2){
-    const q=currentStatsV658();
-    S._badCarrySeverity=Math.max(1,Number(S._badCarrySeverity||0));
-    S._badCarryType='many-ng';S._badCarryDomain='layer';S.badResultKindV648='distance';
-    setEndPosterMode('bad');theme('bad');show('end');
-    document.getElementById('ending').className='endScene bad';
-    document.getElementById('endTitle').textContent=q.done===1?'BAD END　撮れたのは一人だけ':'BAD END　撮影NGが広がる';
-    document.getElementById('endBody').innerHTML=`
-      <div class="endGallery storyGallery"><img class="wide" src="${IMG.venue}"><img src="${IMG.yukina}"><img src="${IMG.karen}"></div>
-      <div class="endChapter">${loop2?'二度目のちゅどーむ ― 閉場前':'イベント終盤 ― ちゅどーむ会場'}</div>
-      <div class="endText">撮影できたのは${q.done}人。撮影を断られた相手は${q.ng}人だった。<br><br>一枚の写真が残っていても、何人もの相手がカメラの前に立ちたくないと判断した事実は消えない。</div>
-      <div class="endImpact">写真の点数だけでは、撮影する人としての評価は取り戻せなかった。</div>
-      <div class="endText">会場を出るころには、マボが声を掛けるより先に距離を取る人もいた。<br><br><b>撮影済 ${q.done}人 ／ 撮影NG ${q.ng}人<br>レイヤー評判：${typeof layerRepName==='function'?layerRepName():'要警戒カメコ'}</b></div>`;
-  }
+  
 
   /* Major incidents first, then refusal count, then the existing photo/score endings. */
   const finishDayEndingV658=finishDayEnding;
   finishDayEnding=function(){
-    if(S.loop!==1)return finishDayEndingV658.apply(this,arguments);
+    
     const q=currentStatsV658();
     if(severeBadV658())return finishDayEndingV658.apply(this,arguments);
     if(q.ng>=3)return manyNgEndingV658(false);
     if(q.ng===2)return endingBad('distance');
     return finishDayEndingV658.apply(this,arguments);
   };
-  const secondLoopEndingV658=secondLoopEnding;
-  secondLoopEnding=function(){
-    const q=currentStatsV658();
-    if(severeBadV658())return secondLoopEndingV658.apply(this,arguments);
-    if(q.ng>=3)return manyNgEndingV658(true);
-    if(q.ng===2)return secondLoopBadEnding('distance');
-    return secondLoopEndingV658.apply(this,arguments);
-  };
+  
+  
 
   /* The cautious conversation now reflects what actually happened with that person in loop 1. */
-  loop2WaryVisit=function(p){
-    const P=people[p];
-    const shot=!!(S.priorShot&&S.priorShot.has(p));
-    const refused=!!(S.priorRefused&&S.priorRefused.has(p));
-    const score=Number(S.priorPhotoScores?.[p]||0);
-    let intro,thought,safeLabel,safeReply,pressureLabel;
-    if(shot){
-      intro='「……前回の撮影とは別に、少し話を聞いてます」<br>'+P.name+'の返事は丁寧だが、警戒が混じっている。';
-      thought='（前回は撮影できた。今の警戒は、本人との撮影とは別の場所から届いた評判だ。）';
-      safeLabel='「前回は撮影ありがとうございました。今日はお願いせず離れます」';
-      safeReply=score>=80
-        ?'「……写真はありがとうございました。でも、今日は撮影の話はなしでお願いします」'
-        :score>0
-          ?'「前回はありがとうございました。今日はもう大丈夫です」'
-          :'「分かりました。今日はそれでお願いします」';
-      pressureLabel='「前回も撮らせてもらったので、今回も一枚だけ」と頼む';
-    }else if(refused){
-      intro=(typeof LOOP2_WARY!=='undefined'&&LOOP2_WARY[p])?LOOP2_WARY[p]:'「前回のこと、覚えています」<br>'+P.name+'ははっきり距離を取った。';
-      thought='（前回、この人から撮影を断られている。謝罪は撮影許可を取り直すための道具じゃない。）';
-      safeLabel='「前回はすみませんでした」と短く謝って離れる';
-      safeReply='「……はい。今日はもう声を掛けないでもらえると助かります」';
-      pressureLabel='「今回は大丈夫なので、一枚だけ」と頼む';
-    }else{
-      intro='「ほかの方から、少し話を聞いています」<br>'+P.name+'は初対面の距離を保ったまま、こちらを警戒している。';
-      thought='（この人とは前回会っていない。知り合いのように謝るのも、説明を迫るのも違う。）';
-      safeLabel='初対面なので、撮影は頼まず一礼して離れる';
-      safeReply='「……はい」<br>'+P.name+'は短く会釈した。';
-      pressureLabel='「噂だけで決めず、一枚だけ」と頼む';
-    }
-    story(p,P.name,intro+'<br><span class="thought">'+thought+'</span>',[
-      [safeLabel,()=>{S.backedOff++;S.unease++;markSkippedV663(p);story(p,P.name,safeReply+'<br><span class="thought">（ここで撮影へつなげようとしない。それが今できる最低限だ。）</span>',[['何も足さず離れる',()=>show('map')]])}],
-      ['今日は撮影を頼まず、挨拶だけする',()=>{S.backedOff++;S.unease++;markSkippedV663(p);story(p,P.name,'「……こんにちは。今日はこれで失礼します」<br>'+P.name+'は会話が終わるのを待っている。',[['そのまま離れる',()=>show('map')]])}],
-      [pressureLabel,()=>{S.unease+=3;refuse(p);story(p,P.name,'「前回どうだったかや、噂が正しいかとは別に、今日は撮影しません」<br><span class="thought">（撮影しないという答えに、反論の余地を探すな。）</span>',[['すぐ引く',()=>{S.backedOff++;show('map')}],['もう一度だけ頼む',()=>{recordWarningIncident(p,'2周目の明確な拒否後も再依頼');endingBad('warning')} ]])}],
-      ['何も言わずマップへ戻る',()=>show('map')]
-    ]);
-  };
+  
 
   /* Add a fifth meaningful choice to both stages of the Nebata interruption. */
   const storyV658=story;
@@ -3947,8 +2962,7 @@ window.addEventListener('load',()=>{
     return storyV658(p,sp,text,choices,img);
   };
 
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.58';
+
 })();
 </script>
 
@@ -3956,12 +2970,7 @@ window.addEventListener('load',()=>{
 /* === Ver.6.59: final state/history consistency controller === */
 (function(){
   const LAYERS_V659=['outdoor','indoor','rest','east','entrance'];
-  function historyV659(p){
-    if(S.priorShot&&S.priorShot.has(p))return 'shot';
-    if(S.priorRefused&&S.priorRefused.has(p))return 'refused';
-    if(S.priorMet&&S.priorMet.has(p))return 'met';
-    return 'unmet';
-  }
+  
   function statsV659(){
     const done=LAYERS_V659.filter(p=>S.shotDone&&S.shotDone.has(p)).length;
     const ng=LAYERS_V659.filter(p=>S.refused&&S.refused.has(p)&&!(S.shotDone&&S.shotDone.has(p))).length;
@@ -3992,23 +3001,9 @@ window.addEventListener('load',()=>{
     return r;
   };
 
-  /* 前回の個人履歴と合わない「謝罪」「写真を褒める」を最終表示直前で除去する。 */
-  const loop2RepGreetingV659=loop2RepGreeting;
-  loop2RepGreeting=function(p){
-    let line=loop2RepGreetingV659.apply(this,arguments);
-    if(typeof line!=='string')return line;
-    const h=historyV659(p),score=Number(S.priorPhotoScores?.[p]||0);
-    if(h!=='shot'){
-      line=line
-        .replace(/前回の写真[^。<]*(?:でした|です)/g,'前回、会場で見かけました')
-        .replace(/この前の写真[^。<]*(?:でした|です)/g,'この前、会場で見かけました');
-    }else if(score>0&&score<80){
-      line=line
-        .replace(/前回の写真[^。<]*(?:よかった|好き|うれしかった)[^。<]*/g,'前回はありがとうございました')
-        .replace(/この前の写真[^。<]*(?:よかった|好き|嬉しかった)[^。<]*/g,'この前はありがとうございました');
-    }
-    return line;
-  };
+  
+  
+  
 
   const storyV659=story;
   story=function(p,sp,text,choices,img){
@@ -4029,23 +3024,8 @@ window.addEventListener('load',()=>{
       });
     }
 
-    /* 2周目の評判回復会話は、その本人との前回履歴に合わせる。 */
-    if(S.loop===2&&LAYERS_V659.includes(p)&&Array.isArray(next)&&typeof text==='string'&&text.includes('今日は撮影を通す場面ではない')){
-      const h=historyV659(p),P=people[p];
-      next=next.map((ch,i)=>{
-        if(i!==0||!Array.isArray(ch))return ch;
-        if(h==='shot')return ['「前回は撮影ありがとうございました。今日はお願いせず離れます」',()=>{
-          S.backedOff++;S.trust++;markSkippedV663(p);
-          storyV659(p,P.name,'「……写真は受け取りました。今日はそれでお願いします」<br><span class="thought">（前回撮影できたことを、今回の許可として使わない。礼だけ伝えて離れよう。）</span>',[['何も足さず離れる',()=>show('map')]],img);
-        }];
-        if(h==='refused')return ['「前回はすみませんでした」と短く謝って離れる',ch[1]];
-        if(h==='met')return ['前回の距離感を反省し、今日は撮影を頼まず離れる',ch[1]];
-        return ['初対面なので、撮影を頼まず一礼して離れる',()=>{
-          S.backedOff++;markSkippedV663(p);
-          storyV659(p,P.name,'「……はい」<br>'+P.name+'は短く会釈した。<br><span class="thought">（会っていない相手に「前回」を持ち出さず、ここで会話を終える。）</span>',[['そのまま離れる',()=>show('map')]],img);
-        }];
-      });
-    }
+    
+    
     return storyV659(p,sp,text,next,img);
   };
 
@@ -4053,12 +3033,12 @@ window.addEventListener('load',()=>{
   const v2FinalizeV659=v2Finalize;
   v2Finalize=function(){
     const r=v2FinalizeV659.apply(this,arguments),rb=document.getElementById('restart');
-    if(rb)rb.textContent=S.loop===1?'2周目へ進む':'エンディンググラフィックを見る';
+    if(rb)rb.textContent='エンディンググラフィックを見る';
     return r;
   };
 
   /* 開発時にも同じ判定表を確認できる純粋関数を公開。 */
-  window.__CHUDOME_V659__={history:historyV659,stats:statsV659,outcome:outcomeV659};
+
   const matrix=[
     [{done:1,ng:4,severe:false},'many_ng'],
     [{done:2,ng:3,severe:false},'many_ng'],
@@ -4070,8 +3050,7 @@ window.addEventListener('load',()=>{
   ];
   console.assert(matrix.every(([input,want])=>outcomeV659(input)===want),'Ver.6.59 ending matrix failed');
 
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.59';
+
 })();
 </script>
 
@@ -4106,55 +3085,23 @@ window.addEventListener('load',()=>{
     return visitV660.apply(this,arguments);
   };
 
-  /* 1周目の悪評を引き継いだ2周目専用会話。回復は最大一段階だけ。 */
-  const cameraEncounterLoop2V660=cameraEncounterLoop2;
-  cameraEncounterLoop2=function(){
-    if(S.priorCameraRelationV650!=='conflict')return cameraEncounterLoop2V660.apply(this,arguments);
-    theme('rival');
-    story('rivals','黒田','「……また来たんだ」<br>黒田がこちらを見ると、田中たちの会話も止まった。<br>前回の悪評は、その場限りでは終わっていない。<br><span class="thought">（普通の機材話へ戻れる状態じゃない。今日は関係を直すとしても、一段階だけだ。）</span>',[
-      ['「前回は自分の言い方が悪かったです」と短く謝る',()=>{
-        S.camRep=Math.min(-1,Number(S.camRep||0)+1);S.backedOff++;S.cameraRepairV660='partial';
-        story('rivals','田中','「……分かりました。謝る気があるなら、それは聞きます」<br>黒田は何も言わない。空気はまだ固いままだ。<br><span class="thought">（許されたわけでも、普通に戻ったわけでもない。ただ、悪評が一段階だけ薄くなった。）</span>',[
-          ['それ以上話さず離れる',()=>v4CompleteRivals()]
-        ],IMG.tanaka);
-      }],
-      ['会釈だけして距離を置く',()=>{
-        S.backedOff++;
-        story('rivals','カメコたち','田中だけが小さく会釈を返した。黒田たちは会話を再開する。<br><span class="thought">（悪評は残ったまま。ただ、今日はこれ以上悪くしなかった。）</span>',[
-          ['その場を離れる',()=>v4CompleteRivals()]
-        ],IMG.kuroda);
-      }],
-      ['黒田ではなく田中にだけ事情を説明する',()=>{
-        S.camRep=Math.min(-1,Number(S.camRep||0)+1);S.cameraRepairV660='partial';
-        story('rivals','田中','「事情は分かりました。でも、黒田さんたちがどう受け取るかは別なので」<br>田中はそこで話を切った。<br><span class="thought">（説明は届いた。でも、田中一人に話して悪評が全部消えるわけじゃない。）</span>',[
-          ['礼を言って離れる',()=>v4CompleteRivals()]
-        ],IMG.tanaka);
-      }],
-      ['「まだ根に持ってるんですか」と笑う',()=>{
-        S.camRep-=3;S.rivalFlags++;S.camHostile=true;
-        story('rivals','黒田','「そういうところだよ」<br>黒田はそれだけ言うと、完全に背を向けた。田中も取りなそうとはしない。<br><span class="thought">（悪評を、自分でもう一度証明してしまった。）</span>',[
-          ['何も言えず離れる',()=>v4CompleteRivals()]
-        ],IMG.kuroda);
-      }],
-      ['前回の件を蒸し返して言い返す',()=>{
-        S.camRep-=5;S.rivalFlags+=2;S.camHostile=true;endingBad('camera');
-      }]
-    ],IMG.kuroda);
-  };
+  
+  
+  
 
   window.__CHUDOME_V660__={cameraBad:cameraBadV660};
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.60';
+
+
 })();
 </script>
 
 <script>
 /* === Ver.6.61: loop rank caps, GOD title separation, loop-2 camera BAD routing === */
 (function(){
-  /* 2周目のカメコ問題は、どの選択肢からでも2周目専用BADへ送る。 */
+  
   const endingBadV661=endingBad;
   endingBad=function(type){
-    if(S.loop===2&&type==='camera')return secondLoopBadEnding('camera');
+    
     return endingBadV661.apply(this,arguments);
   };
 
@@ -4163,33 +3110,20 @@ window.addEventListener('load',()=>{
   layerRepName=function(){
     let rank=layerRepNameV661.apply(this,arguments);
     if(rank==='神カメコ')rank='人気カメコ';
-    if(S.loop===1&&(rank==='信頼されている'||rank==='人気カメコ'))rank='評判が良い';
+    if(true&&(rank==='信頼されている'||rank==='人気カメコ'))rank='評判が良い';
     return rank;
   };
 
   /* GOD END本文でも、評価と特別称号を明確に分離する。 */
-  const secondLoopEndingV661=secondLoopEnding;
-  secondLoopEnding=function(){
-    const r=secondLoopEndingV661.apply(this,arguments);
-    const title=document.getElementById('endTitle');
-    const body=document.getElementById('endBody');
-    if(title&&body&&/神カメコ|GOD END|TRUE END/.test(title.textContent||'')){
-      body.innerHTML=body.innerHTML
-        .replace(/レイヤー評判：神カメコ/g,'レイヤー評価：人気カメコ')
-        .replace(/レイヤー評価：神カメコ/g,'レイヤー評価：人気カメコ');
-      if(!body.innerHTML.includes('特別称号：神カメコ')){
-        body.insertAdjacentHTML('beforeend','<div class="endImpact"><b>GOD END COMPLETE<br>特別称号：神カメコ</b></div>');
-      }
-    }
-    return r;
-  };
+  
+  
 
   window.__CHUDOME_V661__={
     capRank:(loop,rank)=>rank==='神カメコ'?'人気カメコ':(loop===1&&(rank==='信頼されている'||rank==='人気カメコ')?'評判が良い':rank),
-    cameraBadRoute:(loop,type)=>loop===2&&type==='camera'?'secondLoopBadEnding':'endingBad'
+    cameraBadRoute:()=> 'endingBad'
   };
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.61';
+
+
 })();
 </script>
 
@@ -4262,8 +3196,8 @@ window.addEventListener('load',()=>{
   };
 
   window.__CHUDOME_V662__={cameraOverscan:true,mikuSilentWait:true};
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.62';
+
+
 })();
 </script>
 
@@ -4356,7 +3290,7 @@ function markSkippedV663(p){
     if(S.shotDone.has(p)||S.refused.has(p))return visitV663.apply(this,arguments);
     if(S.closedV663.has(p)||S.skippedV663.has(p))return closedVisitV663(p);
     if(badRankV663()){
-      if(S.loop===2)return loop2WaryVisit(p);
+      
       return firstLoopCautionV663(p);
     }
     return visitV663.apply(this,arguments);
@@ -4408,8 +3342,8 @@ function markSkippedV663(p){
   };
 
   window.__CHUDOME_V663__={markSkipped:markSkippedV663,badRank:badRankV663};
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.63';
+
+
   updateShotStatus();
 })();
 </script>
@@ -4463,7 +3397,7 @@ function markSkippedV663(p){
   }
   function refusedScene(p){
     const P=people[p];
-    const again=S.loop===2?'二周目でも、今日出た答えは変わらない。':'今日はすでに撮影を断られている。';
+    const again='今日はすでに撮影を断られている。';
     story(p,P.name,'「今日はもう撮影しません」<br><span class="thought">（'+again+'ここからは撮影交渉ではなく、食い下がりになる。）</span>',[
       ['「分かりました」と離れる',()=>{S.backedOff++;mapBack()}],
       ['何も言わず離れる',mapBack],
@@ -4478,26 +3412,10 @@ function markSkippedV663(p){
   }
   function reputationScene(p){
     const P=people[p],rank=rankOf();
-    const personallyRefused=S.loop===2&&S.priorRefused&&S.priorRefused.has(p);
     let lead;
-    if(S.loop===2){
-      if(S.priorShot&&S.priorShot.has(p))lead='「前回の撮影とは別に、少し話を聞いています」';
-      else if(S.priorRefused&&S.priorRefused.has(p))lead='「前回のこと、覚えています」';
-      else if(S.priorMet&&S.priorMet.has(p))lead='「前のイベントにもいましたよね。少し話を聞いています」';
-      else lead='「ほかの方から、少し話を聞いています」';
-    }else lead='「……すみません。今日は撮影しません」';
-    const historyThought=personallyRefused
-      ?'（'+P.name+'自身が、前回の行動を覚えている。これは人づての噂ではない。最初から撮影NGとして会話する。）'
-      :'（レイヤー評価：'+rank+'。人づてに聞いた話を警戒しているため、最初から撮影NGとして会話する。）';
-    const thirdChoice=personallyRefused
-      ?['「前回のことは反省しています。もう一度だけ話を聞いてください」と頼む',()=>{
-        S.unease+=2;refuse(p);
-        story(p,P.name,'「反省しているなら、今日はここで終わりにしてください。撮影はしません」<br><span class="thought">（謝罪は、撮影許可を取り直すための交換条件ではない。）</span>',[
-          ['「分かりました」とすぐ離れる',()=>{S.backedOff++;mapBack()}],
-          ['それでも撮影を頼む',()=>{recordWarningIncident(p,'前回の当事者から再び明確に拒否された後も依頼した');endingBad('warning')}]
-        ],P.img);
-      }]
-      :['「噂だけで決めないで」と撮影を頼む',()=>{
+    lead='「……すみません。今日は撮影しません」';
+    const historyThought='（レイヤー評価：'+rank+'。人づてに聞いた話を警戒しているため、最初から撮影NGとして会話する。）';
+    const thirdChoice=['「噂だけで決めないで」と撮影を頼む',()=>{
         S.unease+=2;refuse(p);
         story(p,P.name,'「噂の説明を聞きたいわけではありません。今日は撮影しません」',[
           ['すぐ離れる',()=>{S.backedOff++;mapBack()}],
@@ -4548,7 +3466,7 @@ function markSkippedV663(p){
   const testResults=tests.map(([input,want,name])=>({name,want,got:route(input),pass:route(input)===want}));
   console.assert(testResults.every(t=>t.pass),'Ver.6.64 conversation routing test failed',testResults);
   window.__CHUDOME_V664__={STATE,stateOf,route,tests:testResults};
-  const versionEl=document.querySelector('.titleVersion');if(versionEl)versionEl.textContent='Ver. 6.66';
+
 })();
 </script>
 
@@ -4572,34 +3490,8 @@ function markSkippedV663(p){
   function cautiousRankV667(){
     return typeof layerRepName==='function'&&layerRepName()==='要警戒カメコ';
   }
-  function cautiousContinueV667(loop2){
-    const q=statsV667();
-    S.badResultKindV648='distance';
-    setEndPosterMode('bad');theme('bad');show('end');
-    document.getElementById('ending').className='endScene bad';
-    document.getElementById('endTitle').textContent='BAD END　信頼はまだ戻らない';
-    document.getElementById('endBody').innerHTML=`
-      <div class="endGallery"><img class="wide" src="${IMG.venue}"></div>
-      <div class="endChapter">${loop2?'二度目のちゅどーむ ― 閉場後':'閉場後 ― ちゅどーむ会場'}</div>
-      <div class="endText">撮影できた相手はいた。写真も残った。<br><br>けれど、${loop2?'前回から残る警戒':'今日生まれた警戒'}が、最後まで消えたわけではない。会話が続いた相手も、少し距離を残していた。</div>
-      <div class="endImpact">撮れたことと、信頼を取り戻したことは同じではない。</div>
-      <div class="endText">急いで距離を縮めようとせず、次も相手の返事を尊重するしかない。<br><br><b>撮影済 ${q.done}人 ／ 撮影NG ${q.ng}人<br>レイヤー評判：要警戒カメコ</b></div>`;
-  }
-  function cautiousBadV667(loop2){
-    const q=statsV667();
-    S._badCarrySeverity=Math.max(1,Number(S._badCarrySeverity||0));
-    S._badCarryType='caution-remains';S._badCarryDomain='layer';
-    S.badResultKindV648='distance';
-    setEndPosterMode('bad');theme('bad');show('end');
-    document.getElementById('ending').className='endScene bad';
-    document.getElementById('endTitle').textContent='BAD END　残った警戒';
-    document.getElementById('endBody').innerHTML=`
-      <div class="endGallery storyGallery"><img class="wide" src="${IMG.venue}"><img src="${IMG.rio}"><img src="${IMG.yukina}"></div>
-      <div class="endChapter">${loop2?'二度目のちゅどーむ ― 閉場前':'イベント終盤 ― ちゅどーむ会場'}</div>
-      <div class="endText">${q.done===0?'今日は一人も撮影できなかった。':'撮影できた相手もいたが、撮影NGのほうが多く残った。'}<br><br>無理に食い下がらなかったとしても、警戒されている現状まで消えたわけではない。</div>
-      <div class="endImpact">今日は悪評を広げなかった。だが、信頼を取り戻すところまでは届かなかった。</div>
-      <div class="endText"><b>撮影済 ${q.done}人 ／ 撮影NG ${q.ng}人<br>レイヤー評判：要警戒カメコ</b></div>`;
-  }
+  
+  
 
   const finishDayEndingV667=finishDayEnding;
   finishDayEnding=function(){
@@ -4609,174 +3501,8 @@ function markSkippedV663(p){
     return cautiousContinueV667(false);
   };
 
-  const secondLoopEndingV667=secondLoopEnding;
-  secondLoopEnding=function(){
-    if(!cautiousRankV667()||severeV667())return secondLoopEndingV667.apply(this,arguments);
-    const q=statsV667();
-    if(q.done===0||q.ng>=3||q.ng>q.done)return cautiousBadV667(true);
-    return cautiousContinueV667(true);
-  };
 
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.67';
   window.__CHUDOME_V667__={stats:statsV667,severe:severeV667};
-})();
-</script>
-
-<script>
-/* === Ver.6.68: 二周目「要警戒カメコ」の一段階救済 === */
-(function(){
-  const LAYERS_V668=['outdoor','indoor','rest','east','entrance'];
-  const REPLIES_V668={
-    outdoor:'「……分かりました」<br>雪奈は短く返事をして、友人の方へ戻った。',
-    indoor:'「分かりました。今日はそれで大丈夫です」<br>りおはそれ以上、会話を続けなかった。',
-    rest:'みくはこちらに気づいたが、マボが距離を取るのを見て、友人との会話へ戻った。',
-    east:'「分かりました。今日は撮影の話はなしで」<br>カレンは小さく会釈した。',
-    entrance:'「……ありがとうございます」<br>あやは友人のそばで短く会釈した。'
-  };
-  const LABELS_V668={
-    outdoor:'「前回はすみませんでした」と短く謝り、撮影を頼まず離れる',
-    indoor:'前回の振る舞いを認め、撮影を頼まず離れる',
-    rest:'休憩を邪魔せず、声を掛けないまま離れる',
-    east:'前回の距離感を謝り、今日は撮影を頼まず離れる',
-    entrance:'投稿やタグの話をせず、お礼だけ伝えて離れる'
-  };
-  function rankV668(){return typeof layerRepName==='function'?layerRepName():''}
-  function canRecoverV668(p){
-    return S.loop===2&&LAYERS_V668.includes(p)&&rankV668()==='要警戒カメコ'&&!S.layerRecoveryUsedV668;
-  }
-  function recoverV668(p){
-    S.layerRecoveryUsedV668=true;
-    S.recoveryLevelV648=1;
-    S.recoveryBaseWarningsV648=(S.warningIncidents||[]).length;
-    S.recoveryBasePressuresV648=(S.pressureLog||[]).length;
-    S.backedOff=(S.backedOff||0)+1;
-    S.unease=Math.max(0,Number(S.unease||0)-1);
-    if(Number(S.priorLayerRumorLevel||0)>0)S.priorLayerRumorLevel--;
-    if(Number(S.priorRumorLevel||0)>0)S.priorRumorLevel--;
-    if(typeof markSkippedV663==='function')markSkippedV663(p);
-    story(p,people[p].name,REPLIES_V668[p]+'<br><span class="thought">（この人への撮影は、今日は諦める。言い訳も再依頼もしなかったことで、要警戒の評判が一段だけ薄れた。）</span>',[
-      ['何も足さず離れる',()=>show('map')]
-    ],people[p].img);
-  }
-  function recoverySceneV668(p){
-    const P=people[p];
-    const direct=!!(S.priorRefused&&S.priorRefused.has(p));
-    const lead=direct
-      ?'「前回のこと、覚えています」<br>'+P.name+'は撮影の話へ入る前に距離を取った。'
-      :'「少し話を聞いています」<br>'+P.name+'は警戒したまま、こちらの返事を待っている。';
-    story(p,P.name,lead+'<br><span class="thought">（今日は撮影を通す場面ではない。ここでどう引くかが、次の相手への評判になる。）</span>',[
-      [LABELS_V668[p],()=>recoverV668(p)],
-      ['何も言わず離れる',()=>{if(typeof markSkippedV663==='function')markSkippedV663(p);show('map')}],
-      ['「今回は大丈夫なので、一枚だけ」と撮影を頼む',()=>{
-        S.unease+=2;refuse(p);
-        story(p,P.name,'「大丈夫かどうかを決めるのは、あなたではありません。今日は撮影しません」<br><span class="thought">（要警戒の理由を、自分でもう一度証明してしまった。）</span>',[
-          ['すぐ離れる',()=>show('map')],
-          ['それでも食い下がる',()=>{recordWarningIncident(p,'要警戒状態で明確に断られた後も撮影を迫った');endingBad('warning')}]
-        ],P.img);
-      }]
-    ],P.img);
-  }
-
-  const visitV668=visit;
-  visit=function(p){
-    if(canRecoverV668(p))return recoverySceneV668(p);
-    return visitV668.apply(this,arguments);
-  };
-
-  function recoveredEndingV668(){
-    const done=LAYERS_V668.filter(p=>S.shotDone&&S.shotDone.has(p)).length;
-    const ng=LAYERS_V668.filter(p=>S.refused&&S.refused.has(p)&&!(S.shotDone&&S.shotDone.has(p))).length;
-    if(done===0){
-      setEndPosterMode('bad');theme('bad');show('end');
-      document.getElementById('ending').className='endScene bad';
-      document.getElementById('endTitle').textContent='BAD END　残った警戒';
-      document.getElementById('endBody').innerHTML=`<div class="endGallery"><img class="wide" src="${IMG.venue}"></div><div class="endChapter">二度目のちゅどーむ ― 閉場後</div><div class="endText">要警戒の評判は一段だけ薄れた。だが、今日は一人も撮影できなかった。</div><div class="endImpact">悪化は止めた。信頼を取り戻す一枚には、まだ届いていない。</div><div class="endText"><b>撮影済 ${done}人 ／ 撮影NG ${ng}人<br>レイヤー評判：微妙なカメコ</b></div>`;
-      return;
-    }
-    setEndPosterMode('continue');theme('field');show('end');
-    document.getElementById('ending').className='endScene';
-    document.getElementById('endTitle').textContent='CONTINUE END　信頼はまだ戻らない';
-    document.getElementById('endBody').innerHTML=`<div class="endGallery"><img class="wide" src="${IMG.venue}"></div><div class="endChapter">二度目のちゅどーむ ― 閉場後</div><div class="endText">一人への撮影を見送り、ほかの相手との撮影もできた。写真は残った。<br><br>けれど、一度生まれた警戒が今日一日で消えたわけではない。</div><div class="endImpact">撮影できたことと、信頼を取り戻したことは同じではない。</div><div class="endText">それでも、無理に距離を縮めずに終えた今日は、前回とは違う。<br><br><b>撮影済 ${done}人 ／ 撮影NG ${ng}人<br>レイヤー評判：微妙なカメコ<br>SPECIAL ENDING 未到達</b></div>`;
-  }
-  function severeV668(){
-    return !!((S.warningIncidents||[]).length||(S.pressureLog||[]).length||
-      Number(S.creep||0)+Number(S.rude||0)>=4||(S.camHostile&&Number(S.camRep||0)<=-5));
-  }
-  const secondLoopEndingV668=secondLoopEnding;
-  secondLoopEnding=function(){
-    if(!S.layerRecoveryUsedV668||severeV668())return secondLoopEndingV668.apply(this,arguments);
-    const done=LAYERS_V668.filter(p=>S.shotDone&&S.shotDone.has(p)).length;
-    const ng=LAYERS_V668.filter(p=>S.refused&&S.refused.has(p)&&!(S.shotDone&&S.shotDone.has(p))).length;
-    /* 回復演出よりNG人数の結末判定を優先する。NG多数をCONTINUEへ上書きしない。 */
-    if(ng>=2||ng>done)return secondLoopEndingV668.apply(this,arguments);
-    return recoveredEndingV668();
-  };
-
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.69';
-  window.__CHUDOME_V668__={canRecover:canRecoverV668};
-})();
-</script>
-
-<script>
-/* === Ver.6.70: 二周目「撮影NG1人＋撮影成功あり」の誤BADを防止 === */
-(function(){
-  const LAYERS_V670=['outdoor','indoor','rest','east','entrance'];
-  function statsV670(){
-    const done=LAYERS_V670.filter(p=>S.shotDone&&S.shotDone.has(p)).length;
-    const ng=LAYERS_V670.filter(p=>S.refused&&S.refused.has(p)&&!(S.shotDone&&S.shotDone.has(p))).length;
-    return {done,ng};
-  }
-  function majorIncidentV670(){
-    const pressures=S.pressureLog||[];
-    const seriousPressure=pressures.some(x=>/食い下が|さらに|拒否後|断られた後|追って|追う|触|髪|無断|迫った/.test(String(x&&x.action||'')));
-    return !!(
-      (S.warningIncidents||[]).length||
-      seriousPressure||
-      pressures.length>=2||
-      Number(S.creep||0)>=4||
-      Number(S.rude||0)>=4||
-      (S.camHostile&&Number(S.camRep||0)<=-5)
-    );
-  }
-  function oneNgContinueV670(){
-    const q=statsV670();
-    const rank=typeof layerRepName==='function'?layerRepName():'微妙なカメコ';
-    if(rank==='要警戒カメコ'){
-      S.badResultKindV648='distance';
-      setEndPosterMode('bad');theme('bad');show('end');
-      document.getElementById('ending').className='endScene bad';
-      document.getElementById('endTitle').textContent='BAD END　信頼はまだ戻らない';
-      document.getElementById('endBody').innerHTML=`
-        <div class="endGallery"><img class="wide" src="${IMG.venue}"></div>
-        <div class="endChapter">二度目のちゅどーむ ― 閉場後</div>
-        <div class="endText">撮影できた相手はいた。けれど、断られた相手との距離は埋まらず、以前からの警戒も残った。</div>
-        <div class="endImpact">写真を撮れたことだけでは、失った信頼は戻らない。</div>
-        <div class="endText">次に会うときも、相手の返事を尊重するしかない。<br><br><b>撮影済 ${q.done}人 ／ 撮影NG ${q.ng}人<br>レイヤー評判：要警戒カメコ<br>SPECIAL ENDING 未到達</b></div>`;
-      return;
-    }
-    setEndPosterMode('continue');theme('field');show('end');
-    document.getElementById('ending').className='endScene';
-    document.getElementById('endTitle').textContent='CONTINUE END　信頼はまだ戻らない';
-    document.getElementById('endBody').innerHTML=`
-      <div class="endGallery"><img class="wide" src="${IMG.venue}"></div>
-      <div class="endChapter">二度目のちゅどーむ ― 閉場後</div>
-      <div class="endText">撮影を断られた相手は一人いた。けれど、その答えを受け入れて離れ、ほかの相手とは撮影を終えることができた。<br><br>一度の撮影NGだけで、今日うまくできたことまで消えるわけではない。</div>
-      <div class="endImpact">撮れたことと、完全に信頼を取り戻したことは同じではない。だが、前回と同じ失敗を繰り返した一日でもなかった。</div>
-      <div class="endText"><b>撮影済 ${q.done}人 ／ 撮影NG ${q.ng}人<br>レイヤー評判：${rank}<br>SPECIAL ENDING 未到達</b></div>`;
-  }
-
-  const secondLoopEndingV670=secondLoopEnding;
-  secondLoopEnding=function(){
-    const q=statsV670();
-    if(S.loop===2&&q.ng===1&&q.done>=1&&!majorIncidentV670())return oneNgContinueV670();
-    return secondLoopEndingV670.apply(this,arguments);
-  };
-
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.70';
-  window.__CHUDOME_V670__={stats:statsV670,majorIncident:majorIncidentV670};
 })();
 </script>
 
@@ -4794,8 +3520,7 @@ function markSkippedV663(p){
     return result;
   };
 
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.71';
+
 window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
 })();
 </script>
@@ -4803,9 +3528,9 @@ window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
 <script>
 /* === Ver.6.74: 撮影ガイド・操作案内・撮影NG表示整合 === */
 (function(){
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.76';
-  window.__CHUDOME_V672__={revisitText:true,singleLeaveButton:true,recoveryEndingPriority:true};
+
+
+  window.__CHUDOME_V672__={revisitText:true,singleLeaveButton:true,endingPriority:true};
   window.__CHUDOME_V673__={strictGodEnding:true,requiresBothLoopsAllFive:true,requiresGradeS:true,requiresTotal90:true};
   window.__CHUDOME_V674__={cameraGuide:true,actionableFeedback:true,ngDisplayConsistency:true};
   window.__CHUDOME_V675__={guideBeforeEveryShoot:true,helpButtonRemoved:true};
@@ -4915,8 +3640,8 @@ window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
     }
     return result;
   };
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.77';
+
+
 })();
 </script>
 
@@ -4946,9 +3671,8 @@ window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
     layerRepTier=function(){return tier};
     try{return fn.apply(ctx,args)}finally{layerRepTier=previous}
   }
-  const oldGreeting=loop2RepGreeting,oldOffer=loop2RepOffer;
-  loop2RepGreeting=function(){return withEffectiveTier(oldGreeting,arguments,this)};
-  loop2RepOffer=function(){return withEffectiveTier(oldOffer,arguments,this)};
+  
+  
   const oldPostShoot=postShootVisit;
   postShootVisit=function(p){
     if(layerRepName()==='要警戒カメコ'||layerRepName()==='ブラックリスト級カメコ'){
@@ -4968,12 +3692,7 @@ window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
     const P=people[p];
     story(p,P.name,'さっき話した'+P.name+'がいる。今も相手の都合を確かめてから、短く声を掛けられそうだ。<br><span class="thought">（同じ挨拶を繰り返しても、信頼は増えない。）</span>',[
       ['撮影できるか、あらためて短く確認する',()=>{
-        if(S.loop===2){
-          if(S.revisitOfferUsedV678?.has(p))return story(p,P.name,'「今日はここまでにしておきます」',[['会場マップへ戻る',()=>{markSkippedV663(p);show('map')}]],P.img);
-          if(!(S.revisitOfferUsedV678 instanceof Set))S.revisitOfferUsedV678=new Set();
-          S.revisitOfferUsedV678.add(p);
-          return loop2ShootOffer(p);
-        }
+        
         if(p==='outdoor'){
           if(!S.reijiSeenV678)return reijiEncounter();
           return story(p,P.name,'「短めなら、今撮影できます」',[['撮影を始める',()=>startShoot(p)],['今日は撮影せず離れる',()=>{markSkippedV663(p);show('map')}]],P.img);
@@ -5006,8 +3725,8 @@ window.__CHUDOME_V671__={cap:'微妙なカメコ=C'};
     return html.replace('終了時刻：'+v2Clock()+'　総合：'+r.total,
       '終了時刻：'+v2Clock()+'　項目平均：'+average+'<br>判定補正後の総合：'+r.total);
   };
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.80';
+
+
 })();
 </script>
 <script>
@@ -5046,8 +3765,130 @@ function creepyRequestV681(p,kind){
     if(S.explicitInappropriateRequestV682&&rank!=='ブラックリスト級カメコ')return '要警戒カメコ';
     return rank;
   };
-  const versionEl=document.querySelector('.titleVersion');
-  if(versionEl)versionEl.textContent='Ver. 6.83';
+
+
+})();
+</script>
+<script>
+/* === Ver.6.86: 単周の配点と結末を整合 === */
+(function(){
+  const places=['outdoor','indoor','rest','east','entrance'];
+  const clamp=n=>Math.max(0,Math.min(100,Math.round(n)));
+  const stats=()=>{
+    const scores=places.map(p=>Number(S.photoScores?.[p])).filter(Number.isFinite);
+    const done=places.filter(p=>S.shotDone.has(p)).length;
+    const ng=places.filter(p=>S.refused.has(p)&&!S.shotDone.has(p)).length;
+    const avg=scores.length?Math.round(scores.reduce((a,b)=>a+b,0)/scores.length):0;
+    return {done,ng,avg,max:scores.length?Math.max(...scores):0};
+  };
+  function cleanRun(){
+    return S.refused.size===0&&Number(S.pushAfterNo||0)===0&&!(S.warningIncidents||[]).length&&!(S.pressureLog||[]).length&&
+      Number(S.creep||0)===0&&Number(S.rude||0)===0&&Number(S.unease||0)<=2&&
+      !S.explicitInappropriateRequestV682&&!S.camHostile;
+  }
+  function rawResult(){
+    const q=stats();
+    const tech=clamp(q.avg);
+    const comm=clamp(48+(S.trust+S.rep)*7-S.unease*7-S.rude*9);
+    const dist=clamp(80+S.backedOff*5-S.creep*16-S.rude*10-(S.warningIncidents||[]).length*35-(S.pressureLog||[]).length*10);
+    const cam=clamp(65+S.camRep*7-S.rivalFlags*5);
+    const total=Math.round(tech*.40+comm*.25+dist*.20+cam*.15);
+    return {...q,tech,comm,dist,cam,total};
+  }
+  function godReady(){
+    const r=rawResult();
+    return r.done===5&&S.v4RivalsComplete&&cleanRun()&&r.avg>=90&&r.max>=96&&
+      r.total>=86&&layerRepScore()>=12&&S.camRep>=0;
+  }
+  isGodKameko=godReady;
+  const oldRank=layerRepName;
+  layerRepName=function(){
+    const rank=oldRank.apply(this,arguments);
+    if(rank==='ブラックリスト級カメコ'||rank==='要警戒カメコ'||rank==='微妙なカメコ')return rank;
+    if(godReady())return '神カメコ';
+    const r=rawResult();
+    if(cleanRun()&&r.done===5&&r.avg>=86&&layerRepScore()>=12)return '人気カメコ';
+    if(cleanRun()&&r.done>=4&&r.avg>=80&&layerRepScore()>=10)return '信頼されている';
+    return rank;
+  };
+  v2Result=function(){
+    const r=rawResult(),rank=layerRepName();
+    let total=r.total;
+    if(rank==='ブラックリスト級カメコ')total=Math.min(total,44);
+    else if(rank==='要警戒カメコ'||rank==='微妙なカメコ')total=Math.min(total,65);
+    if(S.badResultKindV648){
+      const severe=S.badResultKindV648==='warning'||S.explicitInappropriateEscalatedV683;
+      const camera=S.badResultKindV648==='camera';
+      total=Math.min(total,severe?39:camera?49:r.ng>=3?54:59);
+    }
+    total=Math.min(total,[39,54,65,75,85,100][r.done]);
+    let grade=total>=86?'S':total>=76?'A':total>=66?'B':total>=55?'C':total>=40?'D':'E';
+    if(r.avg<85&&grade==='S'){total=85;grade='A'}
+    if((rank==='微妙なカメコ'||rank==='要警戒カメコ')&&['S','A','B'].includes(grade))grade='C';
+    if(rank==='ブラックリスト級カメコ'){total=Math.min(total,39);grade='E'}
+    return {avg:r.avg,tech:r.tech,comm:r.comm,dist:r.dist,cam:r.cam,total,grade};
+  };
+  v2ResultHTML=function(){
+    const r=v2Result(),base=rawResult().total;
+    return '<div class="resultCard"><h3>本日のカメコ評価</h3><div class="rankBig">'+r.grade+'</div><div>撮影技術：'+r.tech+'　コミュ力：'+r.comm+
+      '<br>距離感：'+r.dist+'　カメコ評判：'+r.cam+'<br>撮影人数：'+S.shotDone.size+'/5　写真平均：'+r.avg+
+      '点<br>終了時刻：'+v2Clock()+'　総合：'+r.total+(base!==r.total?'（評判・結末による補正前 '+base+'）':'')+
+      '</div><p><b>野良カメコ Lv.'+Math.max(1,Math.floor(r.total/10))+'</b></p><small>総合は撮影技術40％、コミュ力25％、距離感20％、カメコ評判15％で算出。撮影人数と迷惑行為による上限あり。</small></div>';
+  };
+  function end(title,mode,chapter,body,impact,badKind){
+    S.badResultKindV648=mode==='bad'?(badKind||'distance'):null;
+    setEndPosterMode(mode);theme(mode==='bad'?'bad':mode==='god'||mode==='good'?'good':'field');show('end');
+    document.getElementById('ending').className='endScene '+(mode==='bad'?'bad':'');
+    document.getElementById('endTitle').textContent=title;
+    document.getElementById('endBody').innerHTML='<div class="endGallery"><img class="wide" src="'+IMG.venue+'"></div><div class="endChapter">'+chapter+
+      '</div><div class="endText">'+body+'</div><div class="endImpact">'+impact+'</div>';
+  }
+  endingBad=function(kind){
+    const q=stats(),warning=kind==='warning'||(S.warningIncidents||[]).length>0;
+    const camera=kind==='camera'||(S.camHostile&&S.camRep<=-5);
+    const title=camera?'BAD END　カメコ界隈から消ゆ':warning?'BAD END　越えてはいけない線':'BAD END　残った警戒';
+    const body=camera?'撮影場所で交わした言葉が、カメラマンたちの間に広がった。今日の写真よりも、険悪な態度が記憶に残ってしまった。':
+      warning?'断られた後も相手を追い、会話を終わらせなかった。周囲の視線が集まり、マボはカメラを下ろした。':
+      '撮れた写真は残った。けれど、相手が断ったことや距離を置いたことも今日の結果だ。写真の点数だけでは信頼を補えない。';
+    end(title,'bad','閉場後 ― ちゅどーむ',body+'<br><br><b>撮影済 '+q.done+'人 ／ 撮影NG '+q.ng+'人<br>レイヤー評判：'+layerRepName()+'</b>',
+      camera?'言葉も、撮影する人の評判になる。':warning?'一度出た「やめて」を尊重できなかった。':'撮れたことと、信頼を得たことは同じではない。',kind);
+  };
+  finishDayEnding=function(){
+    const q=stats(),rank=layerRepName(),score=v2Result();
+    if(S.camHostile&&S.camRep<=-5)return endingBad('camera');
+    if((S.warningIncidents||[]).length)return endingBad('warning');
+    if(S.camRep<=-5)return endingBad('camera');
+    if((S.pressureLog||[]).length||S.creep+S.rude>=4||q.ng>=2||rank==='ブラックリスト級カメコ')return endingBad('distance');
+    if(rank==='要警戒カメコ')return endingBad('distance');
+    if(q.ng===1)return end('CONTINUE END　残った一枚と残った距離','continue','閉場後 ― ちゅどーむ',
+      '撮影を断られた相手は一人いた。マボはその返事を受け入れ、ほかに撮れた写真を持ち帰った。<br><br><b>撮影済 '+q.done+'人 ／ 撮影NG 1人<br>レイヤー評判：'+rank+'<br>カメコランク：'+score.grade+'クラス</b>',
+      '断られたことも、撮影できたことも、今日の結果だ。');
+    if(godReady()&&rank==='神カメコ'){
+      end('GOD END　神カメコ','god','閉場後 ― ちゅどーむ',
+        '五人全員を撮影し、写真平均は'+q.avg+'点。最高の一枚は'+q.max+'点だった。<br><br>翌朝、五人から写真への返信が届く。相手の希望を聞いて撮った一枚一枚が、マボの名前と一緒に残った。<br><br><b>レイヤー評判：神カメコ<br>カメコランク：'+score.grade+'クラス<br>GOD END COMPLETE</b>',
+        '撮影技術も距離感も、今日のすべてがつながった。');
+      return;
+    }
+    if(q.done>=4&&q.avg>=80&&score.grade!=='C'&&score.grade!=='D'&&score.grade!=='E')return endingGood(true);
+    const eligible=places.filter(p=>S.shotDone.has(p)&&Number(S.photoScores[p])>=78&&Number(S.bond?.[p]||0)>=2);
+    if(eligible.length){eligible.sort((a,b)=>Number(S.photoScores[b])-Number(S.photoScores[a]));return individualEnding(eligible[0])}
+    if(q.done===0)return end('END　今日の撮影はここまで','continue','閉場後 ― ちゅどーむ',
+      '今日は一人も撮影できなかった。相手の都合を尊重し、カメラをしまって会場を出る。<br><br><b>撮影済 0人 ／ 撮影NG '+q.ng+'人</b>',
+      '撮らない選択も、その日の結果として残る。');
+    return end('CONTINUE END　写真を仕上げる夜','continue','帰宅後 ― PCの前',
+      'マボは今日撮れた'+q.done+'人の写真を見返した。良かった一枚も、次は撮り直したい一枚もある。<br><br><b>撮影済 '+q.done+'人 ／ 撮影NG '+q.ng+'人<br>レイヤー評判：'+rank+'<br>カメコランク：'+score.grade+'クラス</b>',
+      '今日撮れた写真を、きちんと仕上げて届けよう。');
+  };
+  const oldFinalize=v2Finalize;
+  v2Finalize=function(){
+    oldFinalize.apply(this,arguments);
+    const button=document.getElementById('restart');if(button)button.textContent='エンディンググラフィックを見る';
+    const teaser=document.querySelector('.finalEndingTeaser');if(teaser)teaser.remove();
+  };
+  const restart=document.getElementById('restart');
+  if(restart)restart.onclick=()=>{click();showEndPoster()};
+  
+  const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.86';
 })();
 </script>
 </body></html>
