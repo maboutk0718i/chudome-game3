@@ -500,7 +500,7 @@
 
 <section id="loading" class="screen active"><div class="loadingInner"><div class="loadingText">NOW LOADING...</div><div class="loadingSub">CHUDOME GAME DATA</div></div></section>
 <section id="pretitle" class="screen"><div class="pretitleInner"><button id="preludeStart" type="button">タップして開始</button><div id="preludeText" aria-live="polite"></div></div></section>
-<section id="title" class="screen"><div class="hero" id="titleTap"><img src="poses/embedded_dd1dcf349d9b5ec1.png"><div class="titleBrand">MABOX<small>presents</small></div><div class="titleVersion">Ver. 6.97</div><div class="titleLogo"><small>COSPLAY PHOTOGRAPHER ADVENTURE</small><h1>ちゅどーむに消ゆ</h1><small>― 野良カメコ・マボの一日 ―</small></div><button class="press" id="press">タップしてスタート</button><div class="fictionNote">本作品はフィクションです。登場する人物・団体・イベントおよび出来事は架空のものであり、実在のものとは関係ありません</div><div class="maker"><span class="mMark">M</span>MABOX<br><small>© 2026 MABOX</small></div></div></section>
+<section id="title" class="screen"><div class="hero" id="titleTap"><img src="poses/embedded_dd1dcf349d9b5ec1.png"><div class="titleBrand">MABOX<small>presents</small></div><div class="titleVersion">Ver. 6.98</div><div class="titleLogo"><small>COSPLAY PHOTOGRAPHER ADVENTURE</small><h1>ちゅどーむに消ゆ</h1><small>― 野良カメコ・マボの一日 ―</small></div><button class="press" id="press">タップしてスタート</button><div class="fictionNote">本作品はフィクションです。登場する人物・団体・イベントおよび出来事は架空のものであり、実在のものとは関係ありません</div><div class="maker"><span class="mMark">M</span>MABOX<br><small>© 2026 MABOX</small></div></div></section>
 <section id="intro" class="screen"><div class="top"><b>PROLOGUE</b><span>09:18</span></div><div class="art"><img src="poses/embedded_2fe3d4ea4c6bcb65.jpg"></div><div class="intro"><h2>ちゅどーむ、到着。</h2><div id="introText">札幌のコスプレイベント。<br>野良のコスプレカメラマン、マボは今日も一人で会場へ来た。<br><br><span class="thought">（今日こそ……「また撮ってください」って言われる写真を撮る。できればSNSにも載せてもらう。いや、まず普通に会話を成立させろ俺。）</span><br><br>会場には、レイヤーとカメラマン、それぞれの思惑が渦巻いている。<br>何気ない一言が、数時間後の評判を変えることもある。</div></div><div class="next"><button class="cmd" id="toMap">▶ 会場へ入る</button></div></section>
 <section class="screen" id="map">
   <div class="panel">
@@ -3343,7 +3343,7 @@ function markSkippedV663(p){
   story=function(p,sp,text,choices,img){
     ensureConversationStateV663();
     const isPlace=PLACES_V663.includes(p);
-    const positive=isPlace&&typeof text==='string'&&/(今なら.*大丈夫|少しなら大丈夫|お願いします|撮ってほしい|撮りたい雰囲気)/.test(text)&&!/(撮影しません|今日は大丈夫です」<br>.*距離|無理です)/.test(text);
+    const positive=isPlace&&!S.refused.has(p)&&typeof text==='string'&&/(今なら.*大丈夫|少しなら大丈夫|お願いします|撮ってほしい|撮りたい雰囲気)/.test(text)&&!/(撮影しません|今日は大丈夫です」<br>.*距離|無理です)/.test(text);
     if(positive)S.permissionV663.add(p);
     if(Array.isArray(choices))choices=choices.map(ch=>{
       if(!Array.isArray(ch))return ch;
@@ -3917,7 +3917,7 @@ function creepyRequestV681(p,kind){
   const restart=document.getElementById('restart');
   if(restart)restart.onclick=()=>{click();showEndPoster()};
   
-  const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.97';
+  const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.98';
 })();
 </script>
 <script>
@@ -3973,9 +3973,8 @@ function creepyRequestV681(p,kind){
       ['「作品、大好きです！」',()=>fanTalk()],
       ['「男装は初めてですが、撮ってみたいです」',()=>{S.bond.momoa++;costumeTalk()}],
       ['「すみません、今日は男装は撮らないんです」',()=>decline()],
-      ['「女の子っぽいポーズなら撮ります」',()=>{S.unease++;S.bond.momoa--;story('momoa','ももあ','「今日はヒーローとして撮ってほしいので……」<br><span class="thought">（衣装の意図を無視してしまった。）</span>',[
-        ['「失礼しました。ヒーローとして撮らせてください」',()=>{S.backedOff++;costumeTalk()}],
-        ['「分かりました。撮影は控えます」',()=>decline()]
+      ['「女の子っぽいポーズなら撮ります」',()=>{S.unease++;S.bond.momoa--;refuse('momoa');story('momoa','ももあ','「今日はヒーローとして撮ってほしいので。女の子っぽいポーズを条件にされるなら、撮影はお断りします」<br><span class="thought">（衣装と作品への思いを無視して、自分の好みを押しつけた。撮影NGになった。）</span>',[
+        ['「失礼しました」と謝って離れる',()=>{S.backedOff++;show('map')}]
       ],portrait)}],
       ['マップへ戻る',()=>show('map')]
     ],portrait);
@@ -4076,7 +4075,7 @@ function creepyRequestV681(p,kind){
     if(card)card.innerHTML=card.innerHTML.replace(/撮影人数：\d+\/5/g,'撮影人数：'+S.shotDone.size+'/6');
   };
   const version=document.querySelector('.titleVersion');
-  if(version)version.textContent='Ver. 6.97';
+  if(version)version.textContent='Ver. 6.98';
   updateShotStatus();
 })();
 
@@ -4109,7 +4108,7 @@ function creepyRequestV681(p,kind){
    if(endPosterMode==='good'&&v2Result().grade!=='A')endPosterMode='continue';
    return previousPoster.apply(this,arguments);
  };
- const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.97';
+ const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.98';
 })();
 </script>
 
@@ -4227,7 +4226,7 @@ function creepyRequestV681(p,kind){
      body.insertAdjacentHTML('beforeend','<div class="endText">この出会いは次の撮影につながった。今日全体のカメコ評価には、まだ伸ばせるところがある。最後に今日の結果を振り返り、次の一枚へ。</div>');
    }
  };
- const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.97';
+ const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.98';
 })();
 </script>
 <script>
