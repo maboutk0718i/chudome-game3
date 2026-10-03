@@ -500,7 +500,7 @@
 
 <section id="loading" class="screen active"><div class="loadingInner"><div class="loadingText">NOW LOADING...</div><div class="loadingSub">CHUDOME GAME DATA</div></div></section>
 <section id="pretitle" class="screen"><div class="pretitleInner"><button id="preludeStart" type="button">タップして開始</button><div id="preludeText" aria-live="polite"></div></div></section>
-<section id="title" class="screen"><div class="hero" id="titleTap"><img src="poses/embedded_dd1dcf349d9b5ec1.png"><div class="titleBrand">MABOX<small>presents</small></div><div class="titleVersion">Ver. 6.99</div><div class="titleLogo"><small>COSPLAY PHOTOGRAPHER ADVENTURE</small><h1>ちゅどーむに消ゆ</h1><small>― 野良カメコ・マボの一日 ―</small></div><button class="press" id="press">タップしてスタート</button><div class="fictionNote">本作品はフィクションです。登場する人物・団体・イベントおよび出来事は架空のものであり、実在のものとは関係ありません</div><div class="maker"><span class="mMark">M</span>MABOX<br><small>© 2026 MABOX</small></div></div></section>
+<section id="title" class="screen"><div class="hero" id="titleTap"><img src="poses/embedded_dd1dcf349d9b5ec1.png"><div class="titleBrand">MABOX<small>presents</small></div><div class="titleVersion">Ver. 7.00</div><div class="titleLogo"><small>COSPLAY PHOTOGRAPHER ADVENTURE</small><h1>ちゅどーむに消ゆ</h1><small>― 野良カメコ・マボの一日 ―</small></div><button class="press" id="press">タップしてスタート</button><div class="fictionNote">本作品はフィクションです。登場する人物・団体・イベントおよび出来事は架空のものであり、実在のものとは関係ありません</div><div class="maker"><span class="mMark">M</span>MABOX<br><small>© 2026 MABOX</small></div></div></section>
 <section id="intro" class="screen"><div class="top"><b>PROLOGUE</b><span>09:18</span></div><div class="art"><img src="poses/embedded_2fe3d4ea4c6bcb65.jpg"></div><div class="intro"><h2>ちゅどーむ、到着。</h2><div id="introText">札幌のコスプレイベント。<br>野良のコスプレカメラマン、マボは今日も一人で会場へ来た。<br><br><span class="thought">（今日こそ……「また撮ってください」って言われる写真を撮る。できればSNSにも載せてもらう。いや、まず普通に会話を成立させろ俺。）</span><br><br>会場には、レイヤーとカメラマン、それぞれの思惑が渦巻いている。<br>何気ない一言が、数時間後の評判を変えることもある。</div></div><div class="next"><button class="cmd" id="toMap">▶ 会場へ入る</button></div></section>
 <section class="screen" id="map">
   <div class="panel">
@@ -548,7 +548,7 @@
           <img class="mapFace" data-area-face="east" alt="カレン">
           <span class="mapName">カレン</span>
           <span class="statusBadge"></span>
-          <span class="mapSpot">東側</span>
+          <span class="mapSpot">中央展示</span>
         </button>
 
         <button class="mapNpc" data-place="indoor" style="left:19%;top:24%">
@@ -562,7 +562,7 @@
           <img class="mapFace" data-area-face="momoa" src="poses/greenhero_p0.png" alt="ももあ">
           <span class="mapName">ももあ</span>
           <span class="statusBadge"></span>
-          <span class="mapSpot">中央展示</span>
+          <span class="mapSpot">東側</span>
         </button>
 
         <button class="mapNpc rivals" data-place="rivals" style="left:82%;top:84%">
@@ -863,7 +863,7 @@ $('#press').onclick=e=>{
 };
 $('#toMap').onclick=()=>{click();theme('field');show('map')};
 const POSEEX={'indoor1':'poses/embedded_12e3e0347a81f493.jpg','indoor2':'poses/embedded_db5451acc02e6ce0.jpg','indoor3':'poses/embedded_06bd55f295980a04.jpg','indoor4':'poses/embedded_74c44ec11dff802f.jpg','indoor5':'poses/embedded_ec387501e1921362.jpg','indoor6':'poses/embedded_43883657f4e3533b.jpg','rest1':'poses/embedded_95754dee0563b767.jpg','rest2':'poses/embedded_6d8f2aa7567df653.jpg','rest3':'poses/embedded_6a3b2d4a8975050d.jpg','rest4':'poses/embedded_ea04b0bd263cdfb9.jpg','rest5':'poses/embedded_e314800c94a52711.jpg','rest6':'poses/embedded_3b68d46d434ffe2d.jpg','east1':'poses/embedded_a97b79117b9712f9.jpg','east2':'poses/embedded_f1d60535c7b31abc.jpg','east3':'poses/embedded_6470fc572d17a74a.jpg','east4':'poses/embedded_7cad38153dfd5157.jpg','east5':'poses/embedded_08c11f4637a9fab6.jpg','east6':'poses/embedded_8daa2f41b7cea9c6.jpg','entrance1':'poses/embedded_a90be8c85363bed3.jpg','entrance2':'poses/embedded_25848347a845d202.jpg','entrance3':'poses/embedded_72436521b986ab1a.jpg','entrance4':'poses/embedded_a0a62ec89ffe4b57.jpg','entrance5':'poses/embedded_0c0bdd7b4d8964bc.jpg','entrance6':'poses/embedded_e9344654db54ee62.jpg'};
-const people={momoa:{name:'ももあ',img:'poses/greenhero_p0.png',label:'中央展示スペース',intro:'深緑のヒーロー衣装を着たももあが、中央展示スペースで腕のガードを整えている。'},outdoor:{name:'雪奈',img:IMG.yukina,label:'屋外エリア',intro:'白と青の衣装の雪奈が、友人と別れて撮影場所を探している。'},indoor:{name:'りお',img:IMG.rio,label:'屋内壁際',intro:'黒い衣装のりおがスマホを確認している。'},rest:{name:'みく',img:IMG.miku,label:'休憩スペース',intro:'みくが飲み物を手に座っている。明らかに休憩中だ。'},east:{name:'カレン',img:IMG.karen,label:'東側エリア',intro:'カレンが背景と光を確かめている。撮影へのこだわりが強そうだ。'},entrance:{name:'あや',img:IMG.aya,label:'入口付近',intro:'あやが入口で友人を待っている。'}};
+const people={momoa:{name:'ももあ',img:'poses/greenhero_p0.png',label:'東側エリア',intro:'深緑のヒーロー衣装を着たももあが、東側エリアで腕のガードを整えている。'},outdoor:{name:'雪奈',img:IMG.yukina,label:'屋外エリア',intro:'白と青の衣装の雪奈が、友人と別れて撮影場所を探している。'},indoor:{name:'りお',img:IMG.rio,label:'屋内壁際',intro:'黒い衣装のりおがスマホを確認している。'},rest:{name:'みく',img:IMG.miku,label:'休憩スペース',intro:'みくが飲み物を手に座っている。明らかに休憩中だ。'},east:{name:'カレン',img:IMG.karen,label:'中央展示スペース',intro:'カレンが背景と光を確かめている。撮影へのこだわりが強そうだ。'},entrance:{name:'あや',img:IMG.aya,label:'入口付近',intro:'あやが入口で友人を待っている。'}};
 const ENDIMG={"end_bad_room": "poses/embedded_1328842a0199a677.jpg", "end_bad_sns": "poses/embedded_c09ded6e645a1cff.jpg", "end_good_venue": "poses/embedded_f0d8992119de1749.jpg", "end_good_sns": "poses/embedded_a41e77553da29fe8.jpg"};
 function rude(n=1){S.rude+=n;return false}
 function refuse(p){if(p){S.refused.add(p);updateShotStatus();v4SetProgressTime()}}
@@ -1017,7 +1017,7 @@ function cameraEncounter(){
   ],IMG.tanaka)
 }
 function cameraSquabble(){
- story('rivals','黒田','「さっき東側で撮ってた場所、次俺ら使うから。長居しないでね」<br>黒田が軽い口調で言う。<br>田中は苦笑い。リョウとヒデは反応を見ている。<br><span class="thought">（予約制でもないのに“俺ら使うから”か。腹は立つ。でもここで声をデカくしたら、負けるのは多分俺だ。）</span>',[
+ story('rivals','黒田','「さっき中央展示で撮ってた場所、次俺ら使うから。長居しないでね」<br>黒田が軽い口調で言う。<br>田中は苦笑い。リョウとヒデは反応を見ている。<br><span class="thought">（予約制でもないのに“俺ら使うから”か。腹は立つ。でもここで声をデカくしたら、負けるのは多分俺だ。）</span>',[
   ['「空いたら声かけます」で流す',()=>{S.camRep+=2;S.rep++;story('rivals','田中','「それでいいっすよ。混んでるし譲り合いで」<br>田中が間に入り、空気がほどけた。<br><span class="thought">（勝ち負けじゃない。撮れればいい。……言い聞かせろ俺。）</span>',[['話を続ける',()=>camEncounter2()]])}],
   ['「場所は早い者勝ちじゃないでしょ」と冷静に返す',()=>{S.camRep++;S.rivalFlags++;story('rivals','黒田','「まあ、それはそうだけどさ」<br>黒田は少し不満そうだが、それ以上は押してこなかった。<br><span class="thought">（言うことは言った。声量も上げてない。ギリ大人。）</span>',[['そのまま情報交換する',()=>camEncounter2()]])}],
   ['「お前らがどけよ」と強く言う',()=>{S.camRep-=4;S.rivalFlags+=2;S.unease+=2;story('rivals','黒田','「は？ 何その言い方」<br>一気に空気が変わった。ヒデがスマホを触り、田中も笑わなくなった。<br><span class="thought">（やった。口から出た瞬間に分かるタイプの失敗だ。）</span>',[['謝って引く',()=>{S.camRep++;S.backedOff++;cameraResult()}],['さらに言い返す',()=>endingBad('camera')]])}]
@@ -1836,7 +1836,7 @@ window.addEventListener('load',()=>{
       funny:'マボは周囲を見回し、来た方向へそのまま戻った。<br><span class="thought">（自販機は反対側だ。知っている。でも今はこれでいい。）</span>'
     },
     east:{
-      intro:'カレンが東側の背景を確認しながら、次の撮影場所を考えている。<br><span class="thought">（この人には一度、はっきり撮影を断られている。曖昧な再接触は通じない。）</span>',
+      intro:'カレンが中央展示スペースの背景を確認しながら、次の撮影場所を考えている。<br><span class="thought">（この人には一度、はっきり撮影を断られている。曖昧な再接触は通じない。）</span>',
       greetLabel:'カレンに軽く会釈する',
       greet:'「……何か用ですか？」<br>カレンは会釈を返さず、用件だけを確認した。<br><span class="thought">（用件はない。“感じよく見られたい”という俺の都合しかない。）</span>',
       extraLabel:'「さっきのことは気にしてませんから」と伝える',
@@ -2102,7 +2102,7 @@ window.addEventListener('load',()=>{
         <img src="${NEBATA_V643_IMG}">
         <img class="v643-contain" src="${IMG.venue}">
       </div>
-      <div class="endChapter">東側エリア ― 会話の途中</div>
+      <div class="endChapter">中央展示スペース ― 会話の途中</div>
       <div class="endText">粘田が勝手にポーズを指示する。<br>それを止めるのではなく、マボは粘田より先にカレンの髪を直そうと手を伸ばした。<br><br>カレンは即座に身を引く。<br><b>「触らないでください。撮影もしません」</b><br><br>周囲の会話が止まった。伸ばした指先は、髪には届いていない。だが、許可を取らずに触れようとした事実は消えなかった。</div>
       <div class="endChapter">当日の夜 ― SNS</div>
       <div class="post"><b>カレンのアカウントからの投稿</b><br><b>【拡散希望・注意喚起】</b><br>本日ちゅどーむにて、会話中、許可なく髪へ触れようとしてきたカメラマンがいました。すぐに撮影をお断りしましたが、とても怖い思いをしました。同じ被害が出ないよう、ご注意ください。</div>
@@ -2537,9 +2537,9 @@ window.addEventListener('load',()=>{
       story=oldStory;
       if(p==='rivals'&&sp==='黒田'&&typeof text==='string'){
         const lead=visited
-          ?'「さっき東側にいましたよね。次、俺らもあの辺使いたいんで」'
-          :'「東側の撮影場所、次俺らも使いたいんで。長居はお互いなしで」';
-        text=text.replace('「さっき東側で撮ってた場所、次俺ら使うから。長居しないでね」',lead);
+          ?'「さっき中央展示にいましたよね。次、俺らもあの辺使いたいんで」'
+          :'「中央展示の撮影場所、次俺らも使いたいんで。長居はお互いなしで」';
+        text=text.replace('「さっき中央展示で撮ってた場所、次俺ら使うから。長居しないでね」',lead);
       }
       return oldStory(p,sp,text,choices,img);
     };
@@ -3918,7 +3918,7 @@ function creepyRequestV681(p,kind){
   const restart=document.getElementById('restart');
   if(restart)restart.onclick=()=>{click();showEndPoster()};
   
-  const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.99';
+  const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 7.00';
 })();
 </script>
 <script>
@@ -4076,7 +4076,7 @@ function creepyRequestV681(p,kind){
     if(card)card.innerHTML=card.innerHTML.replace(/撮影人数：\d+\/5/g,'撮影人数：'+S.shotDone.size+'/6');
   };
   const version=document.querySelector('.titleVersion');
-  if(version)version.textContent='Ver. 6.99';
+  if(version)version.textContent='Ver. 7.00';
   updateShotStatus();
 })();
 
@@ -4109,7 +4109,7 @@ function creepyRequestV681(p,kind){
    if(endPosterMode==='good'&&v2Result().grade!=='A')endPosterMode='continue';
    return previousPoster.apply(this,arguments);
  };
- const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.99';
+ const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 7.00';
 })();
 </script>
 
@@ -4227,7 +4227,7 @@ function creepyRequestV681(p,kind){
      body.insertAdjacentHTML('beforeend','<div class="endText">この出会いは次の撮影につながった。今日全体のカメコ評価には、まだ伸ばせるところがある。最後に今日の結果を振り返り、次の一枚へ。</div>');
    }
  };
- const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 6.99';
+ const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 7.00';
 })();
 </script>
 <script>
