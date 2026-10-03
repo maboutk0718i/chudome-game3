@@ -500,7 +500,7 @@
 
 <section id="loading" class="screen active"><div class="loadingInner"><div class="loadingText">NOW LOADING...</div><div class="loadingSub">CHUDOME GAME DATA</div></div></section>
 <section id="pretitle" class="screen"><div class="pretitleInner"><button id="preludeStart" type="button">タップして開始</button><div id="preludeText" aria-live="polite"></div></div></section>
-<section id="title" class="screen"><div class="hero" id="titleTap"><img src="poses/embedded_dd1dcf349d9b5ec1.png"><div class="titleBrand">MABOX<small>presents</small></div><div class="titleVersion">Ver. 7.07</div><div class="titleLogo"><small>COSPLAY PHOTOGRAPHER ADVENTURE</small><h1>ちゅどーむに消ゆ</h1><small>― 野良カメコ・マボの一日 ―</small></div><button class="press" id="press">タップしてスタート</button><div class="fictionNote">本作品はフィクションです。登場する人物・団体・イベントおよび出来事は架空のものであり、実在のものとは関係ありません</div><div class="maker"><span class="mMark">M</span>MABOX<br><small>© 2026 MABOX</small></div></div></section>
+<section id="title" class="screen"><div class="hero" id="titleTap"><img src="poses/embedded_dd1dcf349d9b5ec1.png"><div class="titleBrand">MABOX<small>presents</small></div><div class="titleVersion">Ver. 7.11</div><div class="titleLogo"><small>COSPLAY PHOTOGRAPHER ADVENTURE</small><h1>ちゅどーむに消ゆ</h1><small>― 野良カメコ・マボの一日 ―</small></div><button class="press" id="press">タップしてスタート</button><div class="fictionNote">本作品はフィクションです。登場する人物・団体・イベントおよび出来事は架空のものであり、実在のものとは関係ありません</div><div class="maker"><span class="mMark">M</span>MABOX<br><small>© 2026 MABOX</small></div></div></section>
 <section id="intro" class="screen"><div class="top"><b>PROLOGUE</b><span>09:18</span></div><div class="art"><img src="poses/embedded_2fe3d4ea4c6bcb65.jpg"></div><div class="intro"><h2>ちゅどーむ、到着。</h2><div id="introText">札幌のコスプレイベント。<br>野良のコスプレカメラマン、マボは今日も一人で会場へ来た。<br><br><span class="thought">（今日こそ……「また撮ってください」って言われる写真を撮る。できればSNSにも載せてもらう。いや、まず普通に会話を成立させろ俺。）</span><br><br>会場には、レイヤーとカメラマン、それぞれの思惑が渦巻いている。<br>何気ない一言が、数時間後の評判を変えることもある。</div></div><div class="next"><button class="cmd" id="toMap">▶ 会場へ入る</button></div></section>
 <section class="screen" id="map">
   <div class="panel">
@@ -1045,7 +1045,20 @@ function reijiBrag(){story('outdoor','レイジ','「へえ、誰？ 有名っ�
 ['さらに有名レイヤーの名前を出して張り合う',()=>{S.rivalFlags+=2;S.camRep-=2;S.unease+=2;story('outdoor','雪奈','「……ごめんなさい。友達のところに戻りますね」<br>雪奈は会話から一歩引いた。<br><span class="thought">（完全にやった。撮影の話をする空気じゃない。）</span>',[['「すみません」と引く',()=>{refuse('outdoor');show('map')}],['それでも撮影をお願いする',()=>{refuse('outdoor');recordPressure('outdoor','友人の所へ戻ろうとした雪奈に撮影をお願いする');S.creep++;S.unease++;story('outdoor','雪奈','「……すみません。今日は撮影しません」<br>雪奈ははっきり首を振った。',[['ここで引く',()=>{S.backedOff++;show('map')}],['さらに追ってお願いする',()=>{recordWarningIncident('outdoor','明確な拒否後もさらに追う');endingBad('warning')} ]])} ]])}],
 ['レイジと張り合うのをやめて離れる',()=>{S.rep++;show('map')}]
 ],REIJI_IMG)}
-function shootGate(){if(S.trust-S.unease>=0){story('outdoor','雪奈','「……じゃあ、少しだけお願いします」<br><span class="thought">（来た。喋るな俺。いや必要な指示は喋れ。キモくならない程度に。キモくならない程度って何だ。）</span>',[['撮影を始める',()=>startShoot('outdoor')]])}else{refuse('outdoor');story('outdoor','雪奈','「ごめんなさい、友達のところ行きますね」',[['「わかりました」と引く',()=>{S.backedOff++;show('map')}],['「一分だけ！」と追う',()=>{recordPressure('outdoor','一分だけと追う');S.creep++;S.unease++;story('outdoor','雪奈','「ごめんなさい。本当に今日は大丈夫です」<br>雪奈は友人の方へ体を向けた。',[['ここで引く',()=>{S.backedOff++;show('map')}],['さらに追ってお願いする',()=>{recordWarningIncident('outdoor','明確な拒否後もさらに追う');endingBad('warning')} ]])} ]])}}
+function conversationConsentV711(p,line,thought){
+ S.rep++;S.trust++;if(S.bond&&S.bond[p]!==undefined)S.bond[p]+=2;
+ story(p,people[p].name,'「'+line+'」'+(thought?'<br><span class="thought">（'+thought+'）</span>':''),[['撮影を始める',()=>startShoot(p)]],p==='east'?IMG.karen:IMG.yukina);
+}
+function snowConversationAfterReijiV710(){
+ theme('talk');
+ story('outdoor','雪奈','レイジの長話に区切りをつけ、雪奈へ向き直った。<br>「それで、どんな感じで撮りましょうか？」',[
+  ['雪奈の希望する雰囲気とポーズを聞く',()=>conversationConsentV711('outdoor','白と青がきれいに見える、明るい感じがいいです。ポーズはこちらで変えていきますね')],
+  ['「白と青の衣装の雰囲気を大切に撮りたい」と話す',()=>conversationConsentV711('outdoor','うれしいです！ この色の組み合わせ、気に入ってるんです。お願いします')],
+  ['短時間でよいか確認して、撮影をお願いする',()=>conversationConsentV711('outdoor','はい、少しなら大丈夫です。終わったら友達のところへ行きますね')],
+  ['今日は撮影を見送る',()=>{markSkippedV663('outdoor');show('map')}]
+ ],IMG.yukina);
+}
+function shootGate(){if(S.trust-S.unease>=0&&!['要警戒カメコ','ブラックリスト級カメコ'].includes(layerRepName())){return snowConversationAfterReijiV710()}else{refuse('outdoor');story('outdoor','雪奈','「ごめんなさい、友達のところ行きますね」',[['「わかりました」と引く',()=>{S.backedOff++;show('map')}],['「一分だけ！」と追う',()=>{recordPressure('outdoor','一分だけと追う');S.creep++;S.unease++;story('outdoor','雪奈','「ごめんなさい。本当に今日は大丈夫です」<br>雪奈は友人の方へ体を向けた。',[['ここで引く',()=>{S.backedOff++;show('map')}],['さらに追ってお願いする',()=>{recordWarningIncident('outdoor','明確な拒否後もさらに追う');endingBad('warning')} ]])} ]])}}
 function poseImage(place,pose){
 if(place==='momoa')return 'poses/greenhero_p'+(pose%6)+'.png';let v47=V47POSE[place+pose];if(v47)return v47;
 let v45=V45POSE[place+pose];if(v45)return v45;
@@ -2033,12 +2046,13 @@ window.addEventListener('load',()=>{
       return;
     }
 
-    if(S.nebataResumeV646==='shoot'){startShoot('east');return;}
-    if(S.nebataResumeV646==='other'){
-      otherV645('east',true);
-      return;
-    }
-    otherV645('east',true);
+    story('east','カレン','「ありがとうございます。……それでは、撮影のお話を続けましょう」<br><span class="thought">（割り込みは終わった。ここからはカレンの希望を確かめて、撮るかどうかもあらためて決めよう。）</span>',[
+      ['カレンの希望する構図を聞く',()=>conversationConsentV711('east','背景も少し入れて、衣装全体が見える感じでお願いできますか？','衣装と背景、どちらも大事にしたいんだな。構図を合わせて撮ろう。')],
+      ['「この背景を活かして撮りたい」と話す',()=>conversationConsentV711('east','それ、いいですね。衣装もちゃんと見えるようにお願いします')],
+      [LAYER_AMBIGUOUS.east.label,()=>ambiguousLayerChoice('east')],
+      ['「カレンさんのやりやすい感じでお願いします」と任せる',()=>layerTrap('east')],
+      ['今日は撮影を見送る',()=>{markSkippedV663('east');show('map')}]
+    ],IMG.karen);
   }
 
   function nebataSecondStageV642(){
@@ -2053,7 +2067,7 @@ window.addEventListener('load',()=>{
 
   function nebataEncounterV642(){
     theme('rival');
-    story('east','粘田','「あっ、カレンちゃん！ その立ち方じゃ盛れないよ！」<br><br>太ったカメコが汗を拭いながら、会話へ割り込んできた。粘田だ。<br>カレンの表情が一瞬だけ固まる。<br><br>「……今、この方とお話ししてるんですけど」',[
+    story('east','粘田','「あっ、カレンちゃん！ その立ち方じゃ盛れないよ！」<br><br>ヤバい空気感のカメコが汗を拭いながら、会話へ割り込んできた。粘田だ。<br>カレンの表情が一瞬だけ固まる。<br><br>「……今、この方とお話ししてるんですけど」',[
       ['「カレンさんと話している途中ですよ」と止める',()=>{S.trust++;S.bond.east=(S.bond.east||0)+1;S.camRep=Math.max(-9,S.camRep-1);nebataSecondStageV642()}],
       ['「確かに、その角度のほうが盛れそうですね」と乗る',()=>{S.unease++;S.bond.east=Math.max(-3,(S.bond.east||0)-1);nebataSecondStageV642()}],
       ['何も言わず、カレンの反応を見る',()=>{S.unease++;nebataSecondStageV642()}],
@@ -3927,7 +3941,7 @@ function creepyRequestV681(p,kind){
   const restart=document.getElementById('restart');
   if(restart)restart.onclick=()=>{click();showEndPoster()};
   
-  const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 7.07';
+  const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 7.11';
 })();
 </script>
 <script>
@@ -4085,7 +4099,7 @@ function creepyRequestV681(p,kind){
     if(card)card.innerHTML=card.innerHTML.replace(/撮影人数：\d+\/5/g,'撮影人数：'+S.shotDone.size+'/6');
   };
   const version=document.querySelector('.titleVersion');
-  if(version)version.textContent='Ver. 7.07';
+  if(version)version.textContent='Ver. 7.11';
   updateShotStatus();
 })();
 
@@ -4118,7 +4132,7 @@ function creepyRequestV681(p,kind){
    if(endPosterMode==='good'&&v2Result().grade!=='A')endPosterMode='continue';
    return previousPoster.apply(this,arguments);
  };
- const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 7.07';
+ const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 7.11';
 })();
 </script>
 
@@ -4236,7 +4250,7 @@ function creepyRequestV681(p,kind){
      body.insertAdjacentHTML('beforeend','<div class="endText">この出会いは次の撮影につながった。今日全体のカメコ評価には、まだ伸ばせるところがある。最後に今日の結果を振り返り、次の一枚へ。</div>');
    }
  };
- const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 7.07';
+ const version=document.querySelector('.titleVersion');if(version)version.textContent='Ver. 7.11';
 })();
 </script>
 <script>
